@@ -1,7 +1,2 @@
 # Mac crap
 .DS_Store
-
-# Unit test
-.travis.yml
-phpunit.xml
-tests/
