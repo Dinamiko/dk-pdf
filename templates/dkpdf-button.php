@@ -9,8 +9,20 @@
 ?>
 
 <?php
+/**
+* BUG (with Docu enabled) duplications on single doc next/prev
+* Temp. workaround Docu actually can't use PDF Button 
+* check if single Docu
+*/
 
-	global $post;
+global $post;
+$post_type = get_post_type( $post->ID );
+
+if ( $post_type == 'doc' ) {
+
+	// do nothing
+
+} else {
 
 	// check if we're using polylang plugin 
 	if( function_exists( 'pll_register_string' )  ) {
@@ -18,13 +30,13 @@
 		// get button text setting value from polylang
 		$pdfbutton_text = pll__( 'PDF Button' );
 
-  	} else {
+	} else {
 
-  		$pdfbutton_text = sanitize_option( 'dkpdf_pdfbutton_text', get_option( 'dkpdf_pdfbutton_text', 'PDF Button' ) );
+	  	$pdfbutton_text = sanitize_option( 'dkpdf_pdfbutton_text', get_option( 'dkpdf_pdfbutton_text', 'PDF Button' ) );
 
-  	}
+	}
 
-  	$pdfbutton_align = sanitize_option( 'dkpdf_pdfbutton_align', get_option( 'dkpdf_pdfbutton_align', 'right' ) );
+	$pdfbutton_align = sanitize_option( 'dkpdf_pdfbutton_align', get_option( 'dkpdf_pdfbutton_align', 'right' ) );
 
 ?>
 
@@ -43,7 +55,10 @@
 
 	<?php }
 
+} 
+
 ?>
+
 
 
 
