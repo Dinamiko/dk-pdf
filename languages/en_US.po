@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: DK PDF\n"
+"POT-Creation-Date: 2015-07-04 12:26+0100\n"
+"PO-Revision-Date: 2015-07-04 12:26+0100\n"
+"Last-Translator: Emili Castells <emili.castells@dinamiko.com@dinamiko.com>\n"
+"Language-Team: Emili Castells <emili.castells@dinamiko.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../dk-pdf.php:85 ../dk-pdf.php:89 ../includes/class-dkpdf-settings.php:496
+#: ../includes/class-dkpdf-settings.php:505
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: ../includes/class-dkpdf-admin-api.php:160
+msgid "Upload an image"
+msgstr ""
+
+#: ../includes/class-dkpdf-admin-api.php:160
+msgid "Use image"
+msgstr ""
+
+#: ../includes/class-dkpdf-admin-api.php:160
+msgid "Upload new image"
+msgstr ""
+
+#: ../includes/class-dkpdf-admin-api.php:161
+msgid "Remove image"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:47
+#: ../includes/class-dkpdf-settings.php:413
+msgid "DK PDF Settings"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:79
+msgid "Settings"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:93
+msgid "PDF Button"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:98
+msgid "Button text"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:106
+msgid "Post types to apply:"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:114
+msgid "Action"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:122
+msgid "Position"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:130
+msgid "Align"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:140
+msgid "PDF Header & Footer"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:145
+msgid "Header logo"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:153
+msgid "Header show title"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:160
+msgid "Header show pagination"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:167
+msgid "Footer text"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:168
+msgid "HTML tags are allowed."
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:175
+msgid "Footer show title"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:182
+msgid "Footer show pagination"
+msgstr ""
+
+#: ../includes/class-dkpdf-settings.php:465
+msgid "Save Settings"
+msgstr ""
+
+#: ../includes/dkpdf-functions.php:198
+msgid "Create PDF"
+msgstr ""
+
+#: ../includes/dkpdf-metaboxes.php:13
+msgid "Disable DK PDF Button:"
+msgstr ""
+
+#: ../includes/dkpdf-metaboxes.php:37
+msgid "DK PDF"
+msgstr ""
