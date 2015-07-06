@@ -18,12 +18,6 @@
 global $post;
 $post_type = get_post_type( $post->ID );
 
-if ( $post_type == 'doc' ) {
-
-	// do nothing
-
-} else {
-
 	// check if we're using polylang plugin 
 	if( function_exists( 'pll_register_string' )  ) {
 
@@ -54,8 +48,6 @@ if ( $post_type == 'doc' ) {
 		</div>
 
 	<?php }
-
-} 
 
 ?>
 
