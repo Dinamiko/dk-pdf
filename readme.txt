@@ -9,14 +9,26 @@ Create PDF documents from your WordPress pages
 
 == Description ==
 
-...
+A simple to use PDF generator
 
-* <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demos</a>
-* <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
+= See DK PDF in action =
+
+https://www.youtube.com/watch?v=gs9JOrGaZ9o
 
 = Features =
  
-* ...
+* Easy to configure with minimal but powerful settings.
+* Copy plugin templates in your theme for customizations.
+* Disable PDF button in posts using a checkbox.
+* Show PDF button using dkpdf-button shortcode.
+
+= Demo =
+
+* <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
+
+= Documentation =
+ 
+* <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
 
 == Installation ==
 
