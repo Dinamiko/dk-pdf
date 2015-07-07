@@ -1,7 +1,7 @@
 === DK PDF ===
 Contributors: dinamiko
 Tags: acrobat, pdf, post to pdf, generate pdf, mpdf 
-Requires at least: 3.9
+Requires at least: 3.9.6
 Tested up to: 4.2.2
 Stable tag: 1.0
 
