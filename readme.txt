@@ -32,7 +32,7 @@ https://www.youtube.com/watch?v=gs9JOrGaZ9o
 
 = Collaborate in Github =
 
-* <a href="https://github.com/Dinamiko/dk-pdf">https://github.com/Dinamiko/dk-pdf</a>
+* <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
 
 == Installation ==
 
