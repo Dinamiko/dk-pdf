@@ -11,10 +11,6 @@ Create PDF documents from your WordPress pages
 
 A simple to use PDF generator
 
-= See DK PDF in action =
-
-https://www.youtube.com/watch?v=gs9JOrGaZ9o
-
 = Features =
  
 * Easy to configure with minimal but powerful settings.
@@ -26,9 +22,17 @@ https://www.youtube.com/watch?v=gs9JOrGaZ9o
 
 * <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
 
+= See DK PDF in action =
+
+https://www.youtube.com/watch?v=gs9JOrGaZ9o
+
 = Documentation =
  
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
+
+= Collaborate in Github =
+
+* <a href="https://github.com/Dinamiko/dk-pdf">https://github.com/Dinamiko/dk-pdf</a>
 
 == Installation ==
 
