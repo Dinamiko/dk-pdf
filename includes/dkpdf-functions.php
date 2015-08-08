@@ -9,7 +9,17 @@ function dkpdf_display_pdf_button( $content ) {
 
   // if is generated pdf don't show pdf button
   $pdf = get_query_var( 'pdf' );
-  if ( $pdf ) { return $content; }
+
+  if ( $pdf ) { 
+
+      // remove dkpdf-button shortcode
+      // TODO implement logic: if exists    
+      remove_shortcode('dkpdf-button');
+      $content = str_replace( "[dkpdf-button]", "", $content );
+
+      return $content; 
+
+  }
 
   global $post;
   $post_type = get_post_type( $post->ID );

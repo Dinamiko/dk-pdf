@@ -28,7 +28,7 @@ if( function_exists( 'pll_register_string' )  ) {
 
 	$pdfbutton_text = sanitize_option( 'dkpdf_pdfbutton_text', get_option( 'dkpdf_pdfbutton_text', 'PDF Button' ) );
 
-	}
+}
 
 $pdfbutton_align = sanitize_option( 'dkpdf_pdfbutton_align', get_option( 'dkpdf_pdfbutton_align', 'right' ) );
 
