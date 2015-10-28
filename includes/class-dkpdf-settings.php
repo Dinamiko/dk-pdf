@@ -25,10 +25,9 @@ class DKPDF_Settings {
 		// Add settings page to menu
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 
-		// Add settings link to plugins page
-		//add_filter( 'plugin_action_links_' . plugin_basename( $this->parent->file ) , array( $this, 'add_settings_link' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ) , array( $this, 'add_settings_link' ) );
-	
+		// Add settings link to plugins page		
+		add_filter( 'plugin_action_links_' . plugin_basename( DKPDF_PLUGIN_FILE ) , array( $this, 'add_settings_link' ) );
+		
 	}
 
 	/**
