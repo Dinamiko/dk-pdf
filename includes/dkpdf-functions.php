@@ -184,33 +184,6 @@ function dkpdf_set_query_vars( $query_vars ) {
 
 add_filter( 'query_vars', 'dkpdf_set_query_vars' );
 
-/**
-* add the tools page
-*/
-function dkpdf_add_tools_page() {
-
-    add_management_page( 'DK PDF Generator', 'DK PDF Generator', 'manage_options', 'dkpdf-generator', 'dkpdf_tools_page' );
-
-}
-
-//add_action( 'admin_menu', 'dkpdf_add_tools_page' );
-
-function dkpdf_tools_page() { ?>
-
-  <div class="wrap">
-    <h2>DK PDF Generator</h2>
-    <p>When you click the button below WordPress will create an XML file for you to save to your computer.</p>
-    <h3>Choose what to export</h3>
-
-    <form method="post" action="">
-
-        <?php wp_nonce_field('dkpdf') ?>
-        <p><input type="submit" class="button button-primary " name="dkpdf" id="dkpdf" value="<?php _e( 'Create PDF', 'dkpdf' ) ?>" /></p>
-
-    </form>
-  </div>
-
-<?php }
 
 
 
