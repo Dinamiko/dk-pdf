@@ -25,7 +25,7 @@ class DKPDF_Settings {
 		// Add settings page to menu
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 
-		// Add settings link to plugins page		
+		// Add settings link to plugins page	
 		add_filter( 'plugin_action_links_' . plugin_basename( DKPDF_PLUGIN_FILE ) , array( $this, 'add_settings_link' ) );
 		
 	}
@@ -39,12 +39,32 @@ class DKPDF_Settings {
 	}
 
 	/**
-	 * Add settings page to admin menu
+	 * Adds DK PDF admin menu
 	 * @return void
 	 */
 	public function add_menu_item () {
-		$page = add_options_page( __( 'DK PDF Settings', 'dkpdf' ) , __( 'DK PDF Settings', 'dkpdf' ) , 'manage_options' , 'dkpdf' . '_settings' ,  array( $this, 'settings_page' ) );
+		
+		// main menu
+		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );	
+	
+		// Addons submenu
+		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
+
+		// TODO if dkpdf generator is active add submenu
+		if ( is_plugin_active( 'dk-pdf-generator/dk-pdf-generator.php' ) ) {}
+
+		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
+
+	}
+
+	public function dkpdf_addons_screen() {
+		
+		echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
+			echo '<h2>DK PDF Addons</h2>';
+			echo '<p>Coming soon...</p>';
+		echo '</div>';
+
 	}
 
 	/**
@@ -75,7 +95,7 @@ class DKPDF_Settings {
 	 * @return array 		Modified links
 	 */
 	public function add_settings_link ( $links ) {
-		$settings_link = '<a href="options-general.php?page=' . 'dkpdf' . '_settings">' . __( 'Settings', 'dkpdf' ) . '</a>';
+		$settings_link = '<a href="admin.php?page=' . 'dkpdf' . '_settings">' . __( 'Settings', 'dkpdf' ) . '</a>';
   		array_push( $links, $settings_link );
   		return $links;
 	}
@@ -308,6 +328,7 @@ class DKPDF_Settings {
 					$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings' , 'dkpdf' ) ) . '" />' . "\n";
 				$html .= '</p>' . "\n";
 			$html .= '</form>' . "\n";
+
 		$html .= '</div>' . "\n";
 
 		echo $html;
