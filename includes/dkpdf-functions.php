@@ -148,7 +148,8 @@ function dkpdf_get_template( $template_name ) {
 }
 
 /**
-* returns an array of post, page, attachment and custom post types
+* returns an array of active post, page, attachment and custom post types
+* @return array 
 */
 function dkpdf_get_post_types() {
         
@@ -162,12 +163,14 @@ function dkpdf_get_post_types() {
 
     foreach ( $post_types  as $post_type ) {
 
-      $arr = array($post_type => $post_type);
+      $arr = array( $post_type => $post_type );
       $post_arr += $arr;
 
     }
     
-    return $post_arr; 
+    $post_arr = apply_filters( 'dkpdf' . '_posts_arr', $post_arr );
+
+    return $post_arr;
 
 }
 
