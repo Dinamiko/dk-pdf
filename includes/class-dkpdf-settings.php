@@ -25,7 +25,7 @@ class DKPDF_Settings {
 		// Add settings page to menu
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 
-		// Add settings link to plugins page		
+		// Add settings link to plugins page	
 		add_filter( 'plugin_action_links_' . plugin_basename( DKPDF_PLUGIN_FILE ) , array( $this, 'add_settings_link' ) );
 		
 	}
@@ -39,13 +39,50 @@ class DKPDF_Settings {
 	}
 
 	/**
-	 * Add settings page to admin menu
+	 * Adds DK PDF admin menu
 	 * @return void
 	 */
 	public function add_menu_item () {
-		$page = add_options_page( __( 'DK PDF Settings', 'dkpdf' ) , __( 'DK PDF Settings', 'dkpdf' ) , 'manage_options' , 'dkpdf' . '_settings' ,  array( $this, 'settings_page' ) );
+		
+		// main menu
+		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );	
+	
+		// support
+		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
+
+		// Addons submenu
+		//add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
+
+		// TODO if dkpdf generator is active add submenu
+		//if ( is_plugin_active( 'dk-pdf-generator/dk-pdf-generator.php' ) ) {}
+
+		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
+
 	}
+
+	public function dkpdf_support_screen() { ?>
+		
+		<div class="wrap">
+			<h2>DK PDF Support</h2>
+
+			<div class="dkpdf-item">			
+				<h3>Documentation</h3>
+				<p>Everything you need to know for getting DK PDF up and running.</p>
+				<p><a href="http://wp.dinamiko.com/demos/dkpdf/documentation/" target="_blank">Go to Documentation</a></p>
+			</div>
+
+			<div class="dkpdf-item">			
+				<h3>Support</h3>
+				<p>Having trouble? don't worry, create a ticket in the support forum.</p>
+				<p><a href="https://wordpress.org/support/plugin/dk-pdf" target="_blank">Go to Support</a></p>
+			</div>
+
+		</div>
+
+	<?php }
+
+	public function dkpdf_addons_screen() {}
 
 	/**
 	 * Load settings JS & CSS
@@ -75,7 +112,7 @@ class DKPDF_Settings {
 	 * @return array 		Modified links
 	 */
 	public function add_settings_link ( $links ) {
-		$settings_link = '<a href="options-general.php?page=' . 'dkpdf' . '_settings">' . __( 'Settings', 'dkpdf' ) . '</a>';
+		$settings_link = '<a href="admin.php?page=' . 'dkpdf' . '_settings">' . __( 'Settings', 'dkpdf' ) . '</a>';
   		array_push( $links, $settings_link );
   		return $links;
 	}
@@ -133,6 +170,72 @@ class DKPDF_Settings {
 					'options'		=> array( 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' ),
 					'default'		=> 'right'
 				),
+			)
+		);
+
+
+		// pdf setup
+		$settings['dkpdf_setup'] = array(
+			'title'					=> __( 'PDF Setup', 'dkpdfg' ),
+			'description'			=> '',
+			'fields'				=> array(
+				array(
+					'id' 			=> 'page_orientation',
+					'label'			=> __( 'Page orientation', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'radio',
+					'options'		=> array( 'vertical' => 'Vertical', 'horizontal' => 'Horizontal' ),
+					'default'		=> 'vertical'
+				),
+				array(
+					'id' 			=> 'font_size',
+					'label'			=> __( 'Font size', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '12',
+					'placeholder'	=> '12'
+				),
+				array(
+					'id' 			=> 'margin_left',
+					'label'			=> __( 'Margin left', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),
+				array(
+					'id' 			=> 'margin_right',
+					'label'			=> __( 'Margin right', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),
+				array(
+					'id' 			=> 'margin_top',
+					'label'			=> __( 'Margin top', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '50',
+					'placeholder'	=> '50'
+				),
+				array(
+					'id' 			=> 'margin_bottom',
+					'label'			=> __( 'Margin bottom', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '30',
+					'placeholder'	=> '30'
+				),
+				array(
+					'id' 			=> 'margin_header',
+					'label'			=> __( 'Margin header', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),								
+
 			)
 		);
 
@@ -308,6 +411,7 @@ class DKPDF_Settings {
 					$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings' , 'dkpdf' ) ) . '" />' . "\n";
 				$html .= '</p>' . "\n";
 			$html .= '</form>' . "\n";
+
 		$html .= '</div>' . "\n";
 
 		echo $html;

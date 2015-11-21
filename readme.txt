@@ -3,7 +3,7 @@ Contributors: dinamiko
 Tags: acrobat, pdf, post to pdf, generate pdf, mpdf 
 Requires at least: 3.9.6
 Tested up to: 4.3.1
-Stable tag: 1.2
+Stable tag: 1.3
 
 Create PDF documents from your WordPress pages
 
@@ -17,6 +17,12 @@ A simple to use PDF generator
 * Copy plugin templates in your theme for customizations.
 * Disable PDF button in posts using a checkbox.
 * Show PDF button using dkpdf-button shortcode.
+
+= New in 1.3 =
+
+* New DK PDF admin menu
+* PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
+* [dkpdf-remove] shortcode for removing pieces of content in the generated PDF 
 
 = Demo =
 
@@ -60,6 +66,10 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.3 =
+* New DK PDF admin menu for better usability
+* Added a PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
+* Added [dkpdf-remove] shortcode for removing pieces of content in the generated PDF 
 = 1.2 =
 * Settings link in plugins list page
 * Adjusts header template for better logo display

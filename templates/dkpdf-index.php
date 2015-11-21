@@ -18,7 +18,7 @@
       		body {
       			background:#FFF;
       			font-size: 100%;
-      		}				
+      		}			
 
 		</style>
 

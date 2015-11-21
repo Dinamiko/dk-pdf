@@ -97,8 +97,33 @@ function dkpdf_output_pdf( $query ) {
 
       include('mpdf60/mpdf.php');
 
-      //$mpdf = new mPDF();
-      $mpdf = new mPDF( '','A4','','','15','15','28','18' ); // TODO understand all params :)   
+      // page orientation
+      $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
+
+      if ( $dkpdf_page_orientation == 'horizontal') {
+                  
+        $format = 'A4-L';
+
+      } else {
+
+        $format = 'A4';
+
+      }
+
+      // font size 
+      $dkpdf_font_size = get_option( 'dkpdf_font_size', '12' );
+
+      // margins
+      $dkpdf_margin_left = get_option( 'dkpdf_margin_left', '15' );
+      $dkpdf_margin_right = get_option( 'dkpdf_margin_right', '15' );
+      $dkpdf_margin_top = get_option( 'dkpdf_margin_top', '50' );
+      $dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
+      $dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
+
+      // creating and setting the pdf 
+      $mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family, 
+        $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header 
+      ); 
 
       // header 
       $pdf_header_html = dkpdf_get_template( 'dkpdf-header' );
@@ -111,7 +136,6 @@ function dkpdf_output_pdf( $query ) {
       $mpdf->WriteHTML( dkpdf_get_template( 'dkpdf-index' ) );    
 
       // action to do (open or download)  
-
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 
       if( $pdfbutton_action == 'open') {
@@ -148,7 +172,8 @@ function dkpdf_get_template( $template_name ) {
 }
 
 /**
-* returns an array of post, page, attachment and custom post types
+* returns an array of active post, page, attachment and custom post types
+* @return array 
 */
 function dkpdf_get_post_types() {
         
@@ -162,12 +187,14 @@ function dkpdf_get_post_types() {
 
     foreach ( $post_types  as $post_type ) {
 
-      $arr = array($post_type => $post_type);
+      $arr = array( $post_type => $post_type );
       $post_arr += $arr;
 
     }
     
-    return $post_arr; 
+    $post_arr = apply_filters( 'dkpdf' . '_posts_arr', $post_arr );
+
+    return $post_arr;
 
 }
 
