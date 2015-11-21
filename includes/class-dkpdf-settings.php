@@ -173,6 +173,72 @@ class DKPDF_Settings {
 			)
 		);
 
+
+		// pdf setup
+		$settings['dkpdf_setup'] = array(
+			'title'					=> __( 'PDF Setup', 'dkpdfg' ),
+			'description'			=> '',
+			'fields'				=> array(
+				array(
+					'id' 			=> 'page_orientation',
+					'label'			=> __( 'Page orientation', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'radio',
+					'options'		=> array( 'vertical' => 'Vertical', 'horizontal' => 'Horizontal' ),
+					'default'		=> 'vertical'
+				),
+				array(
+					'id' 			=> 'font_size',
+					'label'			=> __( 'Font size', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '12',
+					'placeholder'	=> '12'
+				),
+				array(
+					'id' 			=> 'margin_left',
+					'label'			=> __( 'Margin left', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),
+				array(
+					'id' 			=> 'margin_right',
+					'label'			=> __( 'Margin right', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),
+				array(
+					'id' 			=> 'margin_top',
+					'label'			=> __( 'Margin top', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '50',
+					'placeholder'	=> '50'
+				),
+				array(
+					'id' 			=> 'margin_bottom',
+					'label'			=> __( 'Margin bottom', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '30',
+					'placeholder'	=> '30'
+				),
+				array(
+					'id' 			=> 'margin_header',
+					'label'			=> __( 'Margin header', 'dkpdfg' ),
+					'description'	=> '',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),								
+
+			)
+		);
+
 		// header & footer settings
 		$settings['pdf_header_footer'] = array(
 			'title'	=> __( 'PDF Header & Footer', 'dkpdf' ),
