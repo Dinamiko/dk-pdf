@@ -56,6 +56,9 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 		private function includes() {
 
+			// upgrade dashboard screen
+			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-upgrades.php';
+
 			// settings / metaboxes
 			if ( is_admin() ) {
 

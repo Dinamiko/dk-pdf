@@ -14,15 +14,12 @@ class HooksTest extends WP_UnitTestCase {
 		// actions
 		$this->assertarrayHasKey( 'dkpdf_output_pdf', $wp_filter['wp'][10] );
 
-		
-
 	}
 
 	public function tearDown() {
 		parent::tearDown();
 
 	}
-	
 
 	function test_dummy() {}
 

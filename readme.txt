@@ -18,6 +18,12 @@ A simple to use PDF generator
 * Disable PDF button in posts using a checkbox.
 * Show PDF button using dkpdf-button shortcode.
 
+= New in 1.3 =
+
+* New DK PDF admin menu
+* PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
+* [dkpdf-remove] shortcode for removing pieces of content in the generated PDF 
+
 = Demo =
 
 * <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
@@ -61,7 +67,9 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.3 =
-...
+* New DK PDF admin menu for better usability
+* Added a PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
+* Added [dkpdf-remove] shortcode for removing pieces of content in the generated PDF 
 = 1.2 =
 * Settings link in plugins list page
 * Adjusts header template for better logo display
