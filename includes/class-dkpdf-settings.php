@@ -47,25 +47,42 @@ class DKPDF_Settings {
 		// main menu
 		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );	
 	
+		// support
+		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
+
 		// Addons submenu
-		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
+		//add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
 
 		// TODO if dkpdf generator is active add submenu
-		if ( is_plugin_active( 'dk-pdf-generator/dk-pdf-generator.php' ) ) {}
+		//if ( is_plugin_active( 'dk-pdf-generator/dk-pdf-generator.php' ) ) {}
 
 		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
 
 	}
 
-	public function dkpdf_addons_screen() {
+	public function dkpdf_support_screen() { ?>
 		
-		echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
-			echo '<h2>DK PDF Addons</h2>';
-			echo '<p>Coming soon...</p>';
-		echo '</div>';
+		<div class="wrap">
+			<h2>DK PDF Support</h2>
 
-	}
+			<div class="dkpdf-item">			
+				<h3>Documentation</h3>
+				<p>Everything you need to know for getting DK PDF up and running.</p>
+				<p><a href="http://wp.dinamiko.com/demos/dkpdf/documentation/" target="_blank">Go to Documentation</a></p>
+			</div>
+
+			<div class="dkpdf-item">			
+				<h3>Support</h3>
+				<p>Having trouble? don't worry, create a ticket in the support forum.</p>
+				<p><a href="https://wordpress.org/support/plugin/dk-pdf" target="_blank">Go to Support</a></p>
+			</div>
+
+		</div>
+
+	<?php }
+
+	public function dkpdf_addons_screen() {}
 
 	/**
 	 * Load settings JS & CSS
