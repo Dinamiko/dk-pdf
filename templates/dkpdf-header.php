@@ -50,7 +50,7 @@
 					// check if Header show pagination is checked
 					if ( $pdf_header_show_pagination ) {
 
-						echo '| {PAGENO}';
+						echo apply_filters( 'dkpdf_header_pagination', '| {PAGENO}' );
 
 					} 
 

@@ -23,7 +23,7 @@
 		    <div style="float:right;text-align:right;">
 
 				<?php
-					// check if Header show title exists
+					// check if Footer show title exists
 					if ( $pdf_footer_text ) {
 
 						echo $pdf_footer_text;
@@ -46,7 +46,7 @@
 					// check if Footer show pagination is checked
 					if ( $pdf_footer_show_pagination ) {
 
-						echo '| {PAGENO}';
+						echo apply_filters( 'dkpdf_footer_pagination', '| {PAGENO}' );
 
 					} 
 
