@@ -46,15 +46,12 @@ class DKPDF_Settings {
 		
 		// main menu
 		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );	
+
+		// Addons submenu
+		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
 	
 		// support
 		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
-
-		// Addons submenu
-		//add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
-
-		// TODO if dkpdf generator is active add submenu
-		//if ( is_plugin_active( 'dk-pdf-generator/dk-pdf-generator.php' ) ) {}
 
 		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
@@ -82,7 +79,20 @@ class DKPDF_Settings {
 
 	<?php }
 
-	public function dkpdf_addons_screen() {}
+	public function dkpdf_addons_screen() { ?>
+
+		<div class="wrap">
+			<h2>DK PDF Addons</h2>
+
+			<div class="dkpdf-item">			
+				<h3>DK PDF Generator</h3>
+				<p>Create PDF documents with your selected WordPress content.</p>
+				<p><a href="http://wp.dinamiko.com/demos/dkpdf-generator/" target="_blank">Go to DK PDF Generator</a></p>
+			</div>
+
+		</div>
+
+	<?php }
 
 	/**
 	 * Load settings JS & CSS

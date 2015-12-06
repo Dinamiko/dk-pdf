@@ -60,7 +60,6 @@ function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
 	if( $pdf ) {
 
-
 		$output = '<pagebreak />';
 
 	} else {
