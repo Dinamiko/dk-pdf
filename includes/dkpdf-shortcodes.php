@@ -47,3 +47,30 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 }
 
 add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
+
+/**
+* [dkpdf-pagebreak]
+* Allows adding page breaks for sending content after this shortcode to the next page.
+* Uses <pagebreak /> http://mpdf1.com/manual/index.php?tid=108
+* @return string 
+*/
+function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
+
+	$pdf = get_query_var( 'pdf' );
+
+	if( $pdf ) {
+
+
+		$output = '<pagebreak />';
+
+	} else {
+
+		$output = '';
+
+	}
+
+	return $output;
+
+}
+
+add_shortcode( 'dkpdf-pagebreak', 'dkpdf_pagebreak_shortcode' );
