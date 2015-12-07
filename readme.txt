@@ -21,7 +21,7 @@ A simple to use PDF generator.
 * Disable PDF button in posts using a checkbox.
 
 = Addons =
-* <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> allows creating PDF documents with your selected WordPress content. 
+* <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.
 
 = Demo =
 
