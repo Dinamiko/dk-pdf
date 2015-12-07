@@ -9,20 +9,19 @@ Create PDF documents from your WordPress pages
 
 == Description ==
 
-A simple to use PDF generator
+A simple to use PDF generator.
 
 = Features =
  
-* Easy to configure with minimal but powerful settings.
-* Copy plugin templates in your theme for customizations.
+* Shows PDF button in your selected post types: posts, pages and custom post types.
+* Copy plugin templates in your theme for PDF customizations.
+* [dkpdf-button] shortcode for showing PDF button.
+* [dkpdf-remove] shortcode for removing pieces of content in the generated PDF.
+* [dkpdf-pagebreak] shortcode for adding page breaks. 
 * Disable PDF button in posts using a checkbox.
-* Show PDF button using dkpdf-button shortcode.
 
-= New in 1.3 =
-
-* New DK PDF admin menu
-* PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
-* [dkpdf-remove] shortcode for removing pieces of content in the generated PDF 
+= Addons =
+* <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> allows creating PDF documents with your selected WordPress content. 
 
 = Demo =
 
@@ -51,9 +50,10 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 == Screenshots ==
 
 1. Front-end PDF Button  
-2. PDF Button Settings
-3. PDF Header & Footer Settings
-4. Disable PDF Button Metabox
+2. PDF Button settings
+3. PDF Setup settings
+4. PDF Header & Footer settings
+5. Disable PDF Button Metabox
 
 == Credits ==
 
@@ -67,7 +67,9 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.4 =
-* ...
+* Added [dkpdf-pagebreak] shortcode for adding page breaks
+* Added filters dkpdf_header_pagination and dkpdf_footer_pagination
+* Added addons page to admin menu
 = 1.3 =
 * New DK PDF admin menu for better usability
 * Added a PDF Setup tab for adjusting page orientation, font size and margins of the PDF 
