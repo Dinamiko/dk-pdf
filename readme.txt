@@ -29,11 +29,16 @@ A simple to use PDF generator.
 
 = See DK PDF in action =
 
-https://www.youtube.com/watch?v=gs9JOrGaZ9o
+https://vimeo.com/148082260
 
 = Documentation =
  
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
+
+= Related Plugins by Dinamiko =
+* <a href="https://wordpress.org/plugins/dk-pdf/">DK PDF</a>
+* <a href="http://wp.dinamiko.com/demos/dkpdf-generator/">DK PDF Generator (Pro)</a>
+* <a href="https://wordpress.org/plugins/docu/">Docu</a>
 
 = Collaborate in Github =
 
