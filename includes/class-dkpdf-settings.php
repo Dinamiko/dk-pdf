@@ -302,6 +302,22 @@ class DKPDF_Settings {
 			)
 		);
 
+		// style settings
+		$settings['pdf_css'] = array(
+			'title'	=> __( 'PDF CSS', 'dkpdf' ),
+			'description'			=> '',
+			'fields'				=> array(
+				array(
+					'id' 			=> 'pdf_custom_css',
+					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
+					'description'	=> __( '', 'dkpdf' ),
+					'type'			=> 'textarea',
+					'default'		=> '<style type="text/css"><style>',
+					'placeholder'	=> ''
+				),
+			)
+		);
+
 		$settings = apply_filters( 'dkpdf' . '_settings_fields', $settings );
 
 		return $settings;

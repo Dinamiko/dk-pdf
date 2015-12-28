@@ -3,7 +3,7 @@ Contributors: dinamiko
 Tags: acrobat, pdf, post to pdf, generate pdf, mpdf 
 Requires at least: 3.9.6
 Tested up to: 4.3.1
-Stable tag: 1.4
+Stable tag: 1.5
 
 Create PDF documents from your WordPress pages
 
@@ -71,6 +71,8 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.5 =
+* ...
 = 1.4 =
 * Added [dkpdf-pagebreak] shortcode for adding page breaks
 * Added filters dkpdf_header_pagination and dkpdf_footer_pagination
