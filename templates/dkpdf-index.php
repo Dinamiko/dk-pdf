@@ -25,7 +25,7 @@
 		<?php 
 			// get pdf custom css option
 			$css = get_option( 'dkpdf_pdf_custom_css', '<style type="text/css"><style>' );
-			echo '$css: '.$css; 
+			echo $css; 
 		?>
 
    	</head>
