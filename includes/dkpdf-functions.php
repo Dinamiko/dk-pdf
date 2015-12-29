@@ -235,6 +235,8 @@ function dkpdf_sanitize_options() {
     add_filter( 'pre_update_option_dkpdf_pdf_footer_show_title', 'dkpdf_update_field_dkpdf_pdf_footer_show_title', 10, 2 );
     add_filter( 'pre_update_option_dkpdf_pdf_footer_show_pagination', 'dkpdf_update_field_dkpdf_pdf_footer_show_pagination', 10, 2 );     
     add_filter( 'pre_update_option_dkpdf_pdf_custom_css', 'dkpdf_update_field_dkpdf_pdf_custom_css', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_print_wp_head', 'dkpdf_update_field_dkpdf_print_wp_head', 10, 2 );
+    
 
 }
 
@@ -433,8 +435,15 @@ function dkpdf_update_field_dkpdf_pdf_footer_show_pagination( $new_value, $old_v
 * sanitizes dkpdf_pdf_custom_css option
 */
 function dkpdf_update_field_dkpdf_pdf_custom_css( $new_value, $old_value ) {
-
     $new_value = wp_filter_nohtml_kses( $new_value );
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_print_wp_head option
+*/
+function dkpdf_update_field_dkpdf_print_wp_head( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
     return $new_value;
 }
 

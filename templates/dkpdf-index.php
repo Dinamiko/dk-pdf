@@ -11,9 +11,17 @@
 <html>
     <head>
 
-    	<?php // TODO wp_head() optional ?>
-
     	<link type="text/css" rel="stylesheet" href="<?php echo get_bloginfo( 'stylesheet_url' ); ?>" media="all" />
+
+    	<?php 
+    		$wp_head = get_option( 'dkpdf_print_wp_head', '' );
+
+    		if( $wp_head == 'on' ) {
+
+    			wp_head();
+
+    		} 
+    	?>
 
       	<style type="text/css">
 
@@ -114,7 +122,11 @@
 		    	    global $post;
 		    	    ?>
 
-		    	    <?php the_content(); ?>
+		    	    <div class="dkpdf-content">
+
+		    	    	<?php the_content(); ?>
+
+		    		</div>
 		    	    
 		    	<?php }
 		    	    

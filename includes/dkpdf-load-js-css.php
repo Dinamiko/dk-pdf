@@ -9,7 +9,6 @@ add_action( 'admin_enqueue_scripts', 'dkpdf_admin_enqueue_styles', 10, 1 );
 
 function dkpdf_enqueue_styles () {
 
-	// font awesome
 	wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', array(), '4.3.0' );
 	wp_enqueue_style( 'font-awesome' );	
 
@@ -35,7 +34,10 @@ function dkpdf_admin_enqueue_styles ( $hook = '' ) {
 function dkpdf_admin_enqueue_scripts ( $hook = '' ) {
 	
 	wp_register_script( 'dkpdf-settings-admin', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array( 'jquery' ), DKPDF_VERSION );
-	wp_enqueue_script( 'dkpdf-settings-admin' );	
+	wp_enqueue_script( 'dkpdf-settings-admin' );
+
+	wp_register_script( 'dkpdf-ace', plugins_url( 'dk-pdf/assets/js/src-min/ace.js' ), array(), DKPDF_VERSION );
+	wp_enqueue_script( 'dkpdf-ace' );
 
 	wp_register_script( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/js/admin.js' ), array( 'jquery' ), DKPDF_VERSION );
 	wp_enqueue_script( 'dkpdf-admin' );	

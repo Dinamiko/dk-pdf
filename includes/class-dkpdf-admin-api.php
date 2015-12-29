@@ -94,6 +94,11 @@ class DKPDF_Admin_API {
 				$html .= '<input id="' . esc_attr( $field['id'] ) . '" type="text" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" value="" />' . "\n";
 			break;
 
+			case 'textarea_code':
+				$html .= '<div id="' . 'editor' . '">'. $data .'</div>'. "\n";
+				$html .= '<textarea id="' . esc_attr( $option_name ) . '" rows="5" cols="50" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '">' . $data . '</textarea>'. "\n";
+			break;
+
 			case 'textarea':
 				$html .= '<textarea id="' . esc_attr( $field['id'] ) . '" rows="5" cols="50" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '">' . $data . '</textarea><br/>'. "\n";
 			break;

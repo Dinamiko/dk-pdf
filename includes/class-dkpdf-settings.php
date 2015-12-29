@@ -310,10 +310,17 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'pdf_custom_css',
 					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
-					'description'	=> __( 'Add CSS styles (body, .my-class, #my-id...) to be printed in PDF head.', 'dkpdf' ),
-					'type'			=> 'textarea',
+					'description'	=> __( '', 'dkpdf' ),
+					'type'			=> 'textarea_code',
 					'default'		=> '',
 					'placeholder'	=> ''
+				),
+				array(
+					'id' 			=> 'print_wp_head',
+					'label'			=> __( 'Use your enqueued theme and plugin CSS', 'dkpdf' ),
+					'description'	=> __( 'Adds wp_head() in PDF head', 'dkpdf' ),
+					'type'			=> 'checkbox',
+					'default'		=> ''
 				),
 			)
 		);
