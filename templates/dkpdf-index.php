@@ -18,15 +18,19 @@
       		body {
       			background:#FFF;
       			font-size: 100%;
-      		}			
-
-		</style>
-
+      		}
+      		h1 {font-size:140%;}
+      		h2 {font-size:120%;}	
+      		h3 {font-size:110%;}	
+      		h4 {font-size:100%;}
+      		h5 {font-size:100%;}	
+      		h6 {font-size:100%;}
 		<?php 
 			// get pdf custom css option
-			$css = get_option( 'dkpdf_pdf_custom_css', '<style type="text/css"><style>' );
+			$css = get_option( 'dkpdf_pdf_custom_css', '' );
 			echo $css; 
 		?>
+		</style>
 
    	</head>
 
