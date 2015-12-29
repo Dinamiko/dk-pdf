@@ -310,7 +310,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'pdf_custom_css',
 					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
-					'description'	=> __( '', 'dkpdf' ),
+					'description'	=> __( 'Add CSS styles (body, .my-class, #my-id...) to be printed in PDF head.', 'dkpdf' ),
 					'type'			=> 'textarea',
 					'default'		=> '',
 					'placeholder'	=> ''

@@ -11,6 +11,8 @@
 <html>
     <head>
 
+    	<?php // TODO wp_head() optional ?>
+
     	<link type="text/css" rel="stylesheet" href="<?php echo get_bloginfo( 'stylesheet_url' ); ?>" media="all" />
 
       	<style type="text/css">
@@ -18,15 +20,15 @@
       		body {
       			background:#FFF;
       			font-size: 100%;
-      		}			
+      		}
+
+			<?php 
+				// get pdf custom css option
+				$css = get_option( 'dkpdf_pdf_custom_css', '' );
+				echo $css; 
+			?>			
 
 		</style>
-
-		<?php 
-			// get pdf custom css option
-			$css = get_option( 'dkpdf_pdf_custom_css', '<style type="text/css"><style>' );
-			echo $css; 
-		?>
 
    	</head>
 
