@@ -279,7 +279,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'pdf_footer_text',
 					'label'			=> __( 'Footer text' , 'dkpdf' ),
-					'description'	=> __( 'HTML tags are allowed.', 'dkpdf' ),
+					'description'	=> __( 'HTML tags: a, br, em, strong, p, h1 to h4', 'dkpdf' ),
 					'type'			=> 'textarea',
 					'default'		=> '',
 					'placeholder'	=> ''
@@ -312,7 +312,7 @@ class DKPDF_Settings {
 					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
 					'description'	=> __( '', 'dkpdf' ),
 					'type'			=> 'textarea',
-					'default'		=> '<style type="text/css"><style>',
+					'default'		=> '',
 					'placeholder'	=> ''
 				),
 			)

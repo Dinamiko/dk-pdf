@@ -211,6 +211,253 @@ function dkpdf_set_query_vars( $query_vars ) {
 
 add_filter( 'query_vars', 'dkpdf_set_query_vars' );
 
+/**
+* sanitizes dkpdf options
+*/ 
+function dkpdf_sanitize_options() {
+
+    add_filter( 'pre_update_option_dkpdf_pdfbutton_text', 'dkpdf_update_field_dkpdf_pdfbutton_text', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdfbutton_post_types', 'dkpdf_update_field_dkpdf_pdfbutton_post_types', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdfbutton_action', 'dkpdf_update_field_dkpdf_pdfbutton_action', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdfbutton_position', 'dkpdf_update_field_dkpdf_pdfbutton_position', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdfbutton_align', 'dkpdf_update_field_dkpdf_pdfbutton_align', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_page_orientation', 'dkpdf_update_field_dkpdf_page_orientation', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_font_size', 'dkpdf_update_field_dkpdf_font_size', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_margin_left', 'dkpdf_update_field_dkpdf_margin_left', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_margin_right', 'dkpdf_update_field_dkpdf_margin_right', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_margin_top', 'dkpdf_update_field_dkpdf_margin_top', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_margin_bottom', 'dkpdf_update_field_dkpdf_margin_bottom', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_margin_header', 'dkpdf_update_field_dkpdf_margin_header', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdf_header_image', 'dkpdf_update_field_dkpdf_pdf_header_image', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdf_header_show_title', 'dkpdf_update_field_dkpdf_pdf_header_show_title', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdf_header_show_pagination', 'dkpdf_update_field_dkpdf_pdf_header_show_pagination', 10, 2 );   
+    add_filter( 'pre_update_option_dkpdf_pdf_footer_text', 'dkpdf_update_field_dkpdf_pdf_footer_text', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdf_footer_show_title', 'dkpdf_update_field_dkpdf_pdf_footer_show_title', 10, 2 );
+    add_filter( 'pre_update_option_dkpdf_pdf_footer_show_pagination', 'dkpdf_update_field_dkpdf_pdf_footer_show_pagination', 10, 2 );     
+    add_filter( 'pre_update_option_dkpdf_pdf_custom_css', 'dkpdf_update_field_dkpdf_pdf_custom_css', 10, 2 );
+
+}
+
+add_action( 'init', 'dkpdf_sanitize_options' );
+
+/**
+* sanitizes dkpdf_pdfbutton_text option
+*/
+function dkpdf_update_field_dkpdf_pdfbutton_text( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdfbutton_post_types option
+*/
+function dkpdf_update_field_dkpdf_pdfbutton_post_types( $new_value, $old_value ) {
+    // TODO sanitize_text_field doesn't work
+    //$new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdfbutton_action option
+*/
+function dkpdf_update_field_dkpdf_pdfbutton_action( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdfbutton_position option
+*/
+function dkpdf_update_field_dkpdf_pdfbutton_position( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdfbutton_align option
+*/
+function dkpdf_update_field_dkpdf_pdfbutton_align( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_page_orientation option
+*/
+function dkpdf_update_field_dkpdf_page_orientation( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_font_size option
+*/
+function dkpdf_update_field_dkpdf_font_size( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_margin_left option
+*/
+function dkpdf_update_field_dkpdf_margin_left( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_margin_right option
+*/
+function dkpdf_update_field_dkpdf_margin_right( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_margin_top option
+*/
+function dkpdf_update_field_dkpdf_margin_top( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_margin_bottom option
+*/
+function dkpdf_update_field_dkpdf_margin_bottom( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_margin_header option
+*/
+function dkpdf_update_field_dkpdf_margin_header( $new_value, $old_value ) {
+    $new_value = intval( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_header_image option
+*/
+function dkpdf_update_field_dkpdf_pdf_header_image( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_header_show_title option
+*/
+function dkpdf_update_field_dkpdf_pdf_header_show_title( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_header_show_pagination option
+*/
+function dkpdf_update_field_dkpdf_pdf_header_show_pagination( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_footer_text option
+*/
+function dkpdf_update_field_dkpdf_pdf_footer_text( $new_value, $old_value ) {
+
+    $arr = array(
+        'a' => array(
+            'href' => array(),
+            'title' => array(),
+            'class' => array(),
+            'style' => array()
+        ),
+        'br' => array(),
+        'em' => array(),
+        'strong' => array(),
+        'p' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        ),
+        'h1' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        ),
+        'h2' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        ),
+        'h3' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        ),
+        'h4' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        ),
+        'div' => array(
+           'title' => array(),
+           'class' => array(),
+           'style' => array()
+        )
+    );
+
+    $new_value = wp_kses( $new_value, $arr );
+    return $new_value;
+
+}
+
+/**
+* sanitizes dkpdf_pdf_header_show_pagination option
+*/
+function dkpdf_update_field_dkpdf_pdf_footer_show_title( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_header_show_pagination option
+*/
+function dkpdf_update_field_dkpdf_pdf_footer_show_pagination( $new_value, $old_value ) {
+    $new_value = sanitize_text_field( $new_value ); 
+    return $new_value;
+}
+
+/**
+* sanitizes dkpdf_pdf_custom_css option
+*/
+function dkpdf_update_field_dkpdf_pdf_custom_css( $new_value, $old_value ) {
+
+    $new_value = wp_filter_nohtml_kses( $new_value );
+    return $new_value;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
