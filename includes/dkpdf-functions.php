@@ -436,6 +436,8 @@ function dkpdf_update_field_dkpdf_pdf_footer_show_pagination( $new_value, $old_v
 */
 function dkpdf_update_field_dkpdf_pdf_custom_css( $new_value, $old_value ) {
     $new_value = wp_filter_nohtml_kses( $new_value );
+    $new_value = str_replace('\"', '"', $new_value);
+    $new_value = str_replace("\'", "'", $new_value);
     return $new_value;
 }
 
