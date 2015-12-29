@@ -312,7 +312,7 @@ class DKPDF_Settings {
 					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
 					'description'	=> __( '', 'dkpdf' ),
 					'type'			=> 'textarea',
-					'default'		=> 'body { text-align: justify ; }',
+					'default'		=> '<style type="text/css"><style>',
 					'placeholder'	=> ''
 				),
 			)
