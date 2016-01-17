@@ -58,7 +58,8 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 2. PDF Button settings
 3. PDF Setup settings
 4. PDF Header & Footer settings
-5. Disable PDF Button Metabox
+5. PDF Custom CSS
+6. Disable PDF Button Metabox
 
 == Credits ==
 
@@ -72,7 +73,8 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.5 =
-* ...
+* Added PDF Custom CSS setting
+* Sanitized settings fields
 = 1.4 =
 * Added [dkpdf-pagebreak] shortcode for adding page breaks
 * Added filters dkpdf_header_pagination and dkpdf_footer_pagination
