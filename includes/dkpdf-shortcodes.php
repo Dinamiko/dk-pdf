@@ -64,7 +64,7 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 
 }
 
-add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );z
+add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 
 /**
 * [dkpdf-pagebreak]
