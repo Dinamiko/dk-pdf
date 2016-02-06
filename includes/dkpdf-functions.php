@@ -10,14 +10,27 @@ function dkpdf_display_pdf_button( $content ) {
   // if is generated pdf don't show pdf button
   $pdf = get_query_var( 'pdf' );
 
-  if ( $pdf ) { 
+  if( isset( $_POST['dkpdfg_action_create'] ) ) {
 
-      // remove dkpdf-button shortcode
-      // TODO implement logic: if exists    
-      remove_shortcode('dkpdf-button');
-      $content = str_replace( "[dkpdf-button]", "", $content );
+    if ( $pdf || $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' ) { 
+    
+        remove_shortcode('dkpdf-button');
+        $content = str_replace( "[dkpdf-button]", "", $content );
 
-      return $content; 
+        return $content; 
+
+    }
+
+  } else {
+
+    if ( $pdf ) { 
+    
+        remove_shortcode('dkpdf-button');
+        $content = str_replace( "[dkpdf-button]", "", $content );
+
+        return $content; 
+
+    }
 
   }
 

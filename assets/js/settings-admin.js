@@ -2,6 +2,7 @@ jQuery(document).ready(function($) {
 
     /***** Colour picker *****/
 
+    /*
     $('.colorpicker').hide();
     $('.colorpicker').each( function() {
         $(this).farbtastic( $(this).closest('.color-picker').find('.color') );
@@ -18,6 +19,7 @@ jQuery(document).ready(function($) {
                 $(this).fadeOut();
         });
     });
+    */
 
 
     /***** Uploading images *****/

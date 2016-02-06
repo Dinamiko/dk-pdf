@@ -30,15 +30,33 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 
 	$pdf = get_query_var( 'pdf' );
 
-	// if is pdf returns an empty string
-	if( $pdf ) {
+	if( isset( $_POST['dkpdfg_action_create'] ) ) {
 
-		$removed_content = '';
+		// if is pdf returns an empty string
+		if( $pdf || $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create') {
 
-	// if not returns the content inside the shortcode	
+			$removed_content = '';
+
+		// if not returns the content inside the shortcode	
+		} else {
+
+			$removed_content = $content;
+
+		}
+
 	} else {
 
-		$removed_content = $content;
+		// if is pdf returns an empty string
+		if( $pdf ) {
+
+			$removed_content = '';
+
+		// if not returns the content inside the shortcode	
+		} else {
+
+			$removed_content = $content;
+
+		}
 
 	}
 
@@ -46,7 +64,7 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 
 }
 
-add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
+add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );z
 
 /**
 * [dkpdf-pagebreak]
@@ -58,13 +76,29 @@ function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
 	$pdf = get_query_var( 'pdf' );
 
-	if( $pdf ) {
+	if( isset( $_POST['dkpdfg_action_create'] ) ) {
 
-		$output = '<pagebreak />';
+		if( $pdf || $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' ) {
+
+			$output = '<pagebreak />';
+
+		} else {
+
+			$output = '';
+
+		}
 
 	} else {
 
-		$output = '';
+		if( $pdf ) {
+
+			$output = '<pagebreak />';
+
+		} else {
+
+			$output = '';
+
+		}
 
 	}
 
