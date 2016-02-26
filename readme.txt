@@ -1,27 +1,28 @@
 === DK PDF ===
 Contributors: dinamiko
-Tags: acrobat, pdf, post to pdf, generate pdf, mpdf 
+Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf 
 Requires at least: 3.9.6
 Tested up to: 4.4.2
 Stable tag: 1.6
 
-Create PDF documents from your WordPress pages
+WordPress to PDF made simple. 
 
 == Description ==
 
-A simple to use PDF generator.
+DK PDF allows site visitors convert WordPress posts and pages to PDF using a button.
 
 = Features =
  
-* Shows PDF button in your selected post types: posts, pages and custom post types.
-* Copy plugin templates in your theme for PDF customizations.
-* [dkpdf-button] shortcode for showing PDF button.
-* [dkpdf-remove] shortcode for removing pieces of content in the generated PDF.
+* Add PDF button in posts (including custom post types) and pages.
+* Configure PDF header and footer, add custom logo, add custom CSS and more.
+* Template customizations, copy plugin templates in your theme for PDF customizations.
+* [dkpdf-remove] shortcode for removing pieces of content.
 * [dkpdf-pagebreak] shortcode for adding page breaks. 
-* Disable PDF button in posts using a checkbox.
+* Add PDF button manually using [dkpdf-button] shortcode. 
+* Remove PDF button using a checkbox.
 
 = Addons =
-* <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.
+* Do you need to create a PDF with a selection of your articles? <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
 
 = Demo =
 
@@ -36,9 +37,8 @@ https://vimeo.com/148082260
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
 
 = Related Plugins by Dinamiko =
-* <a href="https://wordpress.org/plugins/dk-pdf/">DK PDF</a>
-* <a href="http://wp.dinamiko.com/demos/dkpdf-generator/">DK PDF Generator (Pro)</a>
-* <a href="https://wordpress.org/plugins/docu/">Docu</a>
+* <a href="https://wordpress.org/plugins/dportfolio/">DPortfolio</a>, portfolio manager.
+* <a href="https://wordpress.org/plugins/docu/">Docu</a>, documentation plugin.
 
 = Collaborate in Github =
 
