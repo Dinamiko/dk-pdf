@@ -11,6 +11,8 @@ WordPress to PDF made simple.
 
 DK PDF allows site visitors convert WordPress posts and pages to PDF using a button.
 
+https://vimeo.com/148082260
+
 = Features =
  
 * Add PDF button in posts (including custom post types) and pages.
@@ -27,10 +29,6 @@ DK PDF allows site visitors convert WordPress posts and pages to PDF using a but
 = Demo =
 
 * <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
-
-= See DK PDF in action =
-
-https://vimeo.com/148082260
 
 = Documentation =
  
