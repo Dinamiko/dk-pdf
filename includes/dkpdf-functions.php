@@ -125,6 +125,7 @@ function dkpdf_output_pdf( $query ) {
 
       // font size 
       $dkpdf_font_size = get_option( 'dkpdf_font_size', '12' );
+      $dkpdf_font_family = '';
 
       // margins
       $dkpdf_margin_left = get_option( 'dkpdf_margin_left', '15' );

@@ -1,11 +1,11 @@
 jQuery(document).ready(function($) {
 
     /***** Colour picker *****/
-
-    /*
     $('.colorpicker').hide();
     $('.colorpicker').each( function() {
-        $(this).farbtastic( $(this).closest('.color-picker').find('.color') );
+        if( jQuery().farbtastic ) {
+            $(this).farbtastic( $(this).closest('.color-picker').find('.color') );
+        }
     });
 
     $('.color').click(function() {
@@ -19,8 +19,6 @@ jQuery(document).ready(function($) {
                 $(this).fadeOut();
         });
     });
-    */
-
 
     /***** Uploading images *****/
 
