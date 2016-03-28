@@ -73,7 +73,7 @@ http://fortawesome.github.io/Font-Awesome/
 == Changelog ==
 = 1.7 =
 * New filters (see documentation filters)
-* Fixed github issues #23 #24
+* Fixed github issues #21 #23 #24
 = 1.6 =
 * 4.4.2 Tested 
 * Added DK PDF Generator compatibility (css + shortcodes)

@@ -387,6 +387,12 @@ class DKPDF_Settings {
 	 */
 	public function settings_page () {
 
+		if( isset( $_GET['settings-updated']) ) { ?>
+		    <div id="message" class="updated">
+		        <p><?php _e('Settings saved.', 'dkpdf');?></p>
+		    </div>
+		<?php }
+
 		// Build page HTML
 		$html = '<div class="wrap" id="' . 'dkpdf' . '_settings">' . "\n";
 			$html .= '<h2>' . __( 'DK PDF Settings' , 'dkpdf' ) . '</h2>' . "\n";
