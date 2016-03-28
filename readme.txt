@@ -16,7 +16,7 @@ https://vimeo.com/148082260
 = Features =
  
 * Add PDF button in posts (including custom post types) and pages.
-* Configure PDF header and footer, add custom logo, add custom CSS and more.
+* Configure PDF header and footer, add custom logo, custom CSS and more.
 * Template customizations, copy plugin templates in your theme for PDF customizations.
 * [dkpdf-remove] shortcode for removing pieces of content.
 * [dkpdf-pagebreak] shortcode for adding page breaks. 
@@ -24,7 +24,8 @@ https://vimeo.com/148082260
 * Remove PDF button using a checkbox.
 
 = Addons =
-* Do you need to create a PDF with a selection of your articles? <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
+* Do you need to create a PDF with a selection of your articles? 
+<a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
 
 = Demo =
 
@@ -71,7 +72,8 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.7 =
-* New filters and actions (see documentation Developers)
+* New filters (see documentation filters)
+* Fixed github issues #23 #24
 = 1.6 =
 * 4.4.2 Tested 
 * Added DK PDF Generator compatibility (css + shortcodes)

@@ -200,7 +200,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'font_size',
 					'label'			=> __( 'Font size', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '12',
 					'placeholder'	=> '12'
@@ -208,7 +208,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'margin_left',
 					'label'			=> __( 'Margin left', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '15',
 					'placeholder'	=> '15'
@@ -216,7 +216,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'margin_right',
 					'label'			=> __( 'Margin right', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '15',
 					'placeholder'	=> '15'
@@ -224,7 +224,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'margin_top',
 					'label'			=> __( 'Margin top', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '50',
 					'placeholder'	=> '50'
@@ -232,7 +232,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'margin_bottom',
 					'label'			=> __( 'Margin bottom', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '30',
 					'placeholder'	=> '30'
@@ -240,7 +240,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'margin_header',
 					'label'			=> __( 'Margin header', 'dkpdfg' ),
-					'description'	=> '',
+					'description'	=> 'In points (pt)',
 					'type'			=> 'number',
 					'default'		=> '15',
 					'placeholder'	=> '15'

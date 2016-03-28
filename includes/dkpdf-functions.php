@@ -146,8 +146,10 @@ function dkpdf_output_pdf( $query ) {
       // footer      
       $pdf_footer_html = dkpdf_get_template( 'dkpdf-footer' );
       $mpdf->SetHTMLFooter( $pdf_footer_html );
-
-      $mpdf->WriteHTML( dkpdf_get_template( 'dkpdf-index' ) );    
+     
+      $mpdf->WriteHTML( apply_filters( 'dkpdf_before_content', '' ) );  
+      $mpdf->WriteHTML( dkpdf_get_template( 'dkpdf-index' ) ); 
+      $mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );     
 
       // action to do (open or download)  
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
