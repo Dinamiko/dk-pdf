@@ -61,7 +61,7 @@ class DKPDF_Settings {
 	public function dkpdf_support_screen() { ?>
 		
 		<div class="wrap">
-			<h2>DK PDF Support</h2>
+			<h2 style="float:left;width:100%;">DK PDF Support</h2>
 
 			<div class="dkpdf-item">			
 				<h3>Documentation</h3>
@@ -74,8 +74,9 @@ class DKPDF_Settings {
 				<p>Having trouble? don't worry, create a ticket in the support forum.</p>
 				<p><a href="https://wordpress.org/support/plugin/dk-pdf" target="_blank">Go to Support</a></p>
 			</div>
-
 		</div>
+
+		<?php do_action( 'dkpdf_after_support' );?>
 
 	<?php }
 
