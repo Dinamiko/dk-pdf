@@ -41,7 +41,7 @@ $hide_pdfbutton = sanitize_meta( '_hide_pdfbutton', get_post_meta( $post->ID,  '
 // only show button if _hide_pdfbutton post meta is not checked
 if ( ! $hide_pdfbutton ) { ?>
 
-	<div class="dkpdf-button-container" style="text-align:<?php echo $pdfbutton_align;?>">
+	<div class="dkpdf-button-container" style="<?php echo apply_filters( 'dkpdf_button_container_css', '' );?> text-align:<?php echo $pdfbutton_align;?> ">
 
 		<a class="dkpdf-button" href="<?php echo esc_url( add_query_arg( 'pdf', $post->ID ) );?>" target="_blank"><span class="dkpdf-button-icon"><i class="fa fa-file-pdf-o"></i></span> <?php echo $pdfbutton_text;?></a>
 
