@@ -18,19 +18,18 @@ https://vimeo.com/148082260
  
 * Add PDF button in posts (including custom post types) and pages.
 * Configure PDF header and footer, add custom logo, custom CSS and more.
-* Template customizations, copy plugin templates in your theme for PDF customizations.
+* Copy plugin templates in your theme for PDF customizations.
 * [dkpdf-remove] shortcode for removing pieces of content.
 * [dkpdf-pagebreak] shortcode for adding page breaks. 
 * Add PDF button manually using [dkpdf-button] shortcode. 
 * Remove PDF button using a checkbox.
 
+= DK PDF customization service =
+* Includes adding data from WordPress database (custom fields...), custom PDF design (custom layout, fonts, google maps, and more...). You can write to me at: emili.castells@dinamiko.com
+
 = Addons =
 * Do you need to create a PDF with a selection of your articles? 
 <a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
-
-= DK PDF customization service =
-* Includes getting any data from WordPress database (custom fields...), custom PDF design (custom layout, fonts, google maps, and more...). 
-You can write to me at: emili.castells@dinamiko.com
 
 = Documentation =
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
@@ -40,7 +39,6 @@ You can write to me at: emili.castells@dinamiko.com
 * <a href="https://wordpress.org/plugins/docu/">Docu</a>, documentation plugin.
 
 = Collaborate in Github =
-
 * <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
 
 == Installation ==
