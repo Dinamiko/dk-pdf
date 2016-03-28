@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: DK PDF
- * Version: 1.6
+ * Version: 1.7
  * Plugin URI: http://wp.dinamiko.com/demos/dkpdf
  * Description: Create PDF documents from your WordPress pages
  * Author: Emili Castells
@@ -47,7 +47,7 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 		private function setup_constants() {
 
-			if ( ! defined( 'DKPDF_VERSION' ) ) { define( 'DKPDF_VERSION', '1.6' ); }
+			if ( ! defined( 'DKPDF_VERSION' ) ) { define( 'DKPDF_VERSION', '1.7' ); }
 			if ( ! defined( 'DKPDF_PLUGIN_DIR' ) ) { define( 'DKPDF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) ); }
 			if ( ! defined( 'DKPDF_PLUGIN_URL' ) ) { define( 'DKPDFPLUGIN_URL', plugin_dir_url( __FILE__ ) ); }
 			if ( ! defined( 'DKPDF_PLUGIN_FILE' ) ) { define( 'DKPDF_PLUGIN_FILE', __FILE__ ); }			
@@ -55,10 +55,6 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		}
 
 		private function includes() {
-
-			// upgrade dashboard screen
-			// TODO not worked when upgrading in plugins list page
-			//require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-upgrades.php';
 
 			// settings / metaboxes
 			if ( is_admin() ) {
