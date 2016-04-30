@@ -19,7 +19,7 @@
 	// only enter here if any of the settings exists
 	if( $pdf_footer_text || $pdf_footer_show_pagination ) { ?>
 
-	    <div style="width:100%;float:left;adding-top:10px;">
+	    <div style="width:100%;float:left;padding-top:10px;">
 		    <div style="float:right;text-align:right;">
 
 				<?php

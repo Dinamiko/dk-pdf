@@ -137,7 +137,14 @@ function dkpdf_output_pdf( $query ) {
       // creating and setting the pdf 
       $mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family, 
         $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header 
-      ); 
+      );
+
+      /*
+      // make chinese characters work in the pdf
+      $mpdf->useAdobeCJK = true;
+      $mpdf->autoScriptToLang = true;
+      $mpdf->autoLangToFont = true;
+      */
 
       // header 
       $pdf_header_html = dkpdf_get_template( 'dkpdf-header' );
