@@ -1,6 +1,6 @@
 === DK PDF ===
 Contributors: dinamiko
-Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf 
+Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf 
 Requires at least: 3.9.6
 Tested up to: 4.4.2
 Stable tag: 1.7
@@ -23,9 +23,6 @@ https://vimeo.com/148082260
 * [dkpdf-pagebreak] shortcode for adding page breaks. 
 * Add PDF button manually using [dkpdf-button] shortcode. 
 * Remove PDF button using a checkbox.
-
-= DK PDF customization service =
-* Includes adding data from WordPress database (custom fields...), custom PDF design (custom layout, fonts, google maps, and more...). You can write to me at: emili.castells@dinamiko.com
 
 = Addons =
 * Do you need to create a PDF with a selection of your articles? 
