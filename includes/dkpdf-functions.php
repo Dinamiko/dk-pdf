@@ -65,6 +65,10 @@ function dkpdf_display_pdf_button( $content ) {
 
         if( $pdfbutton_position ) {
 
+            if ( $pdfbutton_position == 'shortcode' ) {
+              return $c;
+            }
+
             if( $pdfbutton_position == 'before' ) {
 
               ob_start();
