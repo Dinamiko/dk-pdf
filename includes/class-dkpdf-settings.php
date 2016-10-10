@@ -170,7 +170,7 @@ class DKPDF_Settings {
 					'label'			=> __( 'Position', 'dkpdf' ),
 					'description'	=> '',
 					'type'			=> 'radio',
-					'options'		=> array( 'before' => 'Before content', 'after' => 'After content' ),
+					'options'		=> array( 'shortcode' => 'Use shortcode', 'before' => 'Before content', 'after' => 'After content' ),
 					'default'		=> 'before'
 				),
 				array(
