@@ -3,7 +3,7 @@ Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf 
 Requires at least: 3.9.6
 Tested up to: 4.4.2
-Stable tag: 1.7
+Stable tag: 1.8
 
 WordPress to PDF made simple. 
 
@@ -66,6 +66,8 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.8 =
+* Option for remove default PDF button when adding PDF button manually (thanks to Renato Alves)
 = 1.7 =
 * New filters (see documentation filters)
 * Fixed github issues #21 #23 #24
