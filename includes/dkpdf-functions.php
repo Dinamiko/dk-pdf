@@ -475,28 +475,3 @@ function dkpdf_update_field_dkpdf_print_wp_head( $new_value, $old_value ) {
     $new_value = sanitize_text_field( $new_value ); 
     return $new_value;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

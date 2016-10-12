@@ -30,10 +30,8 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 
 	$pdf = get_query_var( 'pdf' );
 
-	if( isset( $_POST['dkpdfg_action_create'] ) ) {
-
-		// if is pdf returns an empty string
-		if( $pdf || $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create') {
+  	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
+    	if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' )  ) { 
 
 			$removed_content = '';
 
@@ -76,9 +74,8 @@ function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
 	$pdf = get_query_var( 'pdf' );
 
-	if( isset( $_POST['dkpdfg_action_create'] ) ) {
-
-		if( $pdf || $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' ) {
+  	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
+    	if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' )  ) { 
 
 			$output = '<pagebreak />';
 
