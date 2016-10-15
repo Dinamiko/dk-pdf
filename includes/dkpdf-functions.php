@@ -119,11 +119,11 @@ function dkpdf_output_pdf( $query ) {
 
       if ( $dkpdf_page_orientation == 'horizontal') {
                   
-        $format = 'A4-L';
+        $format = apply_filters( 'dkpdf_pdf_format', 'A4' ).'-L';
 
       } else {
 
-        $format = 'A4';
+        $format = apply_filters( 'dkpdf_pdf_format', 'A4' );
 
       }
 
