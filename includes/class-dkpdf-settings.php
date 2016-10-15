@@ -280,7 +280,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'pdf_footer_text',
 					'label'			=> __( 'Footer text' , 'dkpdf' ),
-					'description'	=> __( 'HTML tags: a, br, em, strong, p, h1 to h4', 'dkpdf' ),
+					'description'	=> __( 'HTML tags: a, br, em, strong, hr, p, h1 to h4', 'dkpdf' ),
 					'type'			=> 'textarea',
 					'default'		=> '',
 					'placeholder'	=> ''

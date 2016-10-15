@@ -405,6 +405,7 @@ function dkpdf_update_field_dkpdf_pdf_footer_text( $new_value, $old_value ) {
         'br' => array(),
         'em' => array(),
         'strong' => array(),
+        'hr' => array(),
         'p' => array(
            'title' => array(),
            'class' => array(),
