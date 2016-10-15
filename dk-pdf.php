@@ -7,7 +7,7 @@
  * Author: Emili Castells
  * Author URI: http://www.dinamiko.com
  * Requires at least: 3.9
- * Tested up to: 4.4.2
+ * Tested up to: 4.6.1
  *
  * Text Domain: dkpdf
  * Domain Path: /languages/
