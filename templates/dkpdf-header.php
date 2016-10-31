@@ -40,7 +40,7 @@
 					// check if Header show title is checked
 					if ( $pdf_header_show_title ) {
 
-						echo get_the_title( $post->ID );
+						echo apply_filters( 'dkpdf_header_title', get_the_title( $post->ID ) );
 
 					} 
 

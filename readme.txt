@@ -67,6 +67,8 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.8 =
+* New filter dkpdf_pdf_format
+* New filter dkpdf_header_title 
 * Option for remove default PDF button when adding PDF button manually (thanks to Renato Alves)
 = 1.7 =
 * New filters (see documentation filters)
