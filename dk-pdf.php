@@ -1,13 +1,13 @@
 <?php
 /*
  * Plugin Name: DK PDF
- * Version: 1.8
+ * Version: 1.9
  * Plugin URI: http://wp.dinamiko.com/demos/dkpdf
  * Description: Create PDF documents from your WordPress pages
  * Author: Emili Castells
  * Author URI: http://www.dinamiko.com
  * Requires at least: 3.9
- * Tested up to: 4.6.1
+ * Tested up to: 4.7.2
  *
  * Text Domain: dkpdf
  * Domain Path: /languages/
@@ -29,9 +29,9 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 				self::$instance->setup_constants();
 
-				add_action( 'plugins_loaded', array( self::$instance, 'dkpdf_load_textdomain' ) );				
-				
-				self::$instance->includes();	
+				add_action( 'plugins_loaded', array( self::$instance, 'dkpdf_load_textdomain' ) );
+
+				self::$instance->includes();
 
 			}
 
@@ -41,16 +41,16 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 		public function dkpdf_load_textdomain() {
 
-			load_plugin_textdomain( 'dkpdf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+			load_plugin_textdomain( 'dkpdf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		}
 
 		private function setup_constants() {
 
-			if ( ! defined( 'DKPDF_VERSION' ) ) { define( 'DKPDF_VERSION', '1.8' ); }
+			if ( ! defined( 'DKPDF_VERSION' ) ) { define( 'DKPDF_VERSION', '1.9' ); }
 			if ( ! defined( 'DKPDF_PLUGIN_DIR' ) ) { define( 'DKPDF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) ); }
 			if ( ! defined( 'DKPDF_PLUGIN_URL' ) ) { define( 'DKPDFPLUGIN_URL', plugin_dir_url( __FILE__ ) ); }
-			if ( ! defined( 'DKPDF_PLUGIN_FILE' ) ) { define( 'DKPDF_PLUGIN_FILE', __FILE__ ); }			
+			if ( ! defined( 'DKPDF_PLUGIN_FILE' ) ) { define( 'DKPDF_PLUGIN_FILE', __FILE__ ); }
 
 		}
 
@@ -70,7 +70,7 @@ if ( ! class_exists( 'DKPDF' ) ) {
 			}
 
 			// load css / js
-			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-load-js-css.php';						
+			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-load-js-css.php';
 
 			// functions
 			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-functions.php';
