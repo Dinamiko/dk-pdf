@@ -1,2 +1,5 @@
-# Mac crap
+
+vendor
+tests/_data/*
+tests/_output/*
 .DS_Store
