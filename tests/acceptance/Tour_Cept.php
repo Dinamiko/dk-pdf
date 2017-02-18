@@ -1,6 +1,6 @@
 <?php
 $I = new AcceptanceTester($scenario);
-$I->wantTo('Test Backend and Frontend');
+$I->wantTo('Backend and Frontend Tour');
 
 $I->am( 'admin' );
 $I->loginAsAdmin();
@@ -14,18 +14,25 @@ $I->checkOption('#pdfbutton_post_types_post');
 $I->click('Save Settings');
 $I->see('Settings saved.');
 
+// quick fix error: Failed asserting that  on page /wp-admin/wp-admin/wp-admin/post-new.php -->  404 Not Found 404 Not Found nginx
+// we've to logout and then login in order to continue the test
 $I->click('Log Out', '#wp-admin-bar-logout a');
 $I->seeElement('#user_login');
 $I->see('Log In');
 
 $I->loginAsAdmin();
 $I->wantToTest( 'create a new post' );
-$I->loginAsAdmin();
 $I->amOnPage( 'wp-admin/index.php' );
 $I->see('Dashboard');
 
 $I->am( 'admin' );
 $I->wantToTest( 'create a new post' );
+
+$I->click('Log Out', '#wp-admin-bar-logout a');
+$I->seeElement('#user_login');
+$I->see('Log In');
+$I->loginAsAdmin();
+
 $I->amOnPage( 'wp-admin/post-new.php' );
 $I->see( 'Add New Post' );
 $I->seeElement('#post #title');
