@@ -10,25 +10,29 @@
 
 <html>
     <head>
-
-    	<link type="text/css" rel="stylesheet" href="<?php echo get_bloginfo( 'stylesheet_url' ); ?>" media="all" />
-
-    	<?php
-    		$wp_head = get_option( 'dkpdf_print_wp_head', '' );
-
-    		if( $wp_head == 'on' ) {
-
-    			wp_head();
-
-    		}
-    	?>
-
+      	<link type="text/css" rel="stylesheet" href="<?php echo get_bloginfo( 'stylesheet_url' ); ?>" media="all" />
+      	<?php
+      		$wp_head = get_option( 'dkpdf_print_wp_head', '' );
+      		if( $wp_head == 'on' ) {
+      			wp_head();
+      		}
+      	?>
       	<style type="text/css">
-
       		body {
       			background:#FFF;
       			font-size: 100%;
       		}
+          /* fontawesome compatibility */
+          .fa {
+              font-family: fontawesome;
+              display: inline-block;
+              font: normal normal normal 14px/1 FontAwesome;
+              font-size: inherit;
+              text-rendering: auto;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+              transform: translate(0, 0);
+          }
 
 			<?php
 				// get pdf custom css option
