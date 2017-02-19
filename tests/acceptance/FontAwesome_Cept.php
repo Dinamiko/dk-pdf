@@ -18,7 +18,7 @@ $I->see('Log In');
 
 $I->am( 'site visitor' );
 $I->wantToTest( 'see if FontAwesome glyphs displayed in the PDF' );
-$I->amOnPage('test-post/');
+$I->amOnPage('hello-world');
 $I->expect('see fontawesome pdf icon');
 $I->see('PDF Button');
 $I->seeElement('.fa-file-pdf-o');
@@ -32,9 +32,9 @@ $I->seeElement('#post #title');
 $I->click( '#publish' );
 $I->see( 'Publish' );
 $I->fillField('#post input[type=text]', 'FontAwesome Icon');
-$I->fillField('#post #content', 'Test FontAwesome icon<br><i style="font-size:50px;" class="fa fa-file-pdf-o" aria-hidden="true"></i>');
+$I->fillField('#post #content', 'Test FontAwesome icon<br><i style="font-size:50px;color:orange;" class="fa">&#xf1c1;</i>');
 $I->click( '#publish' );
 $I->see( 'Post published.' );
 /*
-test click pdf button manually in frontend in order to see if fontawesome icon appear
+in order to see if fontawesome icon appear in PDF, click pdf button manually in frontend
 */
