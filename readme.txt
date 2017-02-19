@@ -5,7 +5,7 @@ Requires at least: 3.9.6
 Tested up to: 4.7.2
 Stable tag: 1.9
 
-WordPress to PDF made simple.
+WordPress to PDF made easy.
 
 == Description ==
 
@@ -32,6 +32,7 @@ https://vimeo.com/148082260
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
 
 = Related Plugins by Dinamiko =
+* <a href="https://wordpress.org/plugins/dk-white-label/">DK White Label</a>, white label and branding WordPress admin.
 * <a href="https://wordpress.org/plugins/dportfolio/">DPortfolio</a>, portfolio manager.
 * <a href="https://wordpress.org/plugins/docu/">Docu</a>, documentation plugin.
 
@@ -67,6 +68,7 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.9 =
+* Added shortcode tag attribute to dkpdf-remove shortcode
 * FontAwesome icons support
 = 1.8 =
 * New filter dkpdf_pdf_format
