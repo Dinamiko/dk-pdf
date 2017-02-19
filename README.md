@@ -8,6 +8,7 @@ suites: integration, functional, acceptance
 * vendor/bin/wpcept run
 * vendor/bin/wpcept run suite
 * vendor/bin/wpcept run suite --steps --debug
+* vendor/bin/wpcept run suite file-name.php:function-name
 
 ### create new tests
 suites: integration, functional, acceptance
