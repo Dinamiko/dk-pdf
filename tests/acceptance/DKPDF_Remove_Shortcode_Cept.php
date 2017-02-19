@@ -15,6 +15,6 @@ $I->seeElement('#post #title');
 $I->click( '#publish' );
 $I->see( 'Publish' );
 $I->fillField('#post input[type=text]', 'Remove content using [dkpdf-remove] shortcode');
-$I->fillField('#post #content', 'Welcome [dkpdf-remove]to[/dkpdf-remove] WordPress.<br>');
+$I->fillField('#post #content', 'Welcome [dkpdf-remove]<span style="width:auto;color:#FFF;background:red;">to</span>[/dkpdf-remove] WordPress.<br>');
 $I->click( '#publish' );
 $I->see( 'Post published.' );
