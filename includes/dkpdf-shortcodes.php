@@ -30,16 +30,17 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 		$atts = shortcode_atts( array(
 			'tag' => ''
 		), $atts );
-
+		$pdf = get_query_var( 'pdf' );
 		$tag = sanitize_text_field( $atts['tag'] );
-		if( $tag !== '' )  {
+		if( $tag !== '' && $pdf )  {
 				remove_shortcode( $tag );
 				add_shortcode( $tag, '__return_false' );
-
 				return do_shortcode( $content );
+		} else if( $pdf ) {
+				return '';
 		}
 
-		return do_shortcode( $content );	
+		return do_shortcode( $content );
 }
 add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 
