@@ -166,7 +166,8 @@ function dkpdf_output_pdf( $query ) {
 
       if( $pdfbutton_action == 'open') {
 
-        $mpdf->Output();
+        global $post;
+        $mpdf->Output( get_the_title( $post->ID ).'.pdf', 'I' );
 
       } else {
 
