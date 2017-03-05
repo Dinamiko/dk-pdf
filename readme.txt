@@ -70,6 +70,7 @@ http://fortawesome.github.io/Font-Awesome/
 = 1.9 =
 * Added shortcode tag attribute to dkpdf-remove shortcode
 * FontAwesome icons support
+* Added post title as PDF filename when downloaded from browser
 = 1.8 =
 * New filter dkpdf_pdf_format
 * New filter dkpdf_header_title

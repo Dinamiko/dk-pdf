@@ -32,48 +32,14 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 		), $atts );
 
 		$tag = sanitize_text_field( $atts['tag'] );
-		$pdf = get_query_var( 'pdf' );
-		if( $tag !== '' && $pdf ) {
+		if( $tag !== '' )  {
 				remove_shortcode( $tag );
-				add_shortcode($tag, '__return_false');
+				add_shortcode( $tag, '__return_false' );
 
 				return do_shortcode( $content );
 		}
 
-		return do_shortcode( $content );
-/*
-	$pdf = get_query_var( 'pdf' );
-
-  	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
-    	if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' )  ) {
-
-			$removed_content = '';
-
-		// if not returns the content inside the shortcode
-		} else {
-
-			$removed_content = $content;
-
-		}
-
-	} else {
-
-		// if is pdf returns an empty string
-		if( $pdf ) {
-
-			$removed_content = '';
-
-		// if not returns the content inside the shortcode
-		} else {
-
-			$removed_content = $content;
-
-		}
-
-	}
-
-	return $removed_content;
-*/
+		return do_shortcode( $content );	
 }
 add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 
