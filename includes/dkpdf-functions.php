@@ -164,7 +164,7 @@ function dkpdf_output_pdf( $query ) {
        // action to do (open or download)
       global $post;
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
-	    $pdf_title = apply_filters( 'dkpdf_pdf_title', get_the_title( $post->ID ) );
+      $pdf_title = apply_filters( 'dkpdf_pdf_title', get_the_title( $post->ID ) );
 	  
       if( $pdfbutton_action == 'open') {
 
