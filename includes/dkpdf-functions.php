@@ -161,18 +161,18 @@ function dkpdf_output_pdf( $query ) {
       $mpdf->WriteHTML( dkpdf_get_template( 'dkpdf-index' ) );
       $mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );
 
-      // action to do (open or download)
+       // action to do (open or download)
+      global $post;
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
-
+      $pdf_title = apply_filters( 'dkpdf_pdf_title', get_the_title( $post->ID ) );
+	  
       if( $pdfbutton_action == 'open') {
 
-        global $post;
-        $mpdf->Output( get_the_title( $post->ID ).'.pdf', 'I' );
+        $mpdf->Output( $pdf_title.'.pdf', 'I' );
 
       } else {
 
-        global $post;
-        $mpdf->Output( get_the_title( $post->ID ).'.pdf', 'D' );
+        $mpdf->Output( $pdf_title.'.pdf', 'D' );
 
       }
 

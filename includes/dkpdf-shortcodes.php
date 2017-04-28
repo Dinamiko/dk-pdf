@@ -45,6 +45,22 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 
 /**
+* [dkpdf-add]content to add[/dkpdf-add]
+* This shortcode is used to add pieces of content in the generated PDF
+* @return string
+*/
+function dkpdf_add_shortcode( $atts, $content = null ) {
+	$atts = shortcode_atts( array(), $atts );
+	$pdf = get_query_var( 'pdf' );
+
+	if( $pdf )
+		return do_shortcode( $content );
+	
+	return '';
+}
+add_shortcode( 'dkpdf-add', 'dkpdf_add_shortcode' );
+
+/**
 * [dkpdf-pagebreak]
 * Allows adding page breaks for sending content after this shortcode to the next page.
 * Uses <pagebreak /> http://mpdf1.com/manual/index.php?tid=108
