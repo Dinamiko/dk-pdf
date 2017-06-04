@@ -111,11 +111,11 @@
 
 	    } else {
 
-			$args = array(
-			 	'p' => $pdf,
-			 	'post_type' => $post_type,
-			 	'post_status' => 'publish'
-			);
+  			$args = array(
+  			 	'p' => $pdf,
+  			 	'post_type' => $post_type,
+  			 	'post_status' => 'publish'
+  			);
 
 		    $the_query = new WP_Query( apply_filters( 'dkpdf_query_args', $args ) );
 

@@ -10,10 +10,16 @@
 }
 
 .dkpdf-item h3 { font-size:180%;}
-.dkpdf-item p { font-size:130%;} 
+.dkpdf-item p { font-size:130%;}
 
 #editor {
 	height:300px;
+}
+
+#dkpdf_settings .checkbox_multi {
+	margin-right: 10px;
+	margin-bottom: 15px;
+	display: inline-block;
 }
 
 @media only screen and (min-width: 996px) {

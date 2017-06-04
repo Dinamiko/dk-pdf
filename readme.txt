@@ -9,7 +9,7 @@ WordPress to PDF made easy.
 
 == Description ==
 
-DK PDF allows site visitors convert WordPress posts and pages to PDF using a button.
+DK PDF allows site visitors convert posts and pages to PDF using a button.
 
 https://vimeo.com/148082260
 <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
@@ -67,6 +67,8 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.9.1 =
+* Fixed Admin scripts enqueued on all pages (thanks to Aristeides Stathopoulos @aristath)
 = 1.9 =
 * Added shortcode tag attribute to dkpdf-remove shortcode
 * FontAwesome icons support

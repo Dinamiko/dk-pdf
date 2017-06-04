@@ -142,8 +142,14 @@ function dkpdf_output_pdf( $query ) {
         $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
       );
 
-      // TODO add as an option
-      $mpdf->SetProtection( array() );
+      // encrypts and sets the PDF document permissions
+      // https://mpdf.github.io/reference/mpdf-functions/setprotection.html
+      $enable_protection = get_option( 'dkpdf_enable_protection' );
+
+      if( $enable_protection == 'on' ) {
+        $grant_permissions = get_option( 'dkpdf_grant_permissions' );
+        $mpdf->SetProtection( $grant_permissions );
+      }
 
       /*
       // make chinese characters work in the pdf

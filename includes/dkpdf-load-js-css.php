@@ -20,17 +20,21 @@ function dkpdf_enqueue_scripts() {
 }
 
 function dkpdf_admin_enqueue_styles( $hook = '' ) {
-	wp_register_style( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), DKPDF_VERSION );
-	wp_enqueue_style( 'dkpdf-admin' );
+	if( isset( $_GET['page'] ) && $_GET['page'] == 'dkpdf_settings' ) {
+		wp_register_style( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), DKPDF_VERSION );
+		wp_enqueue_style( 'dkpdf-admin' );
+	}
 }
 
 function dkpdf_admin_enqueue_scripts( $hook = '' ) {
-	wp_register_script( 'dkpdf-settings-admin', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array( 'jquery' ), DKPDF_VERSION );
-	wp_enqueue_script( 'dkpdf-settings-admin' );
+	if( isset( $_GET['page'] ) && $_GET['page'] == 'dkpdf_settings' ) {
+		wp_register_script( 'dkpdf-settings-admin', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array( 'jquery' ), DKPDF_VERSION );
+		wp_enqueue_script( 'dkpdf-settings-admin' );
 
-	wp_register_script( 'dkpdf-ace', plugins_url( 'dk-pdf/assets/js/src-min/ace.js' ), array(), DKPDF_VERSION );
-	wp_enqueue_script( 'dkpdf-ace' );
+		wp_register_script( 'dkpdf-ace', plugins_url( 'dk-pdf/assets/js/src-min/ace.js' ), array(), DKPDF_VERSION );
+		wp_enqueue_script( 'dkpdf-ace' );
 
-	wp_register_script( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/js/admin.js' ), array( 'jquery' ), DKPDF_VERSION );
-	wp_enqueue_script( 'dkpdf-admin' );
+		wp_register_script( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/js/admin.js' ), array( 'jquery' ), DKPDF_VERSION );
+		wp_enqueue_script( 'dkpdf-admin' );
+	}
 }

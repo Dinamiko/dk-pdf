@@ -25,9 +25,9 @@ class DKPDF_Settings {
 		// Add settings page to menu
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 
-		// Add settings link to plugins page	
+		// Add settings link to plugins page
 		add_filter( 'plugin_action_links_' . plugin_basename( DKPDF_PLUGIN_FILE ) , array( $this, 'add_settings_link' ) );
-		
+
 	}
 
 	/**
@@ -43,13 +43,13 @@ class DKPDF_Settings {
 	 * @return void
 	 */
 	public function add_menu_item () {
-		
+
 		// main menu
-		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );	
+		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );
 
 		// Addons submenu
 		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
-	
+
 		// support
 		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
 
@@ -59,17 +59,17 @@ class DKPDF_Settings {
 	}
 
 	public function dkpdf_support_screen() { ?>
-		
+
 		<div class="wrap">
 			<h2 style="float:left;width:100%;">DK PDF Support</h2>
 
-			<div class="dkpdf-item">			
+			<div class="dkpdf-item">
 				<h3>Documentation</h3>
 				<p>Everything you need to know for getting DK PDF up and running.</p>
 				<p><a href="http://wp.dinamiko.com/demos/dkpdf/documentation/" target="_blank">Go to Documentation</a></p>
 			</div>
 
-			<div class="dkpdf-item">			
+			<div class="dkpdf-item">
 				<h3>Support</h3>
 				<p>Having trouble? don't worry, create a ticket in the support forum.</p>
 				<p><a href="https://wordpress.org/support/plugin/dk-pdf" target="_blank">Go to Support</a></p>
@@ -85,7 +85,7 @@ class DKPDF_Settings {
 		<div class="wrap">
 			<h2>DK PDF Addons</h2>
 
-			<div class="dkpdf-item">			
+			<div class="dkpdf-item">
 				<h3>DK PDF Generator</h3>
 				<p>Allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.</p>
 				<p><a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">Go to DK PDF Generator</a></p>
@@ -110,11 +110,8 @@ class DKPDF_Settings {
     	// If you're not including an image upload then you can leave this function call out
     	wp_enqueue_media();
 
-    	
     	wp_register_script( 'dkpdf' . '-settings-js', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array( 'farbtastic', 'jquery' ), '1.0.0' );
     	wp_enqueue_script( 'dkpdf' . '-settings-js' );
-    	
-    	
 	}
 
 	/**
@@ -148,7 +145,7 @@ class DKPDF_Settings {
 					'type'			=> 'text',
 					'default'		=> 'PDF Button',
 					'placeholder'	=> ''
-				),				
+				),
 				array(
 					'id' 			=> 'pdfbutton_post_types',
 					'label'			=> __( 'Post types to apply:', 'dkpdf' ),
@@ -245,8 +242,22 @@ class DKPDF_Settings {
 					'type'			=> 'number',
 					'default'		=> '15',
 					'placeholder'	=> '15'
-				),								
-
+				),
+				array(
+					'id' 			=> 'enable_protection',
+					'label'			=> __( 'Enable PDF protection', 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
+				array(
+					'id' 			=> 'grant_permissions',
+					'label'			=> __( 'Grant PDF permissions', 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'checkbox_multi',
+					'options'		=> array( 'copy' => 'Copy', 'print' => 'Print', 'print-highres' => 'Print Highres', 'modify' => 'Modify', 'annot-forms' => 'Annot Forms', 'fill-forms' => 'Fill Forms', 'extract' => 'Extract', 'assemble' => 'Assemble' ),
+					'default'		=> array()
+				),
 			)
 		);
 
