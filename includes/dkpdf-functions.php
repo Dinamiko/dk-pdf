@@ -142,6 +142,9 @@ function dkpdf_output_pdf( $query ) {
         $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
       );
 
+      // TODO add as an option
+      $mpdf->SetProtection( array() );
+
       /*
       // make chinese characters work in the pdf
       $mpdf->useAdobeCJK = true;
@@ -167,12 +170,12 @@ function dkpdf_output_pdf( $query ) {
       if( $pdfbutton_action == 'open') {
 
         global $post;
-        $mpdf->Output( get_the_title( $post->ID ).'.pdf', 'I' );
+        $mpdf->Output( apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ).'.pdf', 'I' );
 
       } else {
 
         global $post;
-        $mpdf->Output( get_the_title( $post->ID ).'.pdf', 'D' );
+        $mpdf->Output( apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ).'.pdf', 'D' );
 
       }
 

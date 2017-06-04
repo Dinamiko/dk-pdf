@@ -3,17 +3,16 @@ Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
 Requires at least: 3.9.6
 Tested up to: 4.7.2
-Stable tag: 1.9
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 1.9.1
 
-WordPress to PDF made easy. DK PDF allows site visitors convert WordPress posts and pages to PDF using a button.
+WordPress to PDF made easy.
 
 == Description ==
 
 DK PDF allows site visitors convert WordPress posts and pages to PDF using a button.
+
 https://vimeo.com/148082260
-See <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">DK PDF Demo</a>
+<a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
 
 = Features =
 
