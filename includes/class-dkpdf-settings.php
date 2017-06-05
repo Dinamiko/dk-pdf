@@ -258,6 +258,13 @@ class DKPDF_Settings {
 					'options'		=> array( 'copy' => 'Copy', 'print' => 'Print', 'print-highres' => 'Print Highres', 'modify' => 'Modify', 'annot-forms' => 'Annot Forms', 'fill-forms' => 'Fill Forms', 'extract' => 'Extract', 'assemble' => 'Assemble' ),
 					'default'		=> array()
 				),
+				array(
+					'id' 			=> 'keep_columns',
+					'label'			=> __( 'Keep columns', 'dkpdf' ),
+					'description'	=> 'Columns will be written successively (dkpdf-columns shortcode). i.e. there will be no balancing of the length of columns.',
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
 			)
 		);
 

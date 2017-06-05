@@ -151,6 +151,13 @@ function dkpdf_output_pdf( $query ) {
         $mpdf->SetProtection( $grant_permissions );
       }
 
+      // keep columns
+      $keep_columns = get_option( 'dkpdf_keep_columns' );
+
+      if( $keep_columns == 'on' ) {
+        $mpdf->keepColumns = true;
+      }
+
       /*
       // make chinese characters work in the pdf
       $mpdf->useAdobeCJK = true;
@@ -173,15 +180,20 @@ function dkpdf_output_pdf( $query ) {
       // action to do (open or download)
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 
+      $title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
+
+      $mpdf->SetTitle( $title );
+      $mpdf->SetAuthor( apply_filters( 'dkpdf_pdf_author', get_bloginfo( 'name' ) ) );
+
+      global $post;
+
       if( $pdfbutton_action == 'open') {
 
-        global $post;
-        $mpdf->Output( apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ).'.pdf', 'I' );
+        $mpdf->Output( $title.'.pdf', 'I' );
 
       } else {
 
-        global $post;
-        $mpdf->Output( apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ).'.pdf', 'D' );
+        $mpdf->Output($title.'.pdf', 'D' );
 
       }
 
