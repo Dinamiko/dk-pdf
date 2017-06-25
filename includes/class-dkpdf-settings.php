@@ -246,13 +246,13 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'enable_protection',
 					'label'			=> __( 'Enable PDF protection', 'dkpdf' ),
-					'description'	=> '',
+					'description'	=> __( 'Encrypts PDF file and respects permissions given below', 'dkpdf' ),
 					'type'			=> 'checkbox',
 					'default'		=> ''
 				),
 				array(
 					'id' 			=> 'grant_permissions',
-					'label'			=> __( 'Grant PDF permissions', 'dkpdf' ),
+					'label'			=> __( 'Protected PDF permissions', 'dkpdf' ),
 					'description'	=> '',
 					'type'			=> 'checkbox_multi',
 					'options'		=> array( 'copy' => 'Copy', 'print' => 'Print', 'print-highres' => 'Print Highres', 'modify' => 'Modify', 'annot-forms' => 'Annot Forms', 'fill-forms' => 'Fill Forms', 'extract' => 'Extract', 'assemble' => 'Assemble' ),
@@ -336,8 +336,8 @@ class DKPDF_Settings {
 				),
 				array(
 					'id' 			=> 'print_wp_head',
-					'label'			=> __( 'Use your enqueued theme and plugin CSS', 'dkpdf' ),
-					'description'	=> __( 'Adds wp_head() in PDF head', 'dkpdf' ),
+					'label'			=> __( 'Use current theme\'s CSS', 'dkpdf' ),
+					'description'	=> __( 'Includes the stylesheet from current theme, but is overridden by PDF Custom CSS and plugins adding its own stylesheets.', 'dkpdf' ),
 					'type'			=> 'checkbox',
 					'default'		=> ''
 				),

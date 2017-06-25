@@ -2,7 +2,7 @@
 Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
 Requires at least: 3.9.6
-Tested up to: 4.7.2
+Tested up to: 4.8
 Stable tag: 1.9.1
 
 WordPress to PDF made easy.
@@ -68,6 +68,9 @@ http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 = 1.9.1 =
+* Added PDF Protection in PDF Setup Settings
+* New Columns Shortcodes: [dkpdf-columns] and [dkpdf-columnbreak]
+* New Filter: dkpdf_pdf_filename
 * Fixed Admin scripts enqueued on all pages (thanks to Aristeides Stathopoulos @aristath)
 = 1.9 =
 * Added shortcode tag attribute to dkpdf-remove shortcode
