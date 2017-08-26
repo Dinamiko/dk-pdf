@@ -1,10 +1,10 @@
 # Changelog
 
 ## 1.9.2
-- ...
+- Task Runner: Add Gulp and `zip task, see [issue #50](https://github.com/Dinamiko/dk-pdf/issues/50).
 
 ## 1.9.1
-- Added PDF Protection in PDF Setup Settings
+- Added PDF Protection in PDF `Setup Settings
 - New Columns Shortcodes: [dkpdf-columns] and [dkpdf-columnbreak]
 - New Filter: dkpdf_pdf_filename
 - Fixed Admin scripts enqueued on all pages (thanks to Aristeides Stathopoulos @aristath)
