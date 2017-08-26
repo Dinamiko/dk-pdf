@@ -1,0 +1,11 @@
+{
+  "name": "dk-pdf",
+  "version": "1.9.2",
+  "description": "WordPress to PDF made easy.",
+  "author": "Emili Castells",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-zip": "^4.0.0"
+  }
+}
