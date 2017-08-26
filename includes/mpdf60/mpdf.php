@@ -11379,6 +11379,15 @@ function _jpgDataFromHeader($hdr) {
 function file_get_contents_by_curl($url, &$data) {
 	$timeout = 5;
 	$ch = curl_init($url);
+
+	//FIX Images not working after move to https
+	// https://github.com/Dinamiko/dk-pdf/issues/51
+	$p = parse_url($url);
+	if ($p['scheme']=='https') {
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	}
+
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1');	// mPDF 5.7.4
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_NOBODY, 0);
