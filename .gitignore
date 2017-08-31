@@ -4,3 +4,4 @@ vendor
 node_modules
 *.zip
 package-lock.json
+composer.lock
