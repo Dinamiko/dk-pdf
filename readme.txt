@@ -69,7 +69,6 @@ http://fortawesome.github.io/Font-Awesome/
 == Changelog ==
 = 1.9.2 =
 - PHP7: Remove some warnings, see [issue #38](https://github.com/Dinamiko/dk-pdf/issues/38), [issue #48](https://github.com/Dinamiko/dk-pdf/issues/48).
-- Task Runner: Add Gulp and `zip` task, see [issue #50](https://github.com/Dinamiko/dk-pdf/issues/50).
 - HTTPS: Fix images not working after move to https, see [issue #51](https://github.com/Dinamiko/dk-pdf/issues/51).
 
 = 1.9.1 =
