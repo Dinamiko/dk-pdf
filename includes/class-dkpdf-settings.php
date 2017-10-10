@@ -244,6 +244,14 @@ class DKPDF_Settings {
 					'placeholder'	=> '15'
 				),
 				array(
+					'id' 			=> 'margin_footer',
+					'label'			=> __( 'Margin footer', 'dkpdfg' ),
+					'description'	=> 'In points (pt)',
+					'type'			=> 'number',
+					'default'		=> '15',
+					'placeholder'	=> '15'
+				),
+				array(
 					'id' 			=> 'enable_protection',
 					'label'			=> __( 'Enable PDF protection', 'dkpdf' ),
 					'description'	=> __( 'Encrypts PDF file and respects permissions given below', 'dkpdf' ),
