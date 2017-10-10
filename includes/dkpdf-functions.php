@@ -136,10 +136,11 @@ function dkpdf_output_pdf( $query ) {
       $dkpdf_margin_top = get_option( 'dkpdf_margin_top', '50' );
       $dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
       $dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
+      $dkpdf_margin_footer = get_option( 'dkpdf_margin_footer', '15' );
 
       // creating and setting the pdf
       $mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family,
-        $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
+        $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header, $dkpdf_margin_footer
       );
 
       // encrypts and sets the PDF document permissions
