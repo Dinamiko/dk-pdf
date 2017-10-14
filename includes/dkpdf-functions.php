@@ -111,7 +111,8 @@ function dkpdf_output_pdf( $query ) {
 
   if( $pdf ) {
 
-      include('mpdf60/mpdf.php');
+	  require_once  realpath(__DIR__ . '/..') . '/vendor/autoload.php';
+	  define('_MPDF_TTFONTDATAPATH', sys_get_temp_dir()."/");
 
       // page orientation
       $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
