@@ -67,6 +67,8 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.9.4 =
+* Fix PHP7 Warning messages.
 = 1.9.3 =
 * Reverting to 1.9.1, something went wrong in 1.9.2
 = 1.9.2 =
