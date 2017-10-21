@@ -112,24 +112,9 @@ function dkpdf_output_pdf( $query ) {
   if( $pdf ) {
 
 	  require_once  realpath(__DIR__ . '/..') . '/vendor/autoload.php';
-	  define('_MPDF_TTFONTDATAPATH', sys_get_temp_dir()."/");
-
-      // page orientation
-      $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
-
-      if ( $dkpdf_page_orientation == 'horizontal') {
-
-        $format = apply_filters( 'dkpdf_pdf_format', 'A4' ).'-L';
-
-      } else {
-
-        $format = apply_filters( 'dkpdf_pdf_format', 'A4' );
-
-      }
 
       // font size
       $dkpdf_font_size = get_option( 'dkpdf_font_size', '12' );
-      $dkpdf_font_family = '';
 
       // margins
       $dkpdf_margin_left = get_option( 'dkpdf_margin_left', '15' );
@@ -138,10 +123,15 @@ function dkpdf_output_pdf( $query ) {
       $dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
       $dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
 
-      // creating and setting the pdf
-      $mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family,
-        $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
-      );
+	  $mpdf = new \Mpdf\Mpdf( [
+		  'tempDir'           => __DIR__ . '/tmp',
+		  'default_font_size' => $dkpdf_font_size,
+		  'margin_left'       => $dkpdf_margin_left,
+		  'margin_right'      => $dkpdf_margin_right,
+		  'margin_top'        => $dkpdf_margin_top,
+		  'margin_bottom'     => $dkpdf_margin_bottom,
+		  'margin_header'     => $dkpdf_margin_header,
+	  ] );
 
       // encrypts and sets the PDF document permissions
       // https://mpdf.github.io/reference/mpdf-functions/setprotection.html
@@ -181,6 +171,7 @@ function dkpdf_output_pdf( $query ) {
       // action to do (open or download)
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 
+      global $post;
       $title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
 
       $mpdf->SetTitle( $title );

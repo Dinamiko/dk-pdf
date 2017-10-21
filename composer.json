@@ -1,13 +1,6 @@
 {
     "name": "dinamiko/dk-pdf",
-    "description": "WordPress to PDF made easy.",
-    "authors": [
-        {
-            "name": "Emilio Castells",
-            "email": "emili.castells@dinamiko.com"
-        }
-    ],
     "require": {
-        "mpdf/mpdf": "^6.1"
+        "mpdf/mpdf": "^7.0"
     }
 }
