@@ -116,6 +116,14 @@ function dkpdf_output_pdf( $query ) {
       // font size
       $dkpdf_font_size = get_option( 'dkpdf_font_size', '12' );
 
+	  // page orientation
+	  $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', 'vertical' );
+	  if ( $dkpdf_page_orientation == 'horizontal') {
+		  $format = apply_filters( 'dkpdf_pdf_format', 'A4' ).'-L';
+	  } else {
+		  $format = apply_filters( 'dkpdf_pdf_format', 'A4' );
+	  }
+
       // margins
       $dkpdf_margin_left = get_option( 'dkpdf_margin_left', '15' );
       $dkpdf_margin_right = get_option( 'dkpdf_margin_right', '15' );
@@ -124,8 +132,9 @@ function dkpdf_output_pdf( $query ) {
       $dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
 
 	  $mpdf = new \Mpdf\Mpdf( [
-		  'tempDir'           => __DIR__ . '/tmp',
+		  'tempDir'           => realpath( __DIR__ . '/..' ) . '/tmp',
 		  'default_font_size' => $dkpdf_font_size,
+		  'format'            => $format,
 		  'margin_left'       => $dkpdf_margin_left,
 		  'margin_right'      => $dkpdf_margin_right,
 		  'margin_top'        => $dkpdf_margin_top,
