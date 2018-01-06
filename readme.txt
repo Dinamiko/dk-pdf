@@ -3,7 +3,7 @@ Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
 Requires at least: 3.9.6
 Tested up to: 4.9
-Stable tag: 1.9.3
+Stable tag: 1.9.6-dev
 
 WordPress to PDF made easy.
 

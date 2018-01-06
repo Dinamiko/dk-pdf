@@ -111,7 +111,7 @@ function dkpdf_output_pdf( $query ) {
 
   if( $pdf ) {
 
-      include('mpdf60/mpdf.php');
+	  require_once  realpath(__DIR__ . '/..') . '/vendor/autoload.php';
 
       // page orientation
       $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
@@ -137,10 +137,17 @@ function dkpdf_output_pdf( $query ) {
       $dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
       $dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
 
-      // creating and setting the pdf
-      $mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family,
-        $dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
-      );
+	  // creating and setting the pdf
+	  $mpdf = new \Mpdf\Mpdf( [
+		  'tempDir'           => realpath( __DIR__ . '/..' ) . '/tmp',
+		  'default_font_size' => $dkpdf_font_size,
+		  'format'            => $format,
+		  'margin_left'       => $dkpdf_margin_left,
+		  'margin_right'      => $dkpdf_margin_right,
+		  'margin_top'        => $dkpdf_margin_top,
+		  'margin_bottom'     => $dkpdf_margin_bottom,
+		  'margin_header'     => $dkpdf_margin_header,
+	  ] );
 
       // encrypts and sets the PDF document permissions
       // https://mpdf.github.io/reference/mpdf-functions/setprotection.html
