@@ -2,8 +2,8 @@
 Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
 Requires at least: 3.9.6
-Tested up to: 4.8
-Stable tag: 1.9.2
+Tested up to: 4.9
+Stable tag: 1.9.3
 
 WordPress to PDF made easy.
 
@@ -67,9 +67,12 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+= 1.9.3 =
+* Reverting to 1.9.1, something went wrong in 1.9.2
+
 = 1.9.2 =
-- PHP7: Remove some warnings, see [issue #38](https://github.com/Dinamiko/dk-pdf/issues/38), [issue #48](https://github.com/Dinamiko/dk-pdf/issues/48).
-- HTTPS: Fix images not working after move to https, see [issue #51](https://github.com/Dinamiko/dk-pdf/issues/51).
+* PHP7: Remove some warnings, see [issue #38](https://github.com/Dinamiko/dk-pdf/issues/38), [issue #48](https://github.com/Dinamiko/dk-pdf/issues/48).
+* HTTPS: Fix images not working after move to https, see [issue #51](https://github.com/Dinamiko/dk-pdf/issues/51).
 
 = 1.9.1 =
 * Added PDF Protection in PDF Setup Settings
