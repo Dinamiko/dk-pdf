@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.6
+- New filters dkpdf_mpdf_font_dir, dkpdf_mpdf_font_data, dkpdf_mpdf_temp_dir. Thanks to [joostvanbockel](https://github.com/joostvanbockel).
+
 ## 1.9.3
 - Reverting to 1.9.1, something went wrong in 1.9.2
 
