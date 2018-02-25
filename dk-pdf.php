@@ -109,7 +109,8 @@ function DKPDF() {
 
 	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
 
-		deactivate_plugins( basename( __FILE__ ) );
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		deactivate_plugins( '/dk-pdf/dk-pdf.php' );
 
 		wp_die(
 			'<p>' . 'DK PDF can not be activated because it requires at least PHP version 5.6.0. '
@@ -117,9 +118,10 @@ function DKPDF() {
 			. '</p>'
 			. '<a href="' . admin_url( 'plugins.php' ) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
 		);
-	}
+	} else {
 
-	return DKPDF::instance();
+		return DKPDF::instance();
+	}
 }
 
 DKPDF();
