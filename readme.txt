@@ -4,7 +4,7 @@ Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf
 Requires at least: 3.9.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.9.6-dev
+Stable tag: 1.9.6
 
 WordPress to PDF made easy.
 
@@ -12,7 +12,7 @@ WordPress to PDF made easy.
 
 DK PDF allows site visitors convert posts and pages to PDF using a button.
 
-https://vimeo.com/148082260
+[vimeo https://vimeo.com/148082260]
 <a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
 
 = Features =
@@ -20,10 +20,8 @@ https://vimeo.com/148082260
 * Add PDF button in posts (including custom post types) and pages.
 * Configure PDF header and footer, add custom logo, custom CSS and more.
 * Copy plugin templates in your theme for PDF customizations.
-* [dkpdf-remove] shortcode for removing pieces of content.
-* [dkpdf-pagebreak] shortcode for adding page breaks.
-* Add PDF button manually using [dkpdf-button] shortcode.
-* Remove PDF button using a checkbox.
+* Multiple shortcodes: [dkpdf-button], [dkpdf-pagebreak], [dkpdf-remove], and more..
+* Add custom fonts to the PDF.
 
 = Addons =
 * Do you need to create a PDF with a selection of your articles?
@@ -31,11 +29,6 @@ https://vimeo.com/148082260
 
 = Documentation =
 * <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
-
-= Related Plugins by Dinamiko =
-* <a href="https://wordpress.org/plugins/dk-white-label/">DK White Label</a>, white label and branding WordPress admin.
-* <a href="https://wordpress.org/plugins/dportfolio/">DPortfolio</a>, portfolio manager.
-* <a href="https://wordpress.org/plugins/docu/">Docu</a>, documentation plugin.
 
 = Collaborate in Github =
 * <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
@@ -62,12 +55,17 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 Thanks to:
 
 mPDF, PHP class which generates PDF files from UTF-8 encoded HTML
-http://www.mpdf1.com/mpdf/index.php
+https://mpdf.github.io/
 
 Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+
+= 1.9.6 =
+* Update mPDF library to latest version.
+* New filters `dkpdf_mpdf_font_dir`, `dkpdf_mpdf_font_data`, `dkpdf_mpdf_temp_dir`. Thanks to [joostvanbockel](https://github.com/joostvanbockel).
+
 = 1.9.3 =
 * Reverting to 1.9.1, something went wrong in 1.9.2
 
