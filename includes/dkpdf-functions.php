@@ -201,12 +201,14 @@ function dkpdf_output_pdf( $query ) {
       // action to do (open or download)
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 
-	  global $post;
+      global $post;
       $title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
 
       $mpdf->SetTitle( $title );
       $mpdf->SetAuthor( apply_filters( 'dkpdf_pdf_author', get_bloginfo( 'name' ) ) );
-
+	  
+      do_action( 'dkpdf_pdf_pre_output', $mpdf, $post );
+	  
       if( $pdfbutton_action == 'open') {
 
         $mpdf->Output( $title.'.pdf', 'I' );
