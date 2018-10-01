@@ -265,6 +265,13 @@ class DKPDF_Settings {
 					'type'			=> 'checkbox',
 					'default'		=> ''
 				),
+				array(
+					'id' 			=> 'enable_cache',
+					'label'			=> __( 'Enable PDF cache', 'dkpdf' ),
+					'description'	=> 'PDF files will not be generated on every view, an on-disk cache will be created instead.',
+					'type'			=> 'checkbox',
+					'default'		=> ''
+				),
 			)
 		);
 
