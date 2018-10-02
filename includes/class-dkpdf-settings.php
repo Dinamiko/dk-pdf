@@ -2,6 +2,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once('dkpdf-cache.php');
+
 class DKPDF_Settings {
 
 	private static $_instance = null;
@@ -413,9 +415,11 @@ class DKPDF_Settings {
 	 */
 	public function settings_page () {
 
-		if( isset( $_GET['settings-updated']) ) { ?>
+		if( isset( $_GET['settings-updated']) ) { 
+			dkpdf_cache_flush();
+			?>
 		    <div id="message" class="updated">
-		        <p><?php _e('Settings saved.', 'dkpdf');?></p>
+		        <p><?php _e('Settings saved. PDF cache flushed.', 'dkpdf');?></p>
 		    </div>
 		<?php }
 

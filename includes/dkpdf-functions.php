@@ -2,6 +2,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once('dkpdf-cache.php');
+
 /**
 * displays pdf button
 */
@@ -116,7 +118,6 @@ function dkpdf_output_pdf( $query ) {
 
       if( $enable_cache == 'on' or $enable_cache === true ) {
 
-				require_once('dkpdf-cache.php');
 				if($data = dkpdf_cache_get($post->ID)) {
 					error_reporting(E_ALL);
 					$pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
