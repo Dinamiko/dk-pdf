@@ -183,6 +183,7 @@ class DKPDF_Settings {
 			)
 		);
 
+		$cache_force_enabled = (defined('DKPDF_CACHE') && (DKPDF_CACHE == 'on' || DKPDF_CACHE === true)) ? 'WARNING: <b>DKPDF_CACHE</b> defined in wp-config.php, this setting is forced to "on". ' : '';
 
 		// pdf setup
 		$settings['dkpdf_setup'] = array(
@@ -270,9 +271,9 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'enable_cache',
 					'label'			=> __( 'Enable PDF cache', 'dkpdf' ),
-					'description'	=> 'PDF files will not be generated on every view, an on-disk cache will be created instead.',
+					'description'	=> $cache_force_enabled ? $cache_force_enabled : 'PDF files will not be generated on every view, an on-disk cache will be created instead.',
 					'type'			=> 'checkbox',
-					'default'		=> ''
+					'default'		=> $cache_force_enabled ? 'on' : ''
 				),
 			)
 		);
