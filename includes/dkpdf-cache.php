@@ -64,6 +64,7 @@ function dkpdf_cache_unset( $post_id ) {
  * Delete all PDFs from cache
  */
 function dkpdf_cache_flush() {
+	$num_files = 0;
 
 	if(!dkpdf_cache_init()) {
 		return;
@@ -79,7 +80,10 @@ function dkpdf_cache_flush() {
 			continue;
 		}
 		unlink( $file );
+		$num_files++;
 	}
+
+	return $num_files;
 }
 
 /* 

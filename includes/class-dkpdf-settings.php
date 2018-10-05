@@ -52,6 +52,11 @@ class DKPDF_Settings {
 		// Addons submenu
 		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
 
+		// Clear cache submenu
+		if( dkpdf_cache_is_enabled() ) {
+			add_submenu_page( 'dkpdf' . '_settings', 'Clear Cache', 'Clear Cache', 'manage_options', 'dkpdf-cache', array( $this, 'dkpdf_cache_screen' ));
+		}
+
 		// support
 		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
 
@@ -92,6 +97,31 @@ class DKPDF_Settings {
 				<p>Allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.</p>
 				<p><a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">Go to DK PDF Generator</a></p>
 			</div>
+
+		</div>
+
+	<?php }
+
+	public function dkpdf_cache_screen() { ?>
+<?php if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+			$num_flushed = dkpdf_cache_flush();
+?>
+			<div id="message" class="updated">
+					<p><?php _e($num_flushed . ' PDF file(s) deleted from cache.', 'dkpdf');?></p>
+			</div>
+<?php    } ?>
+
+		<div class="wrap">
+			<h2>Clear PDF cache</h2>
+
+<?php if( dkpdf_cache_is_enabled() ) { ?>
+			<p>Click the button below to delete all cached PDF files. </p>
+			<form method="POST">
+				<input class="button-primary" name="Submit" value="Flush All PDF Files From Cache" type="submit" />
+			</form>
+<?php } else { ?>
+			<p>DK PDF cache is disabled, please go to DK PDF Settings - PDF Setup - Enable PDF cache to enable it.</p>
+<?php } ?>
 
 		</div>
 
