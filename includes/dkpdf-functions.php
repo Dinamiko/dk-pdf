@@ -113,13 +113,11 @@ function dkpdf_output_pdf( $query ) {
 
   if( $pdf ) {
 			global $post;
-			/* define('DKPDF_CACHE', 'on') in wp-config.php saves a few seconds compared to just ticking the box in options */
-      $enable_cache = defined('DKPDF_CACHE') ? DKPDF_CACHE : get_option( 'dkpdf_enable_cache' );
+      $enable_cache = dkpdf_cache_is_enabled();
 
-      if( $enable_cache == 'on' or $enable_cache === true ) {
+      if( $enable_cache ) {
 
 				if($data = dkpdf_cache_get($post->ID)) {
-					error_reporting(E_ALL);
 					$pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 					$title = str_replace( '"', '', apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ) );
 					$name = $title . '.pdf';
@@ -263,7 +261,7 @@ function dkpdf_output_pdf( $query ) {
 
       }
 
-      if( $enable_cache == 'on' or $enable_cache === true ) {
+      if( $enable_cache ) {
 				dkpdf_cache_set($post->ID, $mpdf->Output(NULL, \Mpdf\Output\Destination::STRING_RETURN));
 			}
 
