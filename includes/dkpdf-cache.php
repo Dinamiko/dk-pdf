@@ -57,7 +57,9 @@ function dkpdf_cache_unset( $post_id ) {
 
 	$path = dkpdf_cache_path( $post_id );
 
-	unlink( $path );
+	if( is_file( $path ) ) {
+		unlink( $path );
+	}
 }
 
 /**
@@ -79,8 +81,10 @@ function dkpdf_cache_flush() {
 		if( strlen( $file ) == 0 || $file[strlen( $file ) - 1] == DIRECTORY_SEPARATOR ) {
 			continue;
 		}
-		unlink( $file );
-		$num_files++;
+		if( is_file( $path ) ) {
+			unlink( $file );
+			$num_files++;
+		}
 	}
 
 	return $num_files;
