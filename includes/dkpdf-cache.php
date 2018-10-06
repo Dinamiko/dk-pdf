@@ -18,7 +18,13 @@ function dkpdf_cache_init() {
 		mkdir( DKPDF_CACHE_DIR, 0750, TRUE );
 	}
 
-	return is_writable( DKPDF_CACHE_DIR );
+	$result = is_writable( DKPDF_CACHE_DIR );
+
+	if( !$result ) {
+		error_log( 'Could not initialize DK-PDF cache: ' . DKPDF_CACHE_DIR . ' is not writable by PHP' );
+	}
+
+	return $result;
 }
 
 function dkpdf_cache_path( $post_id ) {
