@@ -115,6 +115,8 @@ function dkpdf_output_pdf( $query ) {
 			global $post;
       $enable_cache = dkpdf_cache_is_enabled();
 
+			ini_set('display_errors', 0);
+
       if( $enable_cache ) {
 
 				if($data = dkpdf_cache_get($post->ID)) {
@@ -122,6 +124,7 @@ function dkpdf_output_pdf( $query ) {
 					$title = str_replace( '"', '', apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ) );
 					$name = $title . '.pdf';
 
+					http_response_code(200);
 					if( $pdfbutton_action == 'open' ) {
 						header('Content-Type: application/pdf');
 
