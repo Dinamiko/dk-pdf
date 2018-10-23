@@ -63,7 +63,9 @@ function dkpdf_cache_unset( $post_id ) {
 
 	$path = dkpdf_cache_path( $post_id );
 
-	unlink( $path );
+	if( is_file( $path ) ) {
+		unlink( $path );
+	}
 }
 
 /**
@@ -77,7 +79,7 @@ function dkpdf_cache_flush() {
 	}
 
 	$files = glob( DKPDF_CACHE_DIR . DIRECTORY_SEPARATOR . '*', GLOB_NOSORT | GLOB_MARK );
-  if( $files === false ) {
+	if( $files === false ) {
 		return;
 	}
 
@@ -85,8 +87,12 @@ function dkpdf_cache_flush() {
 		if( strlen( $file ) == 0 || $file[strlen( $file ) - 1] == DIRECTORY_SEPARATOR ) {
 			continue;
 		}
-		unlink( $file );
-		$num_files++;
+
+		$deleted = @unlink( $file );
+
+		if( $deleted ) {
+			$num_files++;
+		}
 	}
 
 	return $num_files;
