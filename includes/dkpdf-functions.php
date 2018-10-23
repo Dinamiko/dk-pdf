@@ -127,7 +127,7 @@ function dkpdf_output_pdf( $query ) {
 
 						if (!isset($_SERVER['HTTP_ACCEPT_ENCODING']) || empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
 							// don't use length if server using compression
-							header('Content-Length: ' . strlen($this->buffer));
+							header('Content-Length: ' . strlen($data));
 						}
 
 						header('Content-disposition: inline; filename="' . $name . '"');
