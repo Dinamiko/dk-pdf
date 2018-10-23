@@ -2,6 +2,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once('dkpdf-cache.php');
+
 /**
 * displays pdf button
 */
@@ -110,8 +112,54 @@ function dkpdf_output_pdf( $query ) {
   $pdf = sanitize_text_field( get_query_var( 'pdf' ) );
 
   if( $pdf ) {
+			global $post;
+      $enable_cache = dkpdf_cache_is_enabled();
 
-	  require_once  realpath(__DIR__ . '/..') . '/vendor/autoload.php';
+			ini_set('display_errors', 0);
+
+      if( $enable_cache ) {
+
+				if($data = dkpdf_cache_get($post->ID)) {
+					$pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
+					$title = str_replace( '"', '', apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) ) );
+					$name = $title . '.pdf';
+
+					http_response_code(200);
+					if( $pdfbutton_action == 'open' ) {
+						header('Content-Type: application/pdf');
+
+						if (!isset($_SERVER['HTTP_ACCEPT_ENCODING']) || empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+							// don't use length if server using compression
+							header('Content-Length: ' . strlen($data));
+						}
+
+						header('Content-disposition: inline; filename="' . $name . '"');
+						header('Cache-Control: public, must-revalidate, max-age=0');
+						header('Pragma: public');
+						header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+						header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+					} else {
+						header('Content-Description: File Transfer');
+						header('Content-Transfer-Encoding: binary');
+						header('Cache-Control: public, must-revalidate, max-age=0');
+						header('Pragma: public');
+						header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+						header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+						header('Content-Type: application/pdf');
+
+						if (!isset($_SERVER['HTTP_ACCEPT_ENCODING']) || empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+							// don't use length if server using compression
+							header('Content-Length: ' . strlen($data));
+						}
+
+						header('Content-Disposition: attachment; filename="' . $name . '"');
+					}
+					die($data);
+				}
+			}
+			
+
+			require_once  realpath(__DIR__ . '/..') . '/vendor/autoload.php';
 
       // page orientation
       $dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
@@ -201,7 +249,6 @@ function dkpdf_output_pdf( $query ) {
       // action to do (open or download)
       $pdfbutton_action = sanitize_option( 'dkpdf_pdfbutton_action', get_option( 'dkpdf_pdfbutton_action', 'open' ) );
 
-	  global $post;
       $title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
 
       $mpdf->SetTitle( $title );
@@ -216,6 +263,10 @@ function dkpdf_output_pdf( $query ) {
         $mpdf->Output($title.'.pdf', 'D' );
 
       }
+
+      if( $enable_cache ) {
+				dkpdf_cache_set($post->ID, $mpdf->Output(NULL, \Mpdf\Output\Destination::STRING_RETURN));
+			}
 
       exit;
 
