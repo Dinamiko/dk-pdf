@@ -50,35 +50,10 @@ class DKPDF_Settings {
 		// Addons submenu
 		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
 
-		// support
-		add_submenu_page( 'dkpdf' . '_settings', 'Support', 'Support', 'manage_options', 'dkpdf-support', array( $this, 'dkpdf_support_screen' ));
-
 		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
 
 	}
-
-	public function dkpdf_support_screen() { ?>
-
-		<div class="wrap">
-			<h2 style="float:left;width:100%;">DK PDF Support</h2>
-
-			<div class="dkpdf-item">
-				<h3>Documentation</h3>
-				<p>Everything you need to know for getting DK PDF up and running.</p>
-				<p><a href="http://wp.dinamiko.com/demos/dkpdf/documentation/" target="_blank">Go to Documentation</a></p>
-			</div>
-
-			<div class="dkpdf-item">
-				<h3>Support</h3>
-				<p>Having trouble? don't worry, create a ticket in the support forum.</p>
-				<p><a href="https://wordpress.org/support/plugin/dk-pdf" target="_blank">Go to Support</a></p>
-			</div>
-		</div>
-
-		<?php do_action( 'dkpdf_after_support' );?>
-
-	<?php }
 
 	public function dkpdf_addons_screen() { ?>
 
@@ -88,7 +63,7 @@ class DKPDF_Settings {
 			<div class="dkpdf-item">
 				<h3>DK PDF Generator</h3>
 				<p>Allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.</p>
-				<p><a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">Go to DK PDF Generator</a></p>
+				<p><a href="https://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">Go to DK PDF Generator</a></p>
 			</div>
 
 		</div>

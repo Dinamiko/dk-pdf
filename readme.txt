@@ -13,7 +13,6 @@ WordPress to PDF made easy.
 DK PDF allows site visitors convert posts and pages to PDF using a button.
 
 [vimeo https://vimeo.com/148082260]
-<a href="http://wp.dinamiko.com/demos/dkpdf" target="_blank">See Demo</a>
 
 = Features =
 
@@ -25,12 +24,9 @@ DK PDF allows site visitors convert posts and pages to PDF using a button.
 
 = Addons =
 * Do you need to create a PDF with a selection of your articles?
-<a href="http://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
+<a href="https://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
 
-= Documentation =
-* <a href="http://wp.dinamiko.com/demos/dkpdf/documentation" target="_blank">See Documentation</a>
-
-= Collaborate in Github =
+= Github =
 * <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
 
 == Installation ==
