@@ -1,7 +1,10 @@
 # Changelog
 
 * 1.9.7
- * Fixed plugin text domain and some strings without translation functions
+ * Fixed plugin text domain and some strings without translation functions.
+ * The plugin is already prepared for WordPress.org translation system (GlotPress).
+ * Redesigned documentation.
+ * Tested up to WordPress 5.4
 
 * 1.9.6
  * Update mPDF library to latest version.
