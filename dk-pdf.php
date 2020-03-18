@@ -1,15 +1,15 @@
 <?php
 /*
  * Plugin Name: DK PDF
- * Version: 1.9.6
+ * Version: 1.9.7
  * Plugin URI: http://wp.dinamiko.com/demos/dkpdf
  * Description: WordPress to PDF made easy.
  * Author: Emili Castells
  * Author URI: http://www.dinamiko.com
- * Requires at least: 3.9
- * Tested up to: 4.9
+ * Requires at least: 4.0 +
+ * Tested up to: 5.4
  * License: MIT
- * Text Domain: dkpdf
+ * Text Domain: dk-pdf
  * Domain Path: /languages/
  */
 
@@ -43,7 +43,7 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 		public function dkpdf_load_textdomain() {
 
-			load_plugin_textdomain( 'dkpdf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+			load_plugin_textdomain( 'dk-pdf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		}
 
@@ -113,11 +113,9 @@ function DKPDF() {
 		deactivate_plugins( '/dk-pdf/dk-pdf.php' );
 
 		wp_die(
-			'<p>' . 'DK PDF can not be activated because it requires at least PHP version 5.6.0. '
-			. 'In case you can not update PHP, here you can <a href="'. esc_url('https://github.com/Dinamiko/dk-pdf/releases/tag/v1.9.3') .'" target="_blank">download DK PDF 1.9.3</a> which works with PHP 5.3 and above.'
-			. '</p>'
-			. '<a href="' . admin_url( 'plugins.php' ) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
-		);
+			// translators: 1. GitHub URL, 2. Plugin URL, 3. Back label
+			wp_sprintf( __('<p>DK PDF can not be activated because it requires at least PHP version 5.6.0. In case you can not update PHP, here you can <a href="%s" target="_blank">download DK PDF 1.9.3</a> which works with PHP 5.3 and above.</p><a href="%s">%s</a>'), esc_url('https://github.com/Dinamiko/dk-pdf/releases/tag/v1.9.3'), admin_url('plugins.php'), esc_attr__('Back', 'dk-pdf') )
+			);
 	} else {
 
 		return DKPDF::instance();

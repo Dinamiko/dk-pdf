@@ -1,10 +1,10 @@
 === DK PDF ===
-Contributors: dinamiko
+Contributors: dinamiko, yordansoares
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
-Requires at least: 3.9.6
-Tested up to: 4.9
+Requires at least: 4.0
+Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 1.9.6
+Stable tag: 1.9.7
 
 WordPress to PDF made easy.
 
@@ -57,6 +57,9 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+
+= 1.9.7 =
+* Fixed plugin text domain and some strings without translation functions
 
 = 1.9.6 =
 * Update mPDF library to latest version.

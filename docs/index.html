@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DK PDF</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-dark-mode@latest/dist/style.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/style.css" />
+
+  <style>
+    article img {
+      box-shadow: 0px 0px 10px #ccc;
+      border: 3px solid #fff;
+      border-radius: 5px;
+      max-width: 800px;
+    }
+    section.cover .cover-main>p:last-child a:last-child {
+    background-color: var(--theme-color);
+    border: none;
+    color: #fff;
+    }    
+    section.cover .cover-main>p:last-child a:last-child:hover {
+    background-color: #f15642;
+    border: none;
+    color: #fff;
+    }
+    section.cover .cover-main>p:last-child a:hover {
+    color: white;
+    background: var(--theme-color);
+    }
+  </style>
+
+  
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      // load from _navbar.md
+      // loadNavbar: true,
+      // Enable cover
+      coverpage: true,
+      onlyCover: false,
+      // load from _sidebar.md
+      loadSidebar: true,
+      // Change to /home.md
+      // homepage: 'home.md',
+      // load the logo
+      logo: '/_media/logo.png',
+      name: 'DK Plugin Docs',
+      repo: '',
+      darkMode: {
+        dark: {
+          background: "#1c2022",
+          toggleBtnBg: "#34495e",
+          textColor: "#b4b4b4"
+        },
+        light: {
+          background: "white",
+          toggleBtnBg: "var(--theme-color)",
+          textColor: "var(--theme-color)"
+        }
+      },
+      themeColor: "#42b983",
+      pagination: {
+      previousText: 'Previous',
+      nextText: 'Next',
+      crossChapter: true,
+      crossChapterText: true,
+      }
+      }
+     
+  </script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-dark-mode@latest/dist/index.min.js"></script>
+    <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/index.js"></script>
+  </body>
+</html>
