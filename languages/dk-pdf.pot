@@ -1,0 +1,300 @@
+# Copyright (C) 2020 Emili Castells
+# This file is distributed under the same license as the DK PDF plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: DK PDF 1.9.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dk-pdf\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-03-18T10:51:04-04:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: dk-pdf\n"
+
+#. Plugin Name of the plugin
+#: includes/class-dkpdf-settings.php:48
+msgid "DK PDF"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://wp.dinamiko.com/demos/dkpdf"
+msgstr ""
+
+#. Description of the plugin
+msgid "WordPress to PDF made easy."
+msgstr ""
+
+#. Author of the plugin
+msgid "Emili Castells"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.dinamiko.com"
+msgstr ""
+
+#. translators: 1. GitHub URL, 2. Plugin URL, 3. Back label
+#: dk-pdf.php:117
+msgid "Back"
+msgstr ""
+
+#: includes/class-dkpdf-admin-api.php:165
+msgid "Upload an image"
+msgstr ""
+
+#: includes/class-dkpdf-admin-api.php:165
+msgid "Use image"
+msgstr ""
+
+#: includes/class-dkpdf-admin-api.php:165
+msgid "Upload new image"
+msgstr ""
+
+#: includes/class-dkpdf-admin-api.php:166
+msgid "Remove image"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:51
+msgid "Addons"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:54
+#: includes/class-dkpdf-settings.php:73
+msgid "Support"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:64
+msgid "DK PDF Support"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:67
+msgid "Documentation"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:68
+msgid "Everything you need to know for getting DK PDF up and running."
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:69
+msgid "Go to Documentation"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:74
+msgid "Having trouble? don&#8217;t worry, create a ticket in the support forum."
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:75
+msgid "Go to Support"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:123
+msgid "Settings"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:138
+msgid "PDF Button"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:143
+msgid "Button text"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:151
+msgid "Post types to apply:"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:159
+msgid "Action"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:162
+msgid "Open PDF in new Window"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:162
+msgid "Download PDF directly"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:167
+msgid "Position"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:170
+msgid "Use shortcode"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:170
+msgid "Before content"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:170
+msgid "After content"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:175
+msgid "Align"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:178
+msgid "Left"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:178
+msgid "Center"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:178
+msgid "Right"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:187
+msgid "PDF Setup"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:192
+msgid "Page orientation"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:200
+msgid "Font size"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:201
+#: includes/class-dkpdf-settings.php:209
+#: includes/class-dkpdf-settings.php:217
+#: includes/class-dkpdf-settings.php:225
+#: includes/class-dkpdf-settings.php:233
+#: includes/class-dkpdf-settings.php:241
+msgid "In points (pt)"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:208
+msgid "Margin left"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:216
+msgid "Margin right"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:224
+msgid "Margin top"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:232
+msgid "Margin bottom"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:240
+msgid "Margin header"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:248
+msgid "Enable PDF protection"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:249
+msgid "Encrypts PDF file and respects permissions given below"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:255
+msgid "Protected PDF permissions"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Copy"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Print"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Print Highres"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Modify"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Annot Forms"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Fill Forms"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Extract"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:258
+msgid "Assemble"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:263
+msgid "Keep columns"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:264
+msgid "Columns will be written successively (dkpdf-columns shortcode). i.e. there will be no balancing of the length of columns."
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:273
+msgid "PDF Header & Footer"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:278
+msgid "Header logo"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:286
+msgid "Header show title"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:293
+msgid "Header show pagination"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:300
+msgid "Footer text"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:301
+msgid "HTML tags: a, br, em, strong, hr, p, h1 to h4"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:308
+msgid "Footer show title"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:315
+msgid "Footer show pagination"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:326
+msgid "PDF CSS"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:331
+msgid "PDF Custom CSS"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:339
+msgid "Use current theme&#39;s CSS"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:340
+msgid "Includes the stylesheet from current theme, but is overridden by PDF Custom CSS and plugins adding its own stylesheets."
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:417
+msgid "DK PDF Settings"
+msgstr ""
+
+#: includes/class-dkpdf-settings.php:492
+#: includes/class-dkpdf-settings.php:499
+msgid "Cheatin&#8217; huh?"
+msgstr ""
