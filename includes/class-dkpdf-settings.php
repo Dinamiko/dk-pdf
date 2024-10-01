@@ -47,28 +47,10 @@ class DKPDF_Settings {
 		// main menu
 		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings',  array( $this, 'settings_page' ) );
 
-		// Addons submenu
-		add_submenu_page( 'dkpdf' . '_settings', 'Addons', 'Addons', 'manage_options', 'dkpdf-addons', array( $this, 'dkpdf_addons_screen' ));
-
 		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
 
 	}
-
-	public function dkpdf_addons_screen() { ?>
-
-		<div class="wrap">
-			<h2>DK PDF Addons</h2>
-
-			<div class="dkpdf-item">
-				<h3>DK PDF Generator</h3>
-				<p>Allows creating PDF documents with your selected WordPress content, also allows adding a Cover and a Table of contents.</p>
-				<p><a href="https://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">Go to DK PDF Generator</a></p>
-			</div>
-
-		</div>
-
-	<?php }
 
 	/**
 	 * Load settings JS & CSS

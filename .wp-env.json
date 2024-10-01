@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "."
+    ".",
+    "https://downloads.wordpress.org/plugin/plugin-check.1.1.0.zip"
   ],
   "phpVersion": "7.4"
 }

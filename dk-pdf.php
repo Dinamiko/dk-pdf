@@ -48,7 +48,7 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		private function setup_constants() {
 
 			if ( ! defined( 'DKPDF_VERSION' ) ) {
-				define( 'DKPDF_VERSION', '1.9.6' );
+				define( 'DKPDF_VERSION', '1.9.7' );
 			}
 			if ( ! defined( 'DKPDF_PLUGIN_DIR' ) ) {
 				define( 'DKPDF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
