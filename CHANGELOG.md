@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.7
+- Fix - Reflected Cross-Site Scripting security issue.
+
 ## 1.9.6
 - New filters `dkpdf_mpdf_font_dir`, `dkpdf_mpdf_font_data`, `dkpdf_mpdf_temp_dir`. Thanks to [joostvanbockel](https://github.com/joostvanbockel).
 

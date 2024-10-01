@@ -4,7 +4,7 @@ Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf
 Requires at least: 3.9.6
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 1.9.6
+Stable tag: 1.9.7
 
 WordPress to PDF made easy.
 
@@ -21,10 +21,6 @@ DK PDF allows site visitors convert posts and pages to PDF using a button.
 * Copy plugin templates in your theme for PDF customizations.
 * Multiple shortcodes: [dkpdf-button], [dkpdf-pagebreak], [dkpdf-remove], and more..
 * Add custom fonts to the PDF.
-
-= Addons =
-* Do you need to create a PDF with a selection of your articles?
-<a href="https://codecanyon.net/item/dk-pdf-generator/13530581" target="_blank">DK PDF Generator</a> is the perfect tool for you.
 
 = Github =
 * <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
@@ -57,6 +53,9 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+
+= 1.9.7 =
+* Fix - Reflected Cross-Site Scripting security issue.
 
 = 1.9.6 =
 * Update mPDF library to latest version.
