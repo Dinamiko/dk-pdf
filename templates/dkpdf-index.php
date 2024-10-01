@@ -10,7 +10,7 @@
 
 <html>
     <head>
-      	<link type="text/css" rel="stylesheet" href="<?php echo get_bloginfo( 'stylesheet_url' ); ?>" media="all" />
+      	<link type="text/css" rel="stylesheet" href="<?php echo esc_url(get_bloginfo( 'stylesheet_url' )); ?>" media="all" />
       	<?php
       		$wp_head = get_option( 'dkpdf_print_wp_head', '' );
       		if( $wp_head == 'on' ) {
@@ -37,7 +37,7 @@
 			<?php
 				// get pdf custom css option
 				$css = get_option( 'dkpdf_pdf_custom_css', '' );
-				echo $css;
+				echo esc_js($css);
 			?>
 
 		</style>
@@ -63,7 +63,7 @@
 
 	    			if( $image ) {
 
-	    				echo $image;
+	    				echo wp_kses_post($image);
 
 	    			}
 
@@ -75,8 +75,8 @@
 
 		    		if( $thumb_img ) {
 
-						echo '<p style="margin-top:30px;">Caption: ' . $thumb_img->post_excerpt .'</p>';
-						echo '<p>Description: ' . $thumb_img->post_content .'</p>';
+						echo '<p style="margin-top:30px;">Caption: ' . wp_kses_post($thumb_img->post_excerpt) .'</p>';
+						echo '<p>Description: ' . wp_kses_post($thumb_img->post_content) .'</p>';
 
 		    		}
 
@@ -92,12 +92,12 @@
 	    				$metadata_height = $metadata['height'];
 	    				$image_meta = $metadata['image_meta'];
 
-	    				echo '<p style="margin-top:30px;">Dimensions: '. $metadata_width .' x '. $metadata_height .'</p>';
+	    				echo '<p style="margin-top:30px;">Dimensions: '. esc_attr($metadata_width) .' x '. esc_attr($metadata_height) .'</p>';
 
 	    				// image metadata
 	    				foreach ($image_meta as $key => $value) {
 
-	    				 	echo $key. ': '. $value .'<br>';
+	    				 	echo esc_attr($key). ': '. esc_attr($value) .'<br>';
 
 	    				}
 

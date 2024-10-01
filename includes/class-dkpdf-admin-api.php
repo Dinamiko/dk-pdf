@@ -202,6 +202,7 @@ class DKPDF_Admin_API {
 			return $html;
 		}
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 
 	}
@@ -288,8 +289,9 @@ class DKPDF_Admin_API {
 
 		if ( ! is_array( $field ) || 0 == count( $field ) ) return;
 
-		$field = '<p class="form-field"><label for="' . $field['id'] . '">' . $field['label'] . '</label>' . $this->display_field( $field, $post, false ) . '</p>' . "\n";
+		$field = '<p class="form-field"><label for="' . esc_attr($field['id']) . '">' . esc_attr($field['label']) . '</label>' . $this->display_field( $field, $post, false ) . '</p>' . "\n";
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $field;
 	}
 

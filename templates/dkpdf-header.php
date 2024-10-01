@@ -1,14 +1,14 @@
-<?php 
+<?php
 /**
 * dkpdf-header.php
 * This template is used to display content in PDF Header
 *
-* Do not edit this template directly, 
-* copy this template and paste in your theme inside a directory named dkpdf 
-*/ 
+* Do not edit this template directly,
+* copy this template and paste in your theme inside a directory named dkpdf
+*/
 ?>
 
-<?php 
+<?php
   	global $post;
   	$pdf_header_image = sanitize_option( 'dkpdf_pdf_header_image', get_option( 'dkpdf_pdf_header_image' ) );
     $pdf_header_image_attachment = wp_get_attachment_image_src( $pdf_header_image, 'full' );
@@ -27,10 +27,10 @@
 				if( $pdf_header_image_attachment ) { ?>
 
 					<div style="width:20%;float:left;">
-						<img style="width:auto;height:55px;" src="<?php echo $pdf_header_image_attachment[0];?>">
+						<img style="width:auto;height:55px;" src="<?php echo esc_url($pdf_header_image_attachment[0]);?>">
 					</div>
 
-				<?php } 
+				<?php }
 
 			?>
 
@@ -40,9 +40,10 @@
 					// check if Header show title is checked
 					if ( $pdf_header_show_title ) {
 
-						echo apply_filters( 'dkpdf_header_title', get_the_title( $post->ID ) );
+                        $header_title = apply_filters('dkpdf_header_title', get_the_title($post->ID));
 
-					} 
+                        echo wp_kses_post($header_title);
+					}
 
 				?>
 
@@ -50,9 +51,11 @@
 					// check if Header show pagination is checked
 					if ( $pdf_header_show_pagination ) {
 
-						echo apply_filters( 'dkpdf_header_pagination', '| {PAGENO}' );
+                        $pagination = apply_filters('dkpdf_header_pagination', '| {PAGENO}');
 
-					} 
+                        echo esc_attr($pagination);
+
+					}
 
 				?>
 

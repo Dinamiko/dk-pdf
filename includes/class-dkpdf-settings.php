@@ -353,7 +353,9 @@ class DKPDF_Settings {
 	}
 
 	public function settings_section ( $section ) {
-		$html = '<p> ' . $this->settings[ $section['id'] ]['description'] . '</p>' . "\n";
+		$html = '<p> ' . esc_html($this->settings[ $section['id'] ]['description']) . '</p>' . "\n";
+
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 	}
 
@@ -365,7 +367,7 @@ class DKPDF_Settings {
 
 		if( isset( $_GET['settings-updated']) ) { ?>
 		    <div id="message" class="updated">
-		        <p><?php _e('Settings saved.', 'dkpdf');?></p>
+		        <p><?php esc_html_e('Settings saved.', 'dkpdf');?></p>
 		    </div>
 		<?php }
 
@@ -429,6 +431,7 @@ class DKPDF_Settings {
 
 		$html .= '</div>' . "\n";
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 	}
 
@@ -446,14 +449,16 @@ class DKPDF_Settings {
 	 * Cloning is forbidden.
 	 */
 	public function __clone () {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?' ), $this->parent->_version );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?' ), $this->parent->_version );
 	} // End __clone()
 
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 */
 	public function __wakeup () {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?' ), $this->parent->_version );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?' ), $this->parent->_version );
 	} // End __wakeup()
 
 }

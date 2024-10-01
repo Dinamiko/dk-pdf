@@ -90,13 +90,13 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		}
 
 		public function __clone() {
-
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
 		}
 
 		public function __wakeup() {
-
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
 		}
 
 	}
@@ -114,7 +114,7 @@ function DKPDF() {
 			'<p>' . 'DK PDF can not be activated because it requires at least PHP version 5.6.0. '
 			. 'In case you can not update PHP, here you can <a href="'. esc_url('https://github.com/Dinamiko/dk-pdf/releases/tag/v1.9.3') .'" target="_blank">download DK PDF 1.9.3</a> which works with PHP 5.3 and above.'
 			. '</p>'
-			. '<a href="' . admin_url( 'plugins.php' ) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
+			. '<a href="' . esc_url(admin_url( 'plugins.php' )) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
 		);
 	} else {
 

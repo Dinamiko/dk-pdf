@@ -18,18 +18,18 @@ function dkpdf_get_custom_fields_settings() {
 	);
 
 	return $fields;
-	
+
 }
 
 /**
-* Add metabox to post types 
+* Add metabox to post types
 */
 function dkpdf_meta_box_setup () {
 
 	// get post types selected in settings
 
 	$pdfbutton_post_types = sanitize_option( 'dkpdf_pdfbutton_post_types', get_option( 'dkpdf_pdfbutton_post_types' ) );
-	
+
 	if( $pdfbutton_post_types ) {
 
 		// add metabox to selected post types
@@ -38,14 +38,14 @@ function dkpdf_meta_box_setup () {
 		}
 
 	}
-	
+
 }
 
 add_action( 'add_meta_boxes', 'dkpdf_meta_box_setup' );
 
 /**
 * Add content to metabox
-*/ 
+*/
 function dkpdf_meta_box_content () {
 
 	global $post_id;
@@ -83,13 +83,14 @@ function dkpdf_meta_box_content () {
 
 	}
 
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $html;
 
 }
 
 /**
 * Save metabox data
-*/ 
+*/
 function dkpdf_meta_box_save ( $post_id ) {
 
 	global $post, $messages;
