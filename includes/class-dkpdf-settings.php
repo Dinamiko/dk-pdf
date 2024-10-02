@@ -286,7 +286,7 @@ class DKPDF_Settings {
 				array(
 					'id' 			=> 'pdf_custom_css',
 					'label'			=> __( 'PDF Custom CSS' , 'dkpdf' ),
-					'description'	=> __( '', 'dkpdf' ),
+					'description'	=> '',
 					'type'			=> 'textarea_code',
 					'default'		=> '',
 					'placeholder'	=> ''

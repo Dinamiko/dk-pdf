@@ -169,6 +169,7 @@ class DKPDF_Admin_API {
 
 			case 'color':
 				?><div class="color-picker" style="position:relative;">
+                    <?php // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?>
 			        <input type="text" name="<?php esc_attr_e( $option_name ); ?>" class="color" value="<?php esc_attr_e( $data ); ?>" />
 			        <div style="position:absolute;background:#FFF;z-index:99;border-radius:100%;" class="colorpicker"></div>
 			    </div>
