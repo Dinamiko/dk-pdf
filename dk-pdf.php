@@ -5,7 +5,7 @@
  * Description: WordPress to PDF made easy.
  * Author: Emili Castells
  * Requires at least: 3.9
- * Tested up to: 4.9
+ * Tested up to: 6.6
  * License: MIT
  * Text Domain: dkpdf
  * Domain Path: /languages/

@@ -2,8 +2,8 @@
 Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf
 Requires at least: 3.9.6
-Tested up to: 4.9
-Requires PHP: 5.6
+Tested up to: 6.6
+Requires PHP: 8.0
 Stable tag: 1.9.7
 License: MIT
 
@@ -56,7 +56,8 @@ http://fortawesome.github.io/Font-Awesome/
 == Changelog ==
 
 = 1.9.7 =
-* Fix - Reflected Cross-Site Scripting security issue.
+* Enhancement - Update plugin requirements and mpdf library to PHP 8+
+* Fix - Reflected Cross-Site Scripting security issue
 
 = 1.9.6 =
 * Update mPDF library to latest version.

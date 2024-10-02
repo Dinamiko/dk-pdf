@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.9.7
+- Enhancement - Update plugin requirements and mpdf library to PHP 8+
 - Fix - Reflected Cross-Site Scripting security issue.
 
 ## 1.9.6
