@@ -381,6 +381,7 @@ class DKPDF_Settings {
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = '';
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab2 = sanitize_text_field(wp_unslash($_GET['tab'] ?? ''));
         if ( $tab2) {
 				$tab .= $tab2;
