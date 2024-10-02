@@ -380,9 +380,10 @@ class DKPDF_Settings {
 			$html .= '<h2>' . __( 'DK PDF Settings' , 'dkpdf' ) . '</h2>' . "\n";
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tab = sanitize_text_field(wp_unslash($_GET['tab'] ?? ''));
-        if ( $tab) {
-				$tab .= $tab;
+        $tab = '';
+        $tab2 = sanitize_text_field(wp_unslash($_GET['tab'] ?? ''));
+        if ( $tab2) {
+				$tab .= $tab2;
 			}
 
 			// Show page tabs
@@ -395,12 +396,12 @@ class DKPDF_Settings {
 
 					// Set tab class
 					$class = 'nav-tab';
-					if ( ! isset($tab) ) {
+					if ( ! isset($tab2) ) {
 						if ( 0 == $c ) {
 							$class .= ' nav-tab-active';
 						}
 					} else {
-						if ( isset($tab) && $section == $tab) {
+						if ( isset($tab2) && $section == $tab2) {
 							$class .= ' nav-tab-active';
 						}
 					}

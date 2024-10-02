@@ -1,7 +1,8 @@
 {
   "plugins": [
     ".",
-    "https://downloads.wordpress.org/plugin/plugin-check.1.1.0.zip"
+    "https://downloads.wordpress.org/plugin/plugin-check.1.1.0.zip",
+    "https://downloads.wordpress.org/plugin/classic-editor.1.6.5.zip"
   ],
   "phpVersion": "7.4"
 }
