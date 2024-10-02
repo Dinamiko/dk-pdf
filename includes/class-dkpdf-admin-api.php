@@ -270,7 +270,7 @@ class DKPDF_Admin_API {
 			}
 
 			if ( in_array( $args['id'], $field['metabox'] ) ) {
-				$this->display_meta_box_field( $field, $post );
+				$this->display_meta_box_field( $post, $field );
 			}
 
 		}
@@ -281,11 +281,11 @@ class DKPDF_Admin_API {
 
 	/**
 	 * Dispay field in metabox
+     * @param object $post Post object
 	 * @param  array  $field Field data
-	 * @param  object $post  Post object
 	 * @return void
 	 */
-	public function display_meta_box_field ( $field = array(), $post ) {
+	public function display_meta_box_field ( $post, $field = array()) {
 
 		if ( ! is_array( $field ) || 0 == count( $field ) ) return;
 

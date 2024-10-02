@@ -408,7 +408,7 @@ class DKPDF_Settings {
 					}
 
 					// Set tab link
-					$tab_link = esc_url( add_query_arg( array( 'tab' => $section ) ) );
+					$tab_link = esc_attr( add_query_arg( array( 'tab' => $section ) ) );
                     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( isset( $_GET['settings-updated'] ) ) {
 						$tab_link = remove_query_arg( 'settings-updated', $tab_link );
