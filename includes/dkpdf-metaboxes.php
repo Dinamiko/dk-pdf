@@ -98,7 +98,7 @@ function dkpdf_meta_box_save ( $post_id ) {
 	if ( isset( $_POST[ 'dkpdf' . '_nonce'] ) ) {
 
 		// Verify nonce
-		if ( ! wp_verify_nonce( $_POST[ 'dkpdf' . '_nonce'], plugin_basename( __FILE__ ) ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST[ 'dkpdf' . '_nonce'])), plugin_basename( __FILE__ ) ) ) {
 			return $post_id;
 		}
 
@@ -122,7 +122,7 @@ function dkpdf_meta_box_save ( $post_id ) {
 		${$f} = '';
 
 		if( isset( $_POST[$f] ) ) {
-			${$f} = strip_tags( trim( $_POST[$f] ) );
+            ${$f} = wp_strip_all_tags(( trim( sanitize_text_field(wp_unslash($_POST[$f])) ) ));
 		}
 
 		// Escape the URLs.

@@ -1,10 +1,11 @@
 === DK PDF ===
 Contributors: dinamiko
-Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf, generate pdf, mpdf, generate, convert, create, convert pdf, create pdf
+Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 4.9
 Requires PHP: 5.6
 Stable tag: 1.9.7
+License: MIT
 
 WordPress to PDF made easy.
 

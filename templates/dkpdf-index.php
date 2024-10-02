@@ -10,6 +10,7 @@
 
 <html>
     <head>
+        <?php // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
       	<link type="text/css" rel="stylesheet" href="<?php echo esc_url(get_bloginfo( 'stylesheet_url' )); ?>" media="all" />
       	<?php
       		$wp_head = get_option( 'dkpdf_print_wp_head', '' );

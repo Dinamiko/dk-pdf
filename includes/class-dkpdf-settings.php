@@ -316,11 +316,15 @@ class DKPDF_Settings {
 
 			// Check posted/selected tab
 			$current_section = '';
-			if ( isset( $_POST['tab'] ) && $_POST['tab'] ) {
-				$current_section = $_POST['tab'];
+            // phpcs:ignore
+            $tab = sanitize_text_field(wp_unslash($_POST['tab'] ?? ''));
+            if ( $tab) {
+				$current_section = $tab;
 			} else {
-				if ( isset( $_GET['tab'] ) && $_GET['tab'] ) {
-					$current_section = $_GET['tab'];
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $get_tab = sanitize_text_field(wp_unslash($_GET['tab'] ?? ''));
+                if ( $get_tab) {
+					$current_section = $get_tab;
 				}
 			}
 
@@ -364,7 +368,7 @@ class DKPDF_Settings {
 	 * @return void
 	 */
 	public function settings_page () {
-
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset( $_GET['settings-updated']) ) { ?>
 		    <div id="message" class="updated">
 		        <p><?php esc_html_e('Settings saved.', 'dkpdf');?></p>
@@ -375,9 +379,10 @@ class DKPDF_Settings {
 		$html = '<div class="wrap" id="' . 'dkpdf' . '_settings">' . "\n";
 			$html .= '<h2>' . __( 'DK PDF Settings' , 'dkpdf' ) . '</h2>' . "\n";
 
-			$tab = '';
-			if ( isset( $_GET['tab'] ) && $_GET['tab'] ) {
-				$tab .= $_GET['tab'];
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tab = sanitize_text_field(wp_unslash($_GET['tab'] ?? ''));
+        if ( $tab) {
+				$tab .= $tab;
 			}
 
 			// Show page tabs
@@ -390,18 +395,19 @@ class DKPDF_Settings {
 
 					// Set tab class
 					$class = 'nav-tab';
-					if ( ! isset( $_GET['tab'] ) ) {
+					if ( ! isset($tab) ) {
 						if ( 0 == $c ) {
 							$class .= ' nav-tab-active';
 						}
 					} else {
-						if ( isset( $_GET['tab'] ) && $section == $_GET['tab'] ) {
+						if ( isset($tab) && $section == $tab) {
 							$class .= ' nav-tab-active';
 						}
 					}
 
 					// Set tab link
 					$tab_link = esc_url( add_query_arg( array( 'tab' => $section ) ) );
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( isset( $_GET['settings-updated'] ) ) {
 						$tab_link = remove_query_arg( 'settings-updated', $tab_link );
 					}

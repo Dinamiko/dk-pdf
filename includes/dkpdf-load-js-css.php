@@ -20,6 +20,7 @@ function dkpdf_enqueue_scripts() {
 }
 
 function dkpdf_admin_enqueue_styles( $hook = '' ) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	if( isset( $_GET['page'] ) && $_GET['page'] == 'dkpdf_settings' ) {
 		wp_register_style( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), DKPDF_VERSION );
 		wp_enqueue_style( 'dkpdf-admin' );
@@ -27,6 +28,7 @@ function dkpdf_admin_enqueue_styles( $hook = '' ) {
 }
 
 function dkpdf_admin_enqueue_scripts( $hook = '' ) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	if( isset( $_GET['page'] ) && $_GET['page'] == 'dkpdf_settings' ) {
 		wp_register_script( 'dkpdf-settings-admin', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array( 'jquery' ), DKPDF_VERSION );
 		wp_enqueue_script( 'dkpdf-settings-admin' );

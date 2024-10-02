@@ -10,10 +10,11 @@ function dkpdf_display_pdf_button( $content ) {
   // if is generated pdf don't show pdf button
   $pdf = get_query_var( 'pdf' );
 
+  // phpcs:disable WordPress.Security.NonceVerification.Missing
   if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
 
     if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' )  ) {
-
+        // phpcs:enable
         remove_shortcode('dkpdf-button');
         $content = str_replace( "[dkpdf-button]", "", $content );
 

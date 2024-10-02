@@ -54,9 +54,10 @@ function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
 	$pdf = get_query_var( 'pdf' );
 
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
   	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
     	if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' )  ) {
-
+            // phpcs:enable
 			$output = '<pagebreak />';
 
 		} else {

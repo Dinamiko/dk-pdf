@@ -311,9 +311,11 @@ class DKPDF_Admin_API {
 		if ( ! is_array( $fields ) || 0 == count( $fields ) ) return;
 
 		foreach ( $fields as $field ) {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
 			if ( isset( $_REQUEST[ $field['id'] ] ) ) {
-				update_post_meta( $post_id, $field['id'], $this->validate_field( $_REQUEST[ $field['id'] ], $field['type'] ) );
-			} else {
+				update_post_meta( $post_id, $field['id'], $this->validate_field( sanitize_text_field(wp_unslash($_REQUEST[ $field['id'] ])), $field['type'] ) );
+                // phpcs:enable
+            } else {
 				update_post_meta( $post_id, $field['id'], '' );
 			}
 		}
