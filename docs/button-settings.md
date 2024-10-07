@@ -1,4 +1,4 @@
-## Button Settings
+# Button Settings
 
 ![Button Settings screenshot](_images/button-settings.jpg "Button Settings")
 <p style="margin-top:-1em"><small><em>Button Settings</em></small></p>
