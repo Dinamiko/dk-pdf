@@ -23,8 +23,8 @@ DK PDF allows site visitors convert posts and pages to PDF using a button.
 * Multiple shortcodes: [dkpdf-button], [dkpdf-pagebreak], [dkpdf-remove], and more..
 * Add custom fonts to the PDF.
 
-= Github =
-* <a href="https://github.com/Dinamiko/dk-pdf" target="_blank">https://github.com/Dinamiko/dk-pdf</a>
+= Documentation =
+* <a href="https://github.com/Dinamiko/dk-pdf/wiki" target="_blank">https://github.com/Dinamiko/dk-pdf/wiki</a>
 
 == Installation ==
 

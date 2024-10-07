@@ -304,7 +304,6 @@ class DKPDF_Admin_API {
 	public function save_meta_boxes ( $post_id = 0 ) {
 
 		if ( ! $post_id ) return;
-
 		$post_type = get_post_type( $post_id );
 
 		$fields = apply_filters( $post_type . '_custom_fields', array(), $post_type );
