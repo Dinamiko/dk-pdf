@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'DKPDF' ) ) {
 
+    #[AllowDynamicProperties]
 	final class DKPDF {
 
 		private static $instance;
