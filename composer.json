@@ -1,6 +1,23 @@
 {
     "name": "dinamiko/dk-pdf",
-    "require": {
+    "require-dev": {
         "mpdf/mpdf": "^8.2"
+    },
+    "extra": {
+        "mozart": {
+            "dep_namespace": "Dinamiko\\DKPDF\\Vendor\\",
+            "dep_directory": "/lib/packages/",
+            "classmap_directory": "/lib/classes/",
+            "classmap_prefix": "DKPDF_",
+            "packages": [
+                "mpdf/mpdf"
+            ],
+            "delete_vendor_directories": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Dinamiko\\DKPDF\\Vendor\\": "lib/packages/"
+        }
     }
 }

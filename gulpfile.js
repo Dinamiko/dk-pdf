@@ -9,6 +9,7 @@ gulp.task( 'zip', function() {
 		'languages/**',
 		'templates/**',
 		'vendor/**',
+		'lib/**',
 		], {
 			base: '.'
 		} )
