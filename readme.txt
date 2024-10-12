@@ -4,7 +4,7 @@ Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.6
 Requires PHP: 8.0
-Stable tag: 1.9.7
+Stable tag: 1.9.8
 License: MIT
 
 WordPress to PDF made easy.
@@ -54,6 +54,10 @@ Font Awesome, the iconic font and CSS toolkit
 http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
+
+= 1.9.8 =
+* Fix - Add custom namespace to avoid issues with third party composer packages.
+* Fix - Disable deprecated dynamic property message.
 
 = 1.9.7 =
 * Enhancement - Update plugin requirements and mpdf library to PHP 8+

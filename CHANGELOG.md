@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.8
+- Fix - Add custom namespace to avoid issues with third party composer packages.
+- Fix - Disable deprecated dynamic property message.
+
 ## 1.9.7
 - Enhancement - Update plugin requirements and mpdf library to PHP 8+
 - Fix - Reflected Cross-Site Scripting security issue.
