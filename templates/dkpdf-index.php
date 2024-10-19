@@ -38,7 +38,7 @@
 			<?php
 				// get pdf custom css option
 				$css = get_option( 'dkpdf_pdf_custom_css', '' );
-				echo esc_js($css);
+				echo esc_attr($css);
 			?>
 
 		</style>
