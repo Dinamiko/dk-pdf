@@ -34,7 +34,7 @@
 
 				<?php
 					// check if Footer show title is checked
-					if ( $pdf_footer_show_title ) {
+					if ( $post && $pdf_footer_show_title ) {
 
 						echo wp_kses_post(get_the_title( $post->ID ));
 
