@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.9
+- Fix - Plugin templates not displaying CSS correctly.
+
 ## 1.9.8
 - Fix - Add custom namespace to avoid issues with third party composer packages.
 - Fix - Disable deprecated dynamic property message.

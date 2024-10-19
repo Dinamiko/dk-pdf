@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: DK PDF
- * Version: 1.9.8
+ * Version: 1.9.9
  * Description: WordPress to PDF made easy.
  * Author: Emili Castells
  * Requires at least: 3.9
