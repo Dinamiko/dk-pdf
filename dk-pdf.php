@@ -4,6 +4,7 @@
  * Version: 1.9.9
  * Description: WordPress to PDF made easy.
  * Author: Emili Castells
+ * Author URI: https://dinamiko.dev
  * Requires at least: 3.9
  * Requires PHP: 8.0
  * Tested up to: 6.6
