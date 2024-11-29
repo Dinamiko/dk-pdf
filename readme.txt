@@ -1,30 +1,33 @@
-=== DK PDF ===
+=== DK PDF - WordPress PDF Generator ===
 Contributors: dinamiko
 Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf
 Requires at least: 3.9.6
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 8.0
 Stable tag: 1.9.9
 License: MIT
 
-WordPress to PDF made easy.
+DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
 
 == Description ==
 
-DK PDF allows site visitors convert posts and pages to PDF using a button.
+DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
+
+[Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/)
 
 [vimeo https://vimeo.com/148082260]
 
-= Features =
+== Professional ==
 
-* Add PDF button in posts (including custom post types) and pages.
-* Configure PDF header and footer, add custom logo, custom CSS and more.
-* Copy plugin templates in your theme for PDF customizations.
-* Multiple shortcodes: [dkpdf-button], [dkpdf-pagebreak], [dkpdf-remove], and more..
-* Add custom fonts to the PDF.
+Create professional looking PDF documents including header and footer. Make the PDF follow your brand style adding a logo and custom CSS.
 
-= Documentation =
-* <a href="https://github.com/Dinamiko/dk-pdf/wiki" target="_blank">https://github.com/Dinamiko/dk-pdf/wiki</a>
+== Customizable ==
+
+[Fine-tune content display](https://dinamiko.dev/docs-categories/dk-pdf-shortcodes/) by hiding parts, adding column layouts or page breaks via shortcodes.
+
+== Developer Friendly ==
+
+[PDF templates are 100% customizable](https://dinamiko.dev/docs/how-to-use-dk-pdf-templates-in-your-theme/) meaning that developers can add any content that a WordPress template can render: custom fields, form fields, WooCommerce product data, you name it.
 
 == Installation ==
 
@@ -42,16 +45,6 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 4. PDF Header & Footer settings
 5. PDF Custom CSS
 6. Disable PDF Button Metabox
-
-== Credits ==
-
-Thanks to:
-
-mPDF, PHP class which generates PDF files from UTF-8 encoded HTML
-https://mpdf.github.io/
-
-Font Awesome, the iconic font and CSS toolkit
-http://fortawesome.github.io/Font-Awesome/
 
 == Changelog ==
 

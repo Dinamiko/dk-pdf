@@ -7,7 +7,7 @@
  * Author URI: https://dinamiko.dev
  * Requires at least: 3.9
  * Requires PHP: 8.0
- * Tested up to: 6.6
+ * Tested up to: 6.7
  * License: MIT
  * Text Domain: dkpdf
  * Domain Path: /languages/
