@@ -1,6 +1,6 @@
 === DK PDF - WordPress PDF Generator ===
 Contributors: dinamiko
-Tags: wp to pdf, wordpress to pdf, acrobat, pdf, post to pdf
+Tags: pdf, wordpress pdf generator, pdf generator, generate pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -13,7 +13,7 @@ DK PDF allows your site visitors generate PDF files from WordPress posts, pages 
 
 DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
 
-[Demo Site](https://demo-dk-pdf.dinamiko.dev/) | [Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/)
+[Homepage](https://dinamiko.dev/plugins/dk-pdf-wordpress-pdf-generator/) | [View Demo](https://demo-dk-pdf.dinamiko.dev/) | [Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/)
 
 [vimeo https://vimeo.com/148082260]
 
