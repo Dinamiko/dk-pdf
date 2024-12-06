@@ -15,7 +15,7 @@ DK PDF allows your site visitors generate PDF files from WordPress posts, pages 
 
 [Homepage](https://dinamiko.dev/plugins/dk-pdf-wordpress-pdf-generator/) | [View Demo](https://demo-dk-pdf.dinamiko.dev/) | [Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/)
 
-[vimeo https://vimeo.com/148082260]
+[youtube https://youtu.be/OWxMnfYJZxM]
 
 == Professional ==
 

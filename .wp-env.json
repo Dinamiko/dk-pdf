@@ -9,6 +9,7 @@
     "WP_DEBUG_LOG": true
   },
   "mappings": {
-    "wp-content/themes/storefront": "./themes/storefront"
+    "wp-content/themes/storefront": "./themes/storefront",
+    "wp-content/fonts": "./fonts"
   }
 }
