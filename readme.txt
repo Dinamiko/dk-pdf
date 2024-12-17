@@ -29,7 +29,7 @@ Create professional looking PDF documents including header and footer. Make the 
 
 == Developer Friendly ==
 
-[youtube https://youtu.be/B4SdZWlnbqU]
+[youtube https://youtu.be/FBSL9rFaspM]
 
 [PDF templates are 100% customizable](https://dinamiko.dev/docs/how-to-use-dk-pdf-templates-in-your-theme/) meaning that developers can add any content that a WordPress template can render: custom fields, form fields, WooCommerce product data, you name it.
 
