@@ -223,7 +223,6 @@ function dkpdf_output_pdf( $query ) {
         $mpdf->Output($title.'.pdf', 'D' );
 
       }
-	  */
 
       exit;
 
