@@ -200,7 +200,9 @@ function dkpdf_output_pdf( $query ) {
       $mpdf->SetHTMLFooter( $pdf_footer_html );
 
       $mpdf->WriteHTML( apply_filters( 'dkpdf_before_content', '' ) );
-      $mpdf->WriteHTML( dkpdf_get_template( 'dkpdf-index' ) );
+
+	  $mpdf->WriteHTML( dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
+
       $mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );
 
       // action to do (open or download)
@@ -221,6 +223,7 @@ function dkpdf_output_pdf( $query ) {
         $mpdf->Output($title.'.pdf', 'D' );
 
       }
+	  */
 
       exit;
 
