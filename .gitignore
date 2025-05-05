@@ -8,3 +8,9 @@ composer.lock
 tmp
 themes/*
 fonts/*
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
