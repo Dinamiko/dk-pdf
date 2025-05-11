@@ -1,0 +1,28 @@
+name: Build package
+
+on: workflow_dispatch
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    name: Build package
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Build
+        run: npm build
+
+      - name: Unzip
+        run: unzip dk-pdf.zip -d dist
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.FILENAME }}
+          path: dist/
