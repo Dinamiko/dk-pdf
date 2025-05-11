@@ -16,7 +16,7 @@ jobs:
           php-version: 8.3
 
       - name: Build
-        run: npm build
+        run: npm run build
 
       - name: Unzip
         run: unzip dk-pdf.zip -d dist
