@@ -1,17 +1,21 @@
 {
   "name": "dk-pdf",
-  "version": "1.9.7",
+  "version": "1.9.9",
   "description": "WordPress to PDF made easy.",
   "author": "Emili Castells",
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.3",
-    "@wordpress/env": "^10.8.0",
-    "gulp": "^3.9.1",
-    "gulp-zip": "^4.0.0"
+    "@wordpress/env": "^10.8.0"
   },
   "scripts": {
-    "wp-env": "wp-env"
+    "wp-env": "wp-env",
+    "prebuild": "rm -rf ./vendor && find . -name 'node_modules' -type d -maxdepth 3 -exec rm -rf {} +",
+    "build": "composer install --no-dev && npm install && npm run archive",
+    "prearchive": "rm -rf $npm_package_name.zip",
+    "archive": "zip -r $npm_package_name.zip . -x **.git/\\* **node_modules/\\*",
+    "postarchive": "npm run archive:cleanup && rm -rf $npm_package_name && unzip $npm_package_name.zip -d $npm_package_name && rm $npm_package_name.zip && zip -r $npm_package_name.zip $npm_package_name && rm -rf $npm_package_name",
+    "archive:cleanup": "zip -d $npm_package_name.zip \\*.idea/\\* .wp-env.json CHANGELOG.md playwright-report/\\* tmp/\\* test-results/\\* fonts/\\* themes/\\* tests/\\* .github/\\* wordpress_org_assets/\\* \\*.DS_Store \\*README.md \\*.gitignore \\*composer.json \\*composer.lock phpunit.xml.dist .phpunit.result.cache playwright.config.js \\*package.json \\*package-lock.json"
   }
 }
