@@ -16,6 +16,6 @@
     "prearchive": "rm -rf $npm_package_name.zip",
     "archive": "zip -r $npm_package_name.zip . -x **.git/\\* **node_modules/\\*",
     "postarchive": "npm run archive:cleanup && rm -rf $npm_package_name && unzip $npm_package_name.zip -d $npm_package_name && rm $npm_package_name.zip && zip -r $npm_package_name.zip $npm_package_name && rm -rf $npm_package_name",
-    "archive:cleanup": "zip -d $npm_package_name.zip \\*.idea/\\* .wp-env.json CHANGELOG.md playwright-report/\\* tmp/\\* test-results/\\* fonts/\\* themes/\\* tests/\\* .github/\\* wordpress_org_assets/\\* \\*.DS_Store \\*README.md \\*.gitignore \\*composer.json \\*composer.lock phpunit.xml.dist .phpunit.result.cache playwright.config.js \\*package.json \\*package-lock.json"
+    "archive:cleanup": "zip -d $npm_package_name.zip \\*.idea/\\* .wp-env.json CHANGELOG.md wordpress/\\* playwright-report/\\* tmp/\\* test-results/\\* fonts/\\* themes/\\* tests/\\* .github/\\* wordpress_org_assets/\\* \\*.DS_Store \\*README.md \\*.gitignore \\*composer.json \\*composer.lock phpunit.xml.dist .phpunit.result.cache playwright.config.js \\*package.json \\*package-lock.json"
   }
 }

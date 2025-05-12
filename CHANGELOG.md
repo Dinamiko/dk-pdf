@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.10
+- Enhancement - Add output html for debugging purposes.
+
 ## 1.9.9
 - Fix - Plugin templates not displaying CSS correctly.
 
