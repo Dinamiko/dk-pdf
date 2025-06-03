@@ -17,7 +17,7 @@ class DKPDF_Settings {
 		$this->base = 'dkpdf_';
 
 		// Initialise settings
-		add_action( 'init', array( $this, 'init_settings' ), 11 );
+		add_action( 'init', array( $this, 'init_settings' ), 20 );
 
 		// Register plugin settings
 		add_action( 'admin_init' , array( $this, 'register_settings' ) );
