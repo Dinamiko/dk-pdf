@@ -121,10 +121,10 @@ function dkpdf_output_pdf( $query ) {
 	}
 
 	$output = sanitize_text_field( wp_unslash( $_GET['output'] ?? '' ) );
-	if ( $output === 'html' ) {
+	if ( $output === 'html' && current_user_can('manage_options') ) {
 		$template_content = dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 
-		// Remove all script tags and their contents
+		// Remove all script tags and their contents so we get only HTML and CSS.
 		$template_content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content);
 
 		echo $template_content;

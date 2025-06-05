@@ -2,6 +2,7 @@
 
 ## 1.9.10
 - Enhancement - Add output html for debugging purposes.
+- Enhancement - Increase init settings action priority to allow more custom post types to apply.
 
 ## 1.9.9
 - Fix - Plugin templates not displaying CSS correctly.
