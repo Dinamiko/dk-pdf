@@ -7,6 +7,7 @@ package-lock.json
 composer.lock
 tmp
 themes/*
+plugins/*
 fonts/*
 wordpress
 

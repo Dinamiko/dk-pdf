@@ -11,6 +11,7 @@
   },
   "mappings": {
     "wp-content/themes/storefront": "./themes/storefront",
+    "wp-content/plugins/log-doing-wrong-function": "./plugins/log-doing-wrong-function",
     "wp-content/fonts": "./fonts"
   }
 }

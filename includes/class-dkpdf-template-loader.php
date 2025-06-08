@@ -102,9 +102,7 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 		}
 
 		protected function get_templates_dir() {
-
 			return trailingslashit( $this->plugin_directory ) . $this->plugin_template_directory;
-
 		}
 	}
 }
