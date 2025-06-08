@@ -8,6 +8,7 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 		protected $theme_template_directory = 'dkpdf';
 		protected $plugin_directory = DKPDF_PLUGIN_DIR;
 		protected $plugin_template_directory = 'templates';
+		protected $template_subdirectories = array('default');
 
 		public function get_template_part( $slug, $name = null, $load = true ) {
 
@@ -21,16 +22,20 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 		}
 
 		protected function get_template_file_names( $slug, $name ) {
-
 			$templates = array();
 
 			if ( isset( $name ) ) {
-
 				$templates[] = $slug . '-' . $name . '.php';
-
 			}
-
 			$templates[] = $slug . '.php';
+
+			// Add subdirectory template file names
+			foreach ( $this->template_subdirectories as $subdirectory ) {
+				if ( isset( $name ) ) {
+					$templates[] = $subdirectory . '/' . $slug . '-' . $name . '.php';
+				}
+				$templates[] = $subdirectory . '/' . $slug . '.php';
+			}
 
 			return apply_filters( $this->filter_prefix . '_get_template_part', $templates, $slug, $name );
 
@@ -71,11 +76,10 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 			}
 
 			return $located;
-			
+
 		}
 
 		protected function get_template_paths() {
-
 			$theme_directory = trailingslashit( $this->theme_template_directory );
 
 			$file_paths = array(
@@ -85,9 +89,7 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 
 			// Only add this conditionally, so non-child themes don't redundantly check active theme twice.
 			if ( is_child_theme() ) {
-
 				$file_paths[1] = trailingslashit( get_stylesheet_directory() ) . $theme_directory;
-
 			}
 
 			$file_paths = apply_filters( $this->filter_prefix . '_template_paths', $file_paths );

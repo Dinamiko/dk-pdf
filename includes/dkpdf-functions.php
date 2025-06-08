@@ -244,16 +244,15 @@ function dkpdf_output_pdf( $query ) {
 add_action( 'wp', 'dkpdf_output_pdf' );
 
 /**
- * returs a template
+ * Returns a template
  *
  * @param string template name
  */
 function dkpdf_get_template( $template_name ) {
-
 	$template = new DKPDF_Template_Loader;
 
 	ob_start();
-	$template->get_template_part( $template_name );
+	$template->get_template_part( get_option('dkpdf_selected_template', '') . $template_name );
 
 	return ob_get_clean();
 

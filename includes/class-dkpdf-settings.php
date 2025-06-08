@@ -301,6 +301,22 @@ class DKPDF_Settings {
 			)
 		);
 
+        // PDF Templates
+		$settings['pdf_templates'] = array(
+			'title'	=> __( 'Templates', 'dkpdf' ),
+			'description'			=> '',
+			'fields'				=> array(
+				array(
+					'id' 			=> 'selected_template',
+					'label'			=> __( 'PDF Templates', 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'select',
+					'options'		=> array( '' => 'Select template', 'default/' => 'Default'),
+					'default'		=> array()
+				),
+			)
+		);
+
 		$settings = apply_filters( 'dkpdf' . '_settings_fields', $settings );
 
 		return $settings;
