@@ -555,3 +555,15 @@ function dkpdf_update_field_dkpdf_print_wp_head( $new_value, $old_value ) {
 
 	return $new_value;
 }
+
+add_filter( 'dkpdf_content_template', function($template){
+	if(is_single()) {
+		return 'dkpdf-single';
+	}
+
+	if(is_archive() || is_home() || is_front_page()) {
+		return 'dkpdf-archive';
+	}
+
+	return $template;
+});
