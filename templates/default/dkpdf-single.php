@@ -1,3 +1,9 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
+          media="all"/>
+</head>
+<body>
 <main id="primary" class="site-main">
 	<?php
 	if ( have_posts() ) :
@@ -18,3 +24,6 @@
 	endif;
 	?>
 </main>
+</body>
+</html>
+

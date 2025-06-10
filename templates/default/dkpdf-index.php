@@ -1,3 +1,9 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
+          media="all"/>
+</head>
+<body>
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
 
@@ -18,3 +24,5 @@
 
     </main>
 </div>
+</body>
+</html>
