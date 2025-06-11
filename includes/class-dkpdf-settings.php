@@ -89,6 +89,7 @@ class DKPDF_Settings {
 	private function settings_fields () {
 
 		$post_types_arr = dkpdf_get_post_types();
+		$taxonomies_arr = dkpdf_get_taxonomies();
 
 		// pdf button settings
 		$settings['pdfbtn'] = array(
@@ -109,6 +110,14 @@ class DKPDF_Settings {
 					'description'	=> '',
 					'type'			=> 'checkbox_multi',
 					'options'		=> $post_types_arr,
+					'default'		=> array()
+				),
+				array(
+					'id' 			=> 'pdfbutton_taxonomies',
+					'label'			=> __( 'Taxonomies to apply:', 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'checkbox_multi',
+					'options'		=> $taxonomies_arr,
 					'default'		=> array()
 				),
 				array(

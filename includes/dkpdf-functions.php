@@ -12,101 +12,65 @@ if ( ! defined( 'ABSPATH' ) ) {
  * displays pdf button
  */
 function dkpdf_display_pdf_button( $content ) {
-
-	// if is generated pdf don't show pdf button
 	$pdf = get_query_var( 'pdf' );
 
 	// phpcs:disable WordPress.Security.NonceVerification.Missing
 	if ( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
-
 		if ( $pdf || apply_filters( 'dkpdf_hide_button_equal', $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' ) ) {
 			// phpcs:enable
 			remove_shortcode( 'dkpdf-button' );
 			$content = str_replace( "[dkpdf-button]", "", $content );
 
 			return $content;
-
 		}
-
 	} else {
-
 		if ( $pdf ) {
-
 			remove_shortcode( 'dkpdf-button' );
 			$content = str_replace( "[dkpdf-button]", "", $content );
 
 			return $content;
-
 		}
-
 	}
-
-	global $post;
-	$post_type = get_post_type( $post->ID );
 
 	$option_post_types = sanitize_option( 'dkpdf_pdfbutton_post_types', get_option( 'dkpdf_pdfbutton_post_types', array() ) );
+	$option_taxonomies = sanitize_option( 'dkpdf_pdfbutton_taxonomies', get_option( 'dkpdf_pdfbutton_taxonomies', array() ) );
+	$show_button       = false;
 
-	// TODO button checkboxes?
-	if ( is_archive() || is_front_page() || is_home() ) {
+	if ( is_singular() && ! empty( $option_post_types ) ) {
+		global $post;
+		$show_button = in_array( get_post_type( $post ), $option_post_types );
+	} elseif ( is_tax() || is_category() || is_tag() ) {
+		$queried_object = get_queried_object();
+		if ( $queried_object instanceof WP_Term && ! empty( $option_taxonomies ) ) {
+			$show_button = in_array( $queried_object->taxonomy, $option_taxonomies );
+		}
+	}
+
+	if ( ! $show_button ) {
 		return $content;
 	}
 
-	// return content if not checked
-	if ( $option_post_types ) {
+	$c                  = $content;
+	$pdfbutton_position = sanitize_option( 'dkpdf_pdfbutton_position', get_option( 'dkpdf_pdfbutton_position', 'before' ) );
+	$template           = new DKPDF_Template_Loader;
 
-		if ( ! in_array( get_post_type( $post ), $option_post_types ) ) {
-
-			return $content;
-
-		}
-
+	if ( $pdfbutton_position == 'shortcode' ) {
+		return $c;
 	}
 
-	if ( $option_post_types ) {
+	if ( $pdfbutton_position == 'before' ) {
+		ob_start();
+		$template->get_template_part( 'dkpdf-button' );
 
-		if ( in_array( get_post_type( $post ), $option_post_types ) ) {
+		return ob_get_clean() . $c;
+	} elseif ( $pdfbutton_position == 'after' ) {
+		ob_start();
+		$template->get_template_part( 'dkpdf-button' );
 
-			$c = $content;
-
-			$pdfbutton_position = sanitize_option( 'dkpdf_pdfbutton_position', get_option( 'dkpdf_pdfbutton_position', 'before' ) );
-
-			$template = new DKPDF_Template_Loader;
-
-			if ( $pdfbutton_position ) {
-
-				if ( $pdfbutton_position == 'shortcode' ) {
-					return $c;
-				}
-
-				if ( $pdfbutton_position == 'before' ) {
-
-					ob_start();
-
-					$content = $template->get_template_part( 'dkpdf-button' );
-
-					return ob_get_clean() . $c;
-
-
-				} else if ( $pdfbutton_position == 'after' ) {
-
-					ob_start();
-
-					$content = $template->get_template_part( 'dkpdf-button' );
-
-					return $c . ob_get_clean();
-
-				}
-
-			}
-
-		}
-
-	} else {
-
-		return $content;
-
+		return $c . ob_get_clean();
 	}
 
+	return $content;
 }
 
 add_filter( 'the_content', 'dkpdf_display_pdf_button' );
@@ -121,11 +85,11 @@ function dkpdf_output_pdf( $query ) {
 	}
 
 	$output = sanitize_text_field( wp_unslash( $_GET['output'] ?? '' ) );
-	if ( $output === 'html' && current_user_can('manage_options') ) {
+	if ( $output === 'html' && current_user_can( 'manage_options' ) ) {
 		$template_content = dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 
 		// Remove all script tags and their contents so we get only HTML and CSS.
-		$template_content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content);
+		$template_content = preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content );
 
 		echo $template_content;
 		exit;
@@ -252,7 +216,7 @@ function dkpdf_get_template( $template_name ) {
 	$template = new DKPDF_Template_Loader;
 
 	ob_start();
-	$template->get_template_part( get_option('dkpdf_selected_template', '') . $template_name );
+	$template->get_template_part( get_option( 'dkpdf_selected_template', '' ) . $template_name );
 
 	return ob_get_clean();
 
@@ -283,6 +247,28 @@ function dkpdf_get_post_types() {
 
 	return $post_arr;
 
+}
+
+function dkpdf_get_taxonomies() {
+	$custom_taxonomies = get_taxonomies( array(
+		'public'   => true,
+		'_builtin' => false
+	) );
+
+	$builtin_taxonomies = get_taxonomies( array(
+		'public'   => true,
+		'_builtin' => true
+	) );
+
+	$all_taxonomies = array_merge( $custom_taxonomies, $builtin_taxonomies );
+	$tax_arr        = array();
+
+	foreach ( $all_taxonomies as $taxonomy ) {
+		$arr     = array( $taxonomy => $taxonomy );
+		$tax_arr += $arr;
+	}
+
+	return apply_filters( 'dkpdf_taxonomies_arr', $tax_arr );
 }
 
 /**
@@ -556,14 +542,14 @@ function dkpdf_update_field_dkpdf_print_wp_head( $new_value, $old_value ) {
 	return $new_value;
 }
 
-add_filter( 'dkpdf_content_template', function($template){
-	if(is_single()) {
+add_filter( 'dkpdf_content_template', function ( $template ) {
+	if ( is_single() ) {
 		return 'dkpdf-single';
 	}
 
-	if(is_archive() || is_home() || is_front_page()) {
+	if ( is_archive() || is_home() || is_front_page() ) {
 		return 'dkpdf-archive';
 	}
 
 	return $template;
-});
+} );
