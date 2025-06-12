@@ -18,12 +18,23 @@ class DKPDF_Admin_API {
 	 * @return void
 	 */
 	public function display_field ( $data = array(), $post = false, $echo = true ) {
-
 		// Get field info
 		if ( isset( $data['field'] ) ) {
 			$field = $data['field'];
 		} else {
 			$field = $data;
+		}
+
+		// Check dependency - if this field depends on another field and that field is empty, return empty
+		if (isset($field['depends_on'])) {
+			$dependency_value = get_option($field['depends_on']);
+			if (empty($dependency_value)) {
+				// Return empty if dependency value is not set
+				if (!$echo) {
+					return '';
+				}
+				return;
+			}
 		}
 
 		// Check for prefix on option name
