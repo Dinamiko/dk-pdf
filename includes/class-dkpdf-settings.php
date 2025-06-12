@@ -101,7 +101,6 @@ class DKPDF_Settings {
 	 * @return array Fields to be displayed on settings page
 	 */
 	private function settings_fields() {
-
 		$post_types_arr = dkpdf_get_post_types();
 		$taxonomies_arr = dkpdf_get_taxonomies();
 
@@ -366,6 +365,70 @@ class DKPDF_Settings {
 	 */
 	public function register_settings() {
 		if ( is_array( $this->settings ) ) {
+			// Check posted/selected tab
+			$current_section = '';
+			// phpcs:ignore
+			$tab = sanitize_text_field( wp_unslash( $_POST['tab'] ?? '' ) );
+			if ( $tab ) {
+				$current_section = $tab;
+			} else {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$get_tab = sanitize_text_field( wp_unslash( $_GET['tab'] ?? '' ) );
+				if ( $get_tab ) {
+					$current_section = $get_tab;
+				}
+			}
+
+			foreach ( $this->settings as $section => $data ) {
+				if ( $current_section && $current_section != $section ) {
+					continue;
+				}
+
+				// Add section to page
+				add_settings_section( $section, $data['title'], array(
+					$this,
+					'settings_section'
+				), 'dkpdf' . '_settings' );
+
+				foreach ( $data['fields'] as $field ) {
+					// Check dependency before registering the field
+					$should_register = true;
+					if (isset($field['depends_on'])) {
+						$dependency_value = get_option($field['depends_on']);
+						if (empty($dependency_value)) {
+							$should_register = false;
+						}
+					}
+
+					// Only register and add the field if dependency is satisfied
+					if ($should_register) {
+						// Validation callback for field
+						$validation = '';
+						if ( isset( $field['callback'] ) ) {
+							$validation = $field['callback'];
+						}
+
+						// Register field
+						$option_name = $this->base . $field['id'];
+						register_setting( 'dkpdf' . '_settings', $option_name, $validation );
+
+						// Add field to page
+						add_settings_field( $field['id'], $field['label'], array(
+							$this->parent->admin,
+							'display_field'
+						), 'dkpdf' . '_settings', $section, array( 'field' => $field, 'prefix' => $this->base ) );
+					}
+				}
+
+				if ( ! $current_section ) {
+					break;
+				}
+			}
+		}
+	}
+    /*
+	public function register_settings() {
+		if ( is_array( $this->settings ) ) {
 
 			// Check posted/selected tab
 			$current_section = '';
@@ -418,6 +481,7 @@ class DKPDF_Settings {
 			}
 		}
 	}
+    */
 
 	public function settings_section( $section ) {
 		$html = '<p> ' . esc_html( $this->settings[ $section['id'] ]['description'] ) . '</p>' . "\n";
