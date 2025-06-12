@@ -1,6 +1,7 @@
 # DK PDF
 
 ### How to run e2e tests
+
 ```
 npm install
 npm run wp-env start
@@ -11,10 +12,10 @@ wp-env clean tests
 # Run all tests
 npx playwright test
 
-# Run just the core functionality
+# Run a test file
 npx playwright test tests/e2e/pdf-generation.spec.js
 
-# Run with headed browser
+# Run opening the browser
 npx playwright test --headed
 
 # Run with debugging

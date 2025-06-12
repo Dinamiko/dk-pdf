@@ -11,7 +11,7 @@ test.describe('PDF Generation - Core Functionality', () => {
 
     test('PDF button generates PDF for posts', async ({page}) => {
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
-        await page.getByRole('checkbox', {name: 'post'}).check();
+        await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('radio', {name: 'Download PDF directly'}).check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
 

@@ -543,6 +543,11 @@ function dkpdf_update_field_dkpdf_print_wp_head( $new_value, $old_value ) {
 }
 
 add_filter( 'dkpdf_content_template', function ( $template ) {
+	// If no template set is selected in settings, return the legacy template.
+	if ( ! get_option( 'dkpdf_selected_template', '' ) ) {
+		return $template;
+	}
+
 	if ( is_single() ) {
 		return 'dkpdf-single';
 	}
