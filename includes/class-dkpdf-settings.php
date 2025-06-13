@@ -165,7 +165,6 @@ class DKPDF_Settings {
 			)
 		);
 
-
 		// pdf setup
 		$settings['dkpdf_setup'] = array(
 			'title'       => __( 'PDF Setup', 'dkpdfg' ),

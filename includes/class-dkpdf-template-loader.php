@@ -18,7 +18,6 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 			$templates = $this->get_template_file_names( $slug, $name );
 
 			return $this->locate_template( $templates, $load, false );
-
 		}
 
 		protected function get_template_file_names( $slug, $name ) {

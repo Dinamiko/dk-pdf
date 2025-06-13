@@ -2,6 +2,12 @@
 <head>
     <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
           media="all"/>
+    <style>
+        <?php
+            $css = get_option( 'dkpdf_pdf_custom_css', '' );
+            echo esc_attr($css);
+        ?>
+    </style>
 </head>
 <body>
 <main id="primary" class="site-main">
