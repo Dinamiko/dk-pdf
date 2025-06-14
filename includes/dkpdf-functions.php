@@ -40,6 +40,10 @@ function dkpdf_display_pdf_button( $content ) {
 		global $post;
 		$show_button = in_array( get_post_type( $post ), $option_post_types );
 	} elseif ( is_tax() || is_category() || is_tag() ) {
+		if ( ! get_option( 'dkpdf_selected_template', '' ) ) {
+			return $content;
+		}
+
 		$queried_object = get_queried_object();
 		if ( $queried_object instanceof WP_Term && ! empty( $option_taxonomies ) ) {
 			$show_button = in_array( $queried_object->taxonomy, $option_taxonomies );

@@ -387,7 +387,7 @@ class DKPDF_Settings {
 				add_settings_section( $section, $data['title'], array(
 					$this,
 					'settings_section'
-				), 'dkpdf' . '_settings' );
+				), 'dkpdf_settings' );
 
 				foreach ( $data['fields'] as $field ) {
 					// Check dependency before registering the field
