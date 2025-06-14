@@ -12,7 +12,7 @@
 <body>
 
 <div class="archive-header">
-    <h1 class="archive-title">
+    <h2 class="archive-title">
 		<?php
 		if ( is_category() ) {
 			echo single_cat_title( '', false );
@@ -32,18 +32,18 @@
 			echo 'Archives';
 		}
 		?>
-    </h1>
+    </h2>
 </div>
 
 <div class="posts-container">
 	<?php if ( have_posts() ) :
 		while ( have_posts() ) : the_post(); ?>
             <article class="post-item">
-                <h2 class="post-title">
+                <h3 class="post-title">
                     <a href="<?php the_permalink(); ?>" target="_blank">
 						<?php the_title(); ?>
                     </a>
-                </h2>
+                </h3>
 
                 <div class="post-meta">
 					<?php echo get_the_date( 'F j, Y' ); ?>
