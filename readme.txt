@@ -2,9 +2,9 @@
 Contributors: dinamiko
 Tags: pdf, wordpress pdf generator, pdf generator, generate pdf, post to pdf
 Requires at least: 3.9.6
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.9.9
+Stable tag: 1.9.10
 License: MIT
 
 DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
