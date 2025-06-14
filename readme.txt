@@ -52,6 +52,12 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 
 == Changelog ==
 
+= 1.9.10 =
+* Enhancement - Add new template sets system.
+* Enhancement - Add new `dkpdf_content_template` filter to select template conditionally.
+* Enhancement - Add output PDF html for debugging purposes.
+* Enhancement - Increase init settings action priority to allow more custom post types to apply.
+
 = 1.9.9 =
 * Fix - Plugin templates not displaying CSS correctly.
 

@@ -1,7 +1,9 @@
 # Changelog
 
 ## 1.9.10
-- Enhancement - Add output html for debugging purposes.
+- Enhancement - Add new template sets system.
+- Enhancement - Add new `dkpdf_content_template` filter to select template conditionally.
+- Enhancement - Add output PDF html for debugging purposes.
 - Enhancement - Increase init settings action priority to allow more custom post types to apply.
 
 ## 1.9.9
