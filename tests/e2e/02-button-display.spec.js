@@ -9,13 +9,28 @@ test.describe('PDF Button Display', () => {
         await page.click('#wp-submit');
     });
 
-    test('button appears when post type is enabled', async ({page}) => {
+    test('button appears on single post when post type is enabled', async ({page}) => {
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
 
         await page.goto('/?p=1');
         await expect(page.locator('.dkpdf-button')).toBeVisible();
+    });
+
+    test('button appears on category archive when taxonomy is enabled', async ({page}) => {
+        await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
+        await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
+        await page.getByRole('button', {name: 'Save Settings'}).click();
+        await expect(page.getByText('Settings saved.')).toBeVisible();
+
+        await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdfbtn');
+        await page.locator('#pdfbutton_taxonomies_category').check();
+        await page.getByRole('button', {name: 'Save Settings'}).click();
+        await expect(page.getByText('Settings saved.')).toBeVisible();
+
+        await page.goto('/?cat=1');
+        await expect(page.locator('.dkpdf-button-container')).toBeVisible();
     });
 
     test('button does not appear when post type is disabled', async ({page}) => {

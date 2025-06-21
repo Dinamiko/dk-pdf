@@ -7,7 +7,7 @@ npm install
 npm run wp-env start
 
 # Clean testing environment
-wp-env clean tests
+wp-env clean tests && wp-env run tests-cli wp theme activate twentytwenty
 
 # Run all tests
 npx playwright test
