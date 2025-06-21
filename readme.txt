@@ -4,7 +4,7 @@ Tags: pdf, wordpress pdf generator, pdf generator, generate pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.9.10
+Stable tag: 1.9.11
 License: MIT
 
 DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
@@ -51,6 +51,9 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 6. Disable PDF Button Metabox
 
 == Changelog ==
+
+= 1.9.11  =
+* Enhancement - Add PDF button to archive pages.
 
 = 1.9.10 =
 * Enhancement - Add new template sets system.

@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: DK PDF
- * Version: 1.9.10
+ * Version: 1.9.11
  * Description: WordPress to PDF made easy.
  * Author: Emili Castells
  * Author URI: https://dinamiko.dev
@@ -51,7 +51,7 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		private function setup_constants() {
 
 			if ( ! defined( 'DKPDF_VERSION' ) ) {
-				define( 'DKPDF_VERSION', '1.9.10' );
+				define( 'DKPDF_VERSION', '1.9.11' );
 			}
 			if ( ! defined( 'DKPDF_PLUGIN_DIR' ) ) {
 				define( 'DKPDF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -106,23 +106,4 @@ if ( ! class_exists( 'DKPDF' ) ) {
 
 }
 
-function DKPDF() {
-
-	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
-
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		deactivate_plugins( '/dk-pdf/dk-pdf.php' );
-
-		wp_die(
-			'<p>' . 'DK PDF can not be activated because it requires at least PHP version 5.6.0. '
-			. 'In case you can not update PHP, here you can <a href="'. esc_url('https://github.com/Dinamiko/dk-pdf/releases/tag/v1.9.3') .'" target="_blank">download DK PDF 1.9.3</a> which works with PHP 5.3 and above.'
-			. '</p>'
-			. '<a href="' . esc_url(admin_url( 'plugins.php' )) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
-		);
-	} else {
-
-		return DKPDF::instance();
-	}
-}
-
-DKPDF();
+DKPDF::instance();

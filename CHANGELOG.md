@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.11
+- Enhancement - Add PDF button to archive pages.
+
 ## 1.9.10
 - Enhancement - Add new template sets system.
 - Enhancement - Add new `dkpdf_content_template` filter to select template conditionally.
