@@ -178,6 +178,8 @@ function dkpdf_get_taxonomies() {
 		$tax_arr[ $taxonomy ] = $taxonomy;
 	}
 
+	unset( $tax_arr['post_format'] );
+
 	return apply_filters( 'dkpdf_taxonomies_arr', $tax_arr );
 }
 
@@ -288,10 +290,26 @@ add_filter( 'dkpdf_content_template', function ( $template ) {
 	return $template;
 } );
 
-add_filter('get_the_archive_title', function($title) {
-    if (is_archive()) {
-        return $title . '<div style="margin: 20px 0;">2 Content before archive loop</div>';
-    }
+/**
+ * Add PDF button to archive descriptions if applicable
+ */
+add_filter( 'get_the_archive_description', function( $description ) {
+	if ( ! get_option( 'dkpdf_selected_template', '' ) ) {
+		return $description;
+	}
 
-    return $title;
-});
+	$option_taxonomies = get_option( 'dkpdf_pdfbutton_taxonomies', [] );
+	$queried_object = get_queried_object();
+	if ( $queried_object instanceof WP_Term && ! empty( $option_taxonomies ) ) {
+		if(in_array( $queried_object->taxonomy, $option_taxonomies )) {
+			ob_start();
+			(new DKPDF_Template_Loader())->get_template_part( 'dkpdf-button' );
+			$button = ob_get_clean();
+
+			return $description . $button;
+		}
+	}
+
+	return $description;
+
+} );
