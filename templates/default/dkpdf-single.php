@@ -18,9 +18,7 @@
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <header class="entry-header">
 	                <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="post-thumbnail">
-			                <?php the_post_thumbnail('large'); ?>
-                        </div>
+                        <div class="post-thumbnail" style="height: 300px; width: 100%; background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>'); background-position: center; background-size: cover;"></div>
 	                <?php endif; ?>
                     <h1 class="entry-title"><?php the_title(); ?></h1>
                 </header>
