@@ -382,7 +382,7 @@ class DKPDF_Settings {
 				array(
 					'id'          => 'taxonomy_layout',
 					'label'       => __( 'Taxonomy layout columns', 'dkpdf' ),
-					'description' => __( 'Number of columns for taxonomy archive pages', 'dkpdf' ),
+					'description' => '',
 					'type'        => 'select',
 					'options'     => array( '1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns' ),
 					'default'     => '1',
