@@ -359,6 +359,7 @@ class DKPDF_Settings {
 					'type'        => 'checkbox_multi',
 					'options'     => [
                         'title'      => 'Title',
+                        'content'      => 'Content',
                         'post_date'      => 'Post date',
                         'featured_img' => 'Featured image',
                     ],
@@ -374,6 +375,7 @@ class DKPDF_Settings {
 						'title'      => 'Title',
 						'description'      => 'Description',
 						'post_date' => 'Post date',
+						'post_excerpt' => 'Post excerpt',
 						'post_thumbnail' => 'Post thumbnail',
 					],
 					'default'     => array(),
