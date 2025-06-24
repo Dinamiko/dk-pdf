@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Displays PDF button based on settings and context
  */
 function dkpdf_display_pdf_button( $content ) {
-	$pdf = isset($_GET['pdf']) ? sanitize_text_field($_GET['pdf']) : '';
+	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
 
 	// Don't display button in PDF view or during form submission
 	if ( ( isset( $_POST['dkpdfg_action_create'] ) &&
@@ -28,7 +28,7 @@ function dkpdf_display_pdf_button( $content ) {
 	// Check if button should be shown based on current context
 	if ( is_singular() && ! empty( $option_post_types ) ) {
 		global $post;
-		if (!in_array( get_post_type( $post ), $option_post_types )) {
+		if ( ! in_array( get_post_type( $post ), $option_post_types ) || get_post_type( $post ) === 'product' ) {
 			return $content;
 		}
 	} else {
@@ -180,6 +180,9 @@ function dkpdf_get_taxonomies() {
 
 	unset( $tax_arr['post_format'] );
 
+	unset( $tax_arr['product_shipping_class'] );
+	unset( $tax_arr['product_brand'] );
+
 	return apply_filters( 'dkpdf_taxonomies_arr', $tax_arr );
 }
 
@@ -279,6 +282,11 @@ add_filter( 'dkpdf_content_template', function ( $template ) {
 		return $template;
 	}
 
+	global $post;
+	if ( get_post_type( $post ) === 'product' ) {
+		return 'dkpdf-single-product';
+	}
+
 	if ( is_single() ) {
 		return 'dkpdf-single';
 	}
@@ -293,17 +301,17 @@ add_filter( 'dkpdf_content_template', function ( $template ) {
 /**
  * Add PDF button to archive descriptions if applicable
  */
-add_filter( 'get_the_archive_description', function( $description ) {
+add_filter( 'get_the_archive_description', function ( $description ) {
 	if ( ! get_option( 'dkpdf_selected_template', '' ) ) {
 		return $description;
 	}
 
 	$option_taxonomies = get_option( 'dkpdf_pdfbutton_taxonomies', [] );
-	$queried_object = get_queried_object();
+	$queried_object    = get_queried_object();
 	if ( $queried_object instanceof WP_Term && ! empty( $option_taxonomies ) ) {
-		if(in_array( $queried_object->taxonomy, $option_taxonomies )) {
+		if ( in_array( $queried_object->taxonomy, $option_taxonomies ) ) {
 			ob_start();
-			(new DKPDF_Template_Loader())->get_template_part( 'dkpdf-button' );
+			( new DKPDF_Template_Loader() )->get_template_part( 'dkpdf-button' );
 			$button = ob_get_clean();
 
 			return $description . $button;
@@ -313,3 +321,28 @@ add_filter( 'get_the_archive_description', function( $description ) {
 	return $description;
 
 } );
+
+/**
+ * Adds a PDF button to the shop category page before the products list.
+ */
+add_action( 'woocommerce_before_shop_loop', function () {
+	ob_start();
+	( new DKPDF_Template_Loader() )->get_template_part( 'dkpdf-button' );
+	echo ob_get_clean();
+} );
+
+/**
+ * Adds a PDF button to the single product page.
+ */
+add_action( 'woocommerce_product_meta_start', function () {
+	$option_post_types = get_option( 'dkpdf_pdfbutton_post_types', [] );
+	global $post;
+	if ( ! in_array( get_post_type( $post ), $option_post_types ) ) {
+		return;
+	}
+
+	ob_start();
+	( new DKPDF_Template_Loader() )->get_template_part( 'dkpdf-button' );
+	echo ob_get_clean();
+} );
+
