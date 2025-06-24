@@ -282,9 +282,16 @@ add_filter( 'dkpdf_content_template', function ( $template ) {
 		return $template;
 	}
 
-	global $post;
-	if ( get_post_type( $post ) === 'product' ) {
-		return 'dkpdf-single-product';
+	if (class_exists('WooCommerce')) {
+		// Check for single product page
+		if ( is_product() ) {
+			return 'dkpdf-single-product';
+		}
+
+		// Check for shop page or product archive
+		if ( is_shop() || is_product_category() || is_product_tag() ) {
+			return 'dkpdf-archive-product';
+		}
 	}
 
 	if ( is_single() ) {
