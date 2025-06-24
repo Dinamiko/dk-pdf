@@ -352,6 +352,42 @@ class DKPDF_Settings {
 					'options'     => array( '' => 'Legacy', 'default/' => 'Default' ),
 					'default'     => array(),
 				),
+				array(
+					'id'          => 'post_display',
+					'label'       => __( 'Post display', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'checkbox_multi',
+					'options'     => [
+                        'title'      => 'Title',
+                        'post_date'      => 'Post date',
+                        'featured_img' => 'Featured image',
+                    ],
+					'default'     => array(),
+					'depends_on'  => 'dkpdf_selected_template',
+				),
+				array(
+					'id'          => 'taxonomy_display',
+					'label'       => __( 'Taxonomy display', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'checkbox_multi',
+					'options'     => [
+						'title'      => 'Title',
+						'description'      => 'Description',
+						'post_date' => 'Post date',
+						'post_thumbnail' => 'Post thumbnail',
+					],
+					'default'     => array(),
+					'depends_on'  => 'dkpdf_selected_template',
+				),
+				array(
+					'id'          => 'taxonomy_layout',
+					'label'       => __( 'Taxonomy layout', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'select',
+					'options'     => array( '1' => 'One column', '2' => 'Two columns' ),
+					'default'     => array(),
+					'depends_on'  => 'dkpdf_selected_template',
+				),
 			)
 		);
 
