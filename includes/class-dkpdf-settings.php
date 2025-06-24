@@ -388,22 +388,28 @@ class DKPDF_Settings {
 					'default'     => '1',
 					'depends_on'  => 'dkpdf_selected_template',
 				),
-				array(
-					'id'          => 'wc_product_display',
-					'label'       => __( 'WC product display', 'dkpdf' ),
-					'description' => '',
-					'type'        => 'checkbox_multi',
-					'options'     => [
-						'title'      => 'Title',
-						'description'      => 'Description',
-						'price'      => 'Price',
-						'product_img' => 'Product image',
-					],
-					'default'     => array(),
-					'depends_on'  => 'dkpdf_selected_template',
-				),
 			)
 		);
+
+		if (class_exists('WooCommerce')) {
+			$settings['pdf_templates']['fields'][] = array(
+				'id'          => 'wc_product_display',
+				'label'       => __( 'WC product display', 'dkpdf' ),
+				'description' => '',
+				'type'        => 'checkbox_multi',
+				'options'     => [
+					'title'      => 'Title',
+					'description'      => 'Description',
+					'price'      => 'Price',
+					'product_img' => 'Product image',
+					'sku' => 'SKU',
+					'categories' => 'Categories',
+					'tags' => 'Tags',
+				],
+				'default'     => array(),
+				'depends_on'  => 'dkpdf_selected_template',
+			);
+		}
 
 		return apply_filters( 'dkpdf_settings_fields', $settings );
 	}

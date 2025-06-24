@@ -59,6 +59,14 @@
 		        $product = wc_get_product(get_the_ID());
 		    }
 
+		    // Get WooCommerce product display options
+		    $wc_product_display_options = get_option('dkpdf_wc_product_display', array());
+
+		    // Ensure wc_product_display_options is an array
+		    if (!is_array($wc_product_display_options)) {
+		        $wc_product_display_options = empty($wc_product_display_options) ? array() : array($wc_product_display_options);
+		    }
+
 		    if (!$product) {
 		        // If not a product, just show regular content
 		        ?>
@@ -76,16 +84,18 @@
 		        ?>
 		        <article id="product-<?php the_ID(); ?>" <?php post_class('product-container'); ?>>
 		            <header class="product-header">
-		                <h1 class="product-title"><?php the_title(); ?></h1>
+		                <?php if (in_array('title', $wc_product_display_options)) : ?>
+		                    <h1 class="product-title"><?php the_title(); ?></h1>
+		                <?php endif; ?>
 
-		                <?php if ($product->get_price_html()) : ?>
+		                <?php if (in_array('price', $wc_product_display_options) && $product->get_price_html()) : ?>
 		                    <div class="product-price">
 		                        <?php echo $product->get_price_html(); ?>
 		                    </div>
 		                <?php endif; ?>
 		            </header>
 
-		            <?php if (has_post_thumbnail()) : ?>
+		            <?php if (in_array('product_img', $wc_product_display_options) && has_post_thumbnail()) : ?>
 		                <div class="product-image">
 		                    <?php
 		                    $image_id = get_post_thumbnail_id();
@@ -97,57 +107,66 @@
 		                </div>
 		            <?php endif; ?>
 
-		            <div class="product-description">
-		                <?php
-		                // First try to get short description
-		                $short_description = $product->get_short_description();
-		                if (!empty($short_description)) {
-		                    echo '<div class="product-short-description">' . wpautop($short_description) . '</div>';
-		                }
+		            <?php if (in_array('description', $wc_product_display_options)) : ?>
+		                <div class="product-description">
+		                    <h2>Product Description</h2>
+		                    <?php
+		                    // First try to get short description
+		                    $short_description = $product->get_short_description();
+		                    if (!empty($short_description)) {
+		                        echo '<div class="product-short-description">' . wpautop($short_description) . '</div>';
+		                    }
 
-		                // Always include full description
-		                $description = $product->get_description();
-		                if (!empty($description)) {
-		                    echo '<div class="product-full-description">' . wpautop($description) . '</div>';
-		                } elseif (empty($short_description)) {
-		                    // Fallback to post content if both descriptions are empty
-		                    the_content();
-		                }
-		                ?>
-		            </div>
+		                    // Also include full description
+		                    $description = $product->get_description();
+		                    if (!empty($description)) {
+		                        echo '<div class="product-full-description">' . wpautop($description) . '</div>';
+		                    } elseif (empty($short_description)) {
+		                        // Fallback to post content if both descriptions are empty
+		                        the_content();
+		                    }
+		                    ?>
+		                </div>
+		            <?php endif; ?>
 
 		            <div class="product-meta">
-		                <?php if ($product->get_sku()) : ?>
+		                <?php if (in_array('sku', $wc_product_display_options) && $product->get_sku()) : ?>
 		                    <div class="product-meta-item product-sku">
 		                        <strong>SKU:</strong> <?php echo esc_html($product->get_sku()); ?>
 		                    </div>
 		                <?php endif; ?>
 
-		                <?php
-		                // Display categories
-		                $categories = get_the_terms($product->get_id(), 'product_cat');
-		                if ($categories && !is_wp_error($categories)) {
-		                    $cat_names = array();
-		                    foreach ($categories as $category) {
-		                        $cat_names[] = $category->name;
+		                <?php if (in_array('categories', $wc_product_display_options)) : ?>
+		                    <?php
+		                    // Display categories
+		                    $categories = get_the_terms($product->get_id(), 'product_cat');
+		                    if ($categories && !is_wp_error($categories)) {
+		                        $cat_names = array();
+		                        foreach ($categories as $category) {
+		                            $cat_names[] = $category->name;
+		                        }
+		                        echo '<div class="product-meta-item product-categories">';
+		                        echo '<strong>Categories:</strong> ' . esc_html(implode(', ', $cat_names));
+		                        echo '</div>';
 		                    }
-		                    echo '<div class="product-meta-item product-categories">';
-		                    echo '<strong>Categories:</strong> ' . esc_html(implode(', ', $cat_names));
-		                    echo '</div>';
-		                }
+		                    ?>
+		                <?php endif; ?>
 
-		                // Display tags
-		                $tags = get_the_terms($product->get_id(), 'product_tag');
-		                if ($tags && !is_wp_error($tags)) {
-		                    $tag_names = array();
-		                    foreach ($tags as $tag) {
-		                        $tag_names[] = $tag->name;
+		                <?php if (in_array('tags', $wc_product_display_options)) : ?>
+		                    <?php
+		                    // Display tags
+		                    $tags = get_the_terms($product->get_id(), 'product_tag');
+		                    if ($tags && !is_wp_error($tags)) {
+		                        $tag_names = array();
+		                        foreach ($tags as $tag) {
+		                            $tag_names[] = $tag->name;
+		                        }
+		                        echo '<div class="product-meta-item product-tags">';
+		                        echo '<strong>Tags:</strong> ' . esc_html(implode(', ', $tag_names));
+		                        echo '</div>';
 		                    }
-		                    echo '<div class="product-meta-item product-tags">';
-		                    echo '<strong>Tags:</strong> ' . esc_html(implode(', ', $tag_names));
-		                    echo '</div>';
-		                }
-		                ?>
+		                    ?>
+		                <?php endif; ?>
 		            </div>
 		        </article>
 		        <?php
