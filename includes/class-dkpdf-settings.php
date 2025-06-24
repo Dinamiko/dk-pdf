@@ -383,7 +383,7 @@ class DKPDF_Settings {
 				),
 				array(
 					'id'          => 'taxonomy_layout',
-					'label'       => __( 'Taxonomy layout columns', 'dkpdf' ),
+					'label'       => __( 'Taxonomy columns', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'select',
 					'options'     => array( '1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns' ),
@@ -409,6 +409,29 @@ class DKPDF_Settings {
 					'tags' => 'Tags',
 				],
 				'default'     => array(),
+				'depends_on'  => 'dkpdf_selected_template',
+			);
+			$settings['pdf_templates']['fields'][] = array(
+				'id'          => 'wc_archive_display',
+				'label'       => __( 'WC archive display', 'dkpdf' ),
+				'description' => '',
+				'type'        => 'checkbox_multi',
+				'options'     => [
+					'title'      => 'Title',
+					'price'      => 'Price',
+					'product_thumbnail' => 'Product thumbnail',
+					'sku' => 'SKU',
+				],
+				'default'     => array(),
+				'depends_on'  => 'dkpdf_selected_template',
+			);
+			$settings['pdf_templates']['fields'][] = array(
+				'id'          => 'wc_archive_layout',
+				'label'       => __( 'WC archive columns', 'dkpdf' ),
+				'description' => '',
+				'type'        => 'select',
+				'options'     => array( '1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns' ),
+				'default'     => '1',
 				'depends_on'  => 'dkpdf_selected_template',
 			);
 		}

@@ -61,13 +61,12 @@
 <body>
 
 <?php
-// Get WooCommerce product display options for archives (to be created later)
-// For now we'll use the taxonomy display options as a fallback
-$wc_display_options = get_option('dkpdf_taxonomy_display', array());
+// Get WooCommerce product display options for archives
+$wc_archive_display_options = get_option('dkpdf_wc_archive_display', array());
 
-// Ensure options is an array
-if (!is_array($wc_display_options)) {
-    $wc_display_options = empty($wc_display_options) ? array() : array($wc_display_options);
+// Ensure wc_archive_display_options is an array
+if (!is_array($wc_archive_display_options)) {
+    $wc_archive_display_options = empty($wc_archive_display_options) ? array() : array($wc_archive_display_options);
 }
 
 // Get layout columns option (will use taxonomy_layout as fallback until we create wc_archive_layout)
@@ -124,27 +123,33 @@ if (have_posts()) :
         // Start a new cell
         echo '<td class="product-item" width="' . (100/$columns) . '%">';
 
-        // Display product thumbnail
-        if (has_post_thumbnail()) {
-            echo '<div class="product-thumbnail">';
-            $image_id = get_post_thumbnail_id();
-            $image_url = wp_get_attachment_image_src($image_id, 'medium');
-            if ($image_url) {
-                echo '<img src="' . esc_url($image_url[0]) . '" alt="' . esc_attr(get_the_title()) . '" />';
+        // Display product thumbnail ONLY if selected in wc_archive_display
+        if (in_array('product_thumbnail', $wc_archive_display_options)) {
+            if (has_post_thumbnail()) {
+                echo '<div class="product-thumbnail">';
+                $image_id = get_post_thumbnail_id();
+                $image_url = wp_get_attachment_image_src($image_id, 'medium');
+                if ($image_url) {
+                    echo '<img src="' . esc_url($image_url[0]) . '" alt="' . esc_attr(get_the_title()) . '" />';
+                }
+                echo '</div>';
             }
-            echo '</div>';
         }
 
-        // Display product title
-        echo '<h3 class="product-title">' . get_the_title() . '</h3>';
-
-        // Display product price
-        if ($price_html = $product->get_price_html()) {
-            echo '<div class="product-price">' . $price_html . '</div>';
+        // Display product title ONLY if selected in wc_archive_display
+        if (in_array('title', $wc_archive_display_options)) {
+            echo '<h3 class="product-title">' . get_the_title() . '</h3>';
         }
 
-        // Display SKU if available
-        if ($product->get_sku()) {
+        // Display product price ONLY if selected in wc_archive_display
+        if (in_array('price', $wc_archive_display_options)) {
+            if ($price_html = $product->get_price_html()) {
+                echo '<div class="product-price">' . $price_html . '</div>';
+            }
+        }
+
+        // Display SKU ONLY if selected in wc_archive_display and SKU exists
+        if (in_array('sku', $wc_archive_display_options) && $product->get_sku()) {
             echo '<div class="product-sku"><small>SKU: ' . esc_html($product->get_sku()) . '</small></div>';
         }
 
