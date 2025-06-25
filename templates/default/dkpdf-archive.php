@@ -3,25 +3,26 @@
     <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
           media="all"/>
     <style>
-        <?php
-            $css = get_option( 'dkpdf_pdf_custom_css', '' );
-            echo esc_attr($css);
-        ?>
-        /* Table-based layout for PDF compatibility */
+        a {background-color: transparent;}
+
         .posts-container {
             width: 100%;
             border-collapse: collapse;
         }
-
         .post-item {
             padding: 10px;
             vertical-align: top;
         }
-
         .post-thumbnail img {
             max-width: 100%;
             height: auto;
         }
+
+        <?php
+            $css = get_option( 'dkpdf_pdf_custom_css', '' );
+            echo esc_attr($css);
+        ?>
+
     </style>
 </head>
 <body>

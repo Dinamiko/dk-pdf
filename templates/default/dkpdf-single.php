@@ -3,6 +3,8 @@
     <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
           media="all"/>
     <style>
+        a {background-color: transparent;}
+
         <?php
             $css = get_option( 'dkpdf_pdf_custom_css', '' );
             echo esc_attr($css);
@@ -47,6 +49,22 @@
                     <div class="entry-meta">
                         <span class="posted-on">
                             <?php echo esc_html__('Posted on', 'dkpdf') . ' ' . get_the_date(); ?>
+                            <?php
+                            // Add author if selected in options
+                            if (in_array('post_author', $post_display_options)) {
+                                echo ' ' . esc_html__('by', 'dkpdf') . ' ' . get_the_author();
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <?php
+                }
+                // Display only author if date is not selected but author is
+                elseif (in_array('post_author', $post_display_options)) {
+                    ?>
+                    <div class="entry-meta">
+                        <span class="posted-by">
+                            <?php echo esc_html__('By', 'dkpdf') . ' ' . get_the_author(); ?>
                         </span>
                     </div>
                     <?php

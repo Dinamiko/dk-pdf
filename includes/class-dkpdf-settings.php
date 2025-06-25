@@ -360,6 +360,7 @@ class DKPDF_Settings {
 					'options'     => [
                         'title'      => 'Title',
                         'content'      => 'Content',
+                        'post_author'      => 'Post author',
                         'post_date'      => 'Post date',
                         'featured_img' => 'Featured image',
                     ],
