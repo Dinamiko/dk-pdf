@@ -4,6 +4,14 @@
           media="all"/>
     <style>
         a {background-color: transparent;}
+        .screen-reader-text {
+            display: none;
+        }
+        ins, [aria-hidden="true"] {
+            background-color: transparent;
+            background: none;
+            font-weight: bold;
+        }
 
         .posts-container {
             width: 100%;
