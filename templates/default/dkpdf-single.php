@@ -19,8 +19,10 @@
 			?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <?php
-                // Get post display options
-                $post_display_options = get_option('dkpdf_post_display', array());
+                $post_display_options = get_option( 'dkpdf_post_display', [] );
+                if ( ! is_array( $post_display_options ) ) {
+	                $post_display_options = [];
+                }
 
                 // Only display header if title or featured image are selected
                 if (in_array('title', $post_display_options) || (in_array('featured_img', $post_display_options) && has_post_thumbnail())) {
