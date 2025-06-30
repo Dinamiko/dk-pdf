@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.9.11
-- Enhancement - Add PDF button to archive pages.
+## 2.0.0
+- Enhancement - New template system and content display including archive and single templates.
+- Enhancement - Support for WooCommerce products including single, shop and archive pages.
 
 ## 1.9.10
 - Enhancement - Add new template sets system.
