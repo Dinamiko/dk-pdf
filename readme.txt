@@ -1,6 +1,6 @@
 === DK PDF - WordPress PDF Generator ===
 Contributors: dinamiko
-Tags: pdf, wordpress pdf generator, pdf generator, generate pdf, post to pdf
+Tags: pdf, wordpress pdf generator, pdf generator, woocommerce pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.8
 Requires PHP: 8.0
