@@ -48,7 +48,12 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 3. PDF Setup settings
 4. PDF Header & Footer settings
 5. PDF Custom CSS
-6. Disable PDF Button Metabox
+6. PDF Templates
+7. Single post PDF
+8. Category PDF
+9. WooCommerce Product PDF
+10. WooCommerce Shop PDF
+11. Disable PDF Button Metabox
 
 == Changelog ==
 
