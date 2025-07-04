@@ -7,11 +7,17 @@ Requires PHP: 8.0
 Stable tag: 2.0.0
 License: MIT
 
-DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
+DK PDF allows your site visitors generate PDF files from WordPress posts, pages, custom post types and WooCommerce products using a button.
 
 == Description ==
 
-DK PDF allows your site visitors generate PDF files from WordPress posts, pages and custom post types using a button.
+DK PDF allows your site visitors generate PDF files from WordPress posts, pages, custom post types and WooCommerce products using a button.
+
+== New in version 2.0 ==
+
+New template set which allows you to select the content to display in the PDF, including single and archive templates. It also supports WooCommerce products including single, shop and archive pages.
+
+[youtube https://youtu.be/ZQoXLbu5ldI]
 
 [Homepage](https://dinamiko.dev/plugins/dk-pdf-wordpress-pdf-generator/) | [View Demo](https://demo-dk-pdf.dinamiko.dev/) | [Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/)
 
