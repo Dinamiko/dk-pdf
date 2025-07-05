@@ -3,7 +3,7 @@
     <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
           media="all"/>
     <style>
-        a {background-color: transparent;}
+        a, code, ins, kbd, tt {background-color: transparent;}
 
         <?php
             $css = get_option( 'dkpdf_pdf_custom_css', '' );
