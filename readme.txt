@@ -23,13 +23,12 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 
 * Multi-Content Generation: Create PDFs from posts, pages, custom post types, taxonomies, and WooCommerce products
 * Selective Content Display: Choose exactly what appears in your PDFs - featured images, post dates, authors, categories, and more
-* WooCommerce Integration: Include product details like prices, SKUs, categories, and custom product fields
-* Header & Footer Control: Add logos, custom text, and branding elements to headers and footers
+* WooCommerce Integration: Include product details like prices, SKUs, categories, and more
+* Header & Footer Control: Add logo, custom text, and branding elements to headers and footers
 * Custom CSS Support: Apply your own styling to match your brand perfectly
 * Smart Content Control: Use powerful shortcodes to hide sections, create column layouts, and add page breaks exactly where you need them
 * Template Overrides: Create custom templates in your theme for complete design control
 * WordPress Hooks: Extensive filter and action hooks for advanced customization
-* Shortcode System: Fine-tune content display with powerful shortcodes for layout control
 
 == Perfect for every use case ==
 
