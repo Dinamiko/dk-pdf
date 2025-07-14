@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.1
+- Fix - Broken shortcodes after 2.0.0 upgrade.
+
 ## 2.0.0
 - Enhancement - New template system and content display including archive and single templates.
 - Enhancement - Support for WooCommerce products including single, shop and archive pages.

@@ -30,7 +30,7 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 		$atts = shortcode_atts( array(
 			'tag' => ''
 		), $atts );
-		$pdf = get_query_var( 'pdf' );
+		$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
 		$tag = sanitize_text_field( $atts['tag'] );
 		if( $tag !== '' && $pdf )  {
 				remove_shortcode( $tag );
@@ -52,7 +52,7 @@ add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 */
 function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
-	$pdf = get_query_var( 'pdf' );
+	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
 
     // phpcs:disable WordPress.Security.NonceVerification.Missing
   	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
@@ -89,7 +89,7 @@ add_shortcode( 'dkpdf-pagebreak', 'dkpdf_pagebreak_shortcode' );
  * [dkpdf-columns]text[/dkpdf-columns]
  * https://mpdf.github.io/what-else-can-i-do/columns.html
  *
- * <columns column-count=”n” vAlign=”justify” column-gap=”n” />
+ * <columns column-count="n" vAlign="justify" column-gap="n" />
  * column-count = Number of columns. Anything less than 2 sets columns off. (Required)
  * vAlign = Automatically adjusts height of columns to be equal if set to J or justify. Default Off. (Optional)
  * gap = gap in mm between columns. Default 5. (Optional)
@@ -105,7 +105,7 @@ function dkpdf_columns_shortcode( $atts, $content = null ) {
 		'gap' => '10'
 	), $atts );
 
-	$pdf = get_query_var( 'pdf' );
+	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
 
 	if( $pdf ) {
 		$columns = sanitize_text_field( $atts['columns'] );
@@ -127,9 +127,11 @@ add_shortcode( 'dkpdf-columns', 'dkpdf_columns_shortcode' );
 * @uses <columnbreak />
 */
 function dkpdf_columnbreak_shortcode( $atts, $content = null ) {
-	$pdf = get_query_var( 'pdf' );
+	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
 	if( $pdf ) {
 		return '<columnbreak />';
 	}
+
+	return '';
 }
 add_shortcode( 'dkpdf-columnbreak', 'dkpdf_columnbreak_shortcode' );
