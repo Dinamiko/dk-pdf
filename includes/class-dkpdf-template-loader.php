@@ -8,7 +8,14 @@ if ( ! class_exists( 'DKPDF_Template_Loader' ) )  {
 		protected $theme_template_directory = 'dkpdf';
 		protected $plugin_directory = DKPDF_PLUGIN_DIR;
 		protected $plugin_template_directory = 'templates';
-		protected $template_subdirectories = array('default');
+		protected $template_subdirectories = array();
+
+		public function __construct() {
+			$selected_template = get_option( 'dkpdf_selected_template', '' );
+			if ( ! empty( $selected_template ) ) {
+				$this->template_subdirectories = array('default');
+			}
+		}
 
 		public function get_template_part( $slug, $name = null, $load = true ) {
 
