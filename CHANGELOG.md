@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2.0.2
-- Fix - Loading non legacy templates.
+- Fix - Loading non legacy templates when legacy selected.
 
 ## 2.0.1
 - Fix - Broken shortcodes after 2.0.0 upgrade.
