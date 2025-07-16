@@ -30,7 +30,7 @@ function dkpdf_remove_shortcode( $atts, $content = null ) {
 		$atts = shortcode_atts( array(
 			'tag' => ''
 		), $atts );
-		$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+		$pdf = get_query_var( 'pdf' );
 		$tag = sanitize_text_field( $atts['tag'] );
 		if( $tag !== '' && $pdf )  {
 				remove_shortcode( $tag );
@@ -52,7 +52,7 @@ add_shortcode( 'dkpdf-remove', 'dkpdf_remove_shortcode' );
 */
 function dkpdf_pagebreak_shortcode( $atts, $content = null ) {
 
-	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+	$pdf = get_query_var( 'pdf' );
 
     // phpcs:disable WordPress.Security.NonceVerification.Missing
   	if( apply_filters( 'dkpdf_hide_button_isset', isset( $_POST['dkpdfg_action_create'] ) ) ) {
@@ -105,7 +105,7 @@ function dkpdf_columns_shortcode( $atts, $content = null ) {
 		'gap' => '10'
 	), $atts );
 
-	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+	$pdf = get_query_var( 'pdf' );
 
 	if( $pdf ) {
 		$columns = sanitize_text_field( $atts['columns'] );
@@ -127,7 +127,7 @@ add_shortcode( 'dkpdf-columns', 'dkpdf_columns_shortcode' );
 * @uses <columnbreak />
 */
 function dkpdf_columnbreak_shortcode( $atts, $content = null ) {
-	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+	$pdf = get_query_var( 'pdf' );
 	if( $pdf ) {
 		return '<columnbreak />';
 	}

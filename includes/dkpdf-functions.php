@@ -9,10 +9,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Adds 'pdf' query variable to WordPress
+ */
+function dkpdf_add_query_vars( $vars ) {
+	$vars[] = 'pdf';
+	return $vars;
+}
+add_filter( 'query_vars', 'dkpdf_add_query_vars' );
+
+/**
  * Displays PDF button based on settings and context
  */
 function dkpdf_display_pdf_button( $content ) {
-	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+	$pdf = get_query_var( 'pdf' );
 
 	// Don't display button in PDF view or during form submission
 	if ( ( isset( $_POST['dkpdfg_action_create'] ) &&
@@ -65,7 +74,7 @@ add_filter( 'the_content', 'dkpdf_display_pdf_button' );
  * Outputs the PDF when requested
  */
 function dkpdf_output_pdf( $query ) {
-	$pdf = isset( $_GET['pdf'] ) ? sanitize_text_field( $_GET['pdf'] ) : '';
+	$pdf = get_query_var( 'pdf' );
 	if ( ! $pdf || ! is_numeric( $pdf ) ) {
 		return;
 	}
