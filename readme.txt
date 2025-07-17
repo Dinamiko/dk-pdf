@@ -62,7 +62,7 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 == Changelog ==
 
 = 2.0.2 =
-- Fix - Loading non legacy templates when legacy selected.
+- Fix - Wrong post content in single templates.
 
 = 2.0.1 =
 - Fix - Broken shortcodes after 2.0.0 upgrade.
