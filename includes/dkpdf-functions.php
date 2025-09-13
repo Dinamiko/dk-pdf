@@ -342,6 +342,37 @@ add_filter( 'get_the_archive_description', function ( $description ) {
  * Adds a PDF button to the shop category page before the products list.
  */
 add_action( 'woocommerce_before_shop_loop', function () {
+	// Only proceed if WooCommerce is available
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return;
+	}
+
+	// Only show button if template is selected
+	if ( ! get_option( 'dkpdf_selected_template', '' ) ) {
+		return;
+	}
+
+	$option_taxonomies = get_option( 'dkpdf_pdfbutton_taxonomies', [] );
+
+	// Check if we're on a taxonomy page that should show the button
+	if ( is_product_category() || is_product_tag() ) {
+		$queried_object = get_queried_object();
+		if ( $queried_object instanceof WP_Term && ! empty( $option_taxonomies ) ) {
+			if ( ! in_array( $queried_object->taxonomy, $option_taxonomies ) ) {
+				return;
+			}
+		} else {
+			return;
+		}
+	} else if ( is_shop() ) {
+		// For shop page, only show if product_cat is enabled (as it's the main product archive)
+		if ( empty( $option_taxonomies ) || ! in_array( 'product_cat', $option_taxonomies ) ) {
+			return;
+		}
+	} else {
+		return;
+	}
+
 	ob_start();
 	( new DKPDF_Template_Loader() )->get_template_part( 'dkpdf-button' );
 	echo ob_get_clean();
