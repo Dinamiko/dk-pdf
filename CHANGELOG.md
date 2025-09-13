@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.3
+- Fix - Display pdf button in wc taxonomies to apply.
+
 ## 2.0.2
 - Fix - Wrong post content in single templates.
 
