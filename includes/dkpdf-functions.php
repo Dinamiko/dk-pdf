@@ -32,7 +32,7 @@ function dkpdf_display_pdf_button( $content ) {
 	}
 
 	// Get settings
-	$option_post_types = get_option( 'dkpdf_pdfbutton_post_types', [] );
+	$option_post_types = (array) get_option( 'dkpdf_pdfbutton_post_types', [] );
 
 	// Check if button should be shown based on current context
 	if ( is_singular() && ! empty( $option_post_types ) ) {
