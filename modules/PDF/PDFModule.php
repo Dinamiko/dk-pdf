@@ -13,7 +13,9 @@ class PDFModule implements ServiceModule, ExecutableModule {
 
 	public function services(): array {
 		return [
-			'pdf.generator' => static fn() => new Generator(),
+			'pdf.generator' => static fn($container) => new Generator(
+				$container->get('template.renderer')
+			),
 		];
 	}
 

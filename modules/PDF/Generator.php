@@ -3,11 +3,18 @@ declare( strict_types=1 );
 
 namespace Dinamiko\DKPDF\PDF;
 
+use Dinamiko\DKPDF\Template\TemplateRenderer;
 use Dinamiko\DKPDF\Vendor\Mpdf\Config\ConfigVariables;
 use Dinamiko\DKPDF\Vendor\Mpdf\Config\FontVariables;
 use Dinamiko\DKPDF\Vendor\Mpdf\Mpdf;
 
 class Generator {
+
+	private TemplateRenderer $renderer;
+
+	public function __construct(TemplateRenderer $renderer) {
+		$this->renderer = $renderer;
+	}
 
 	public function handle_pdf_request( $wp = null ): void {
 		$pdf = get_query_var( 'pdf' );
@@ -200,7 +207,7 @@ class Generator {
 	}
 
 	private function output_html_debug(): void {
-		$template_content = \dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
+		$template_content = $this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 		echo preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content );
 		exit;
 	}
@@ -250,12 +257,12 @@ class Generator {
 
 	private function add_content_to_mpdf( Mpdf $mpdf ): void {
 		// Set header and footer
-		$mpdf->SetHTMLHeader( \dkpdf_get_template( 'dkpdf-header' ) );
-		$mpdf->SetHTMLFooter( \dkpdf_get_template( 'dkpdf-footer' ) );
+		$mpdf->SetHTMLHeader( $this->renderer->get_template( 'dkpdf-header' ) );
+		$mpdf->SetHTMLFooter( $this->renderer->get_template( 'dkpdf-footer' ) );
 
 		// Write content
 		$mpdf->WriteHTML( apply_filters( 'dkpdf_before_content', '' ) );
-		$mpdf->WriteHTML( \dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
+		$mpdf->WriteHTML( $this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
 		$mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );
 	}
 
