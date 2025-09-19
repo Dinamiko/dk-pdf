@@ -1,12 +1,19 @@
 <?php
+declare( strict_types=1 );
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace Dinamiko\DKPDF\Frontend;
 
-class DKPDF_Button_Manager {
+use Dinamiko\DKPDF\Template\TemplateLoader;
 
-	public function __construct() {
+class ButtonManager {
+
+	private TemplateLoader $template_loader;
+
+	public function __construct( TemplateLoader $template_loader ) {
+		$this->template_loader = $template_loader;
+	}
+
+	public function init(): void {
 		add_filter( 'the_content', array( $this, 'display_pdf_button' ) );
 	}
 
@@ -16,7 +23,7 @@ class DKPDF_Button_Manager {
 	 * @param string $content Post content
 	 * @return string Modified content with PDF button
 	 */
-	public function display_pdf_button( $content ) {
+	public function display_pdf_button( string $content ): string {
 		$pdf = get_query_var( 'pdf' );
 
 		// Don't display button in PDF view or during form submission
@@ -56,7 +63,7 @@ class DKPDF_Button_Manager {
 	 * @param mixed $pdf PDF query var value
 	 * @return bool
 	 */
-	private function should_hide_button( $pdf ) {
+	private function should_hide_button( $pdf ): bool {
 		return ( isset( $_POST['dkpdfg_action_create'] ) &&
 		        ( $_POST['dkpdfg_action_create'] === 'dkpdfg_action_create' || $pdf ) ) || $pdf;
 	}
@@ -66,7 +73,7 @@ class DKPDF_Button_Manager {
 	 *
 	 * @return bool
 	 */
-	private function should_show_button() {
+	private function should_show_button(): bool {
 		// Get settings
 		$option_post_types = (array) get_option( 'dkpdf_pdfbutton_post_types', array() );
 
@@ -88,10 +95,9 @@ class DKPDF_Button_Manager {
 	 *
 	 * @return string Button HTML
 	 */
-	private function get_button_html() {
-		$template = new DKPDF_Template_Loader();
+	private function get_button_html(): string {
 		ob_start();
-		$template->get_template_part( 'dkpdf-button' );
+		$this->template_loader->get_template_part( 'dkpdf-button' );
 		return ob_get_clean();
 	}
 }

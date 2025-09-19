@@ -18,7 +18,11 @@ declare( strict_types=1 );
 namespace Dinamiko\DKPDF;
 
 use Dinamiko\DKPDF\Admin\AdminModule;
+use Dinamiko\DKPDF\Core\CoreModule;
+use Dinamiko\DKPDF\Frontend\FrontendModule;
 use Dinamiko\DKPDF\PDF\PDFModule;
+use Dinamiko\DKPDF\Shortcode\ShortcodeModule;
+use Dinamiko\DKPDF\Template\TemplateModule;
 use Dinamiko\DKPDF\WooCommerce\WooCommerceModule;
 use Inpsyde\Modularity\Package;
 use Inpsyde\Modularity\Properties\PluginProperties;
@@ -77,33 +81,33 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		}
 
 		private function includes() {
+			// All functionality is now handled by the modular system
+			// Legacy includes have been migrated to modules
 
-			// settings / metaboxes
-			if ( is_admin() ) {
-
-				require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-metaboxes.php';
-
+			// Global helper functions for backward compatibility
+			if ( ! function_exists( 'dkpdf_get_template' ) ) {
+				function dkpdf_get_template( $template_name ) {
+					$container = \Dinamiko\DKPDF\Container::get_container();
+					$template_renderer = $container->get( 'template.renderer' );
+					return $template_renderer->get_template( $template_name );
+				}
 			}
 
-			// load css / js
-			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-load-js-css.php';
+			if ( ! function_exists( 'dkpdf_get_post_types' ) ) {
+				function dkpdf_get_post_types() {
+					$container = \Dinamiko\DKPDF\Container::get_container();
+					$helper = $container->get( 'core.helper' );
+					return $helper->get_post_types();
+				}
+			}
 
-			// core classes
-			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-helper.php';
-			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-button-manager.php';
-			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-wordpress-integration.php';
-
-			// initialize core functionality
-			new \DKPDF_Button_Manager();
-			new \DKPDF_WordPress_Integration();
-
-			// functions
-			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-functions.php';
-
-			// shortcodes
-			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-template-loader.php';
-			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-shortcodes.php';
-
+			if ( ! function_exists( 'dkpdf_get_taxonomies' ) ) {
+				function dkpdf_get_taxonomies() {
+					$container = \Dinamiko\DKPDF\Container::get_container();
+					$helper = $container->get( 'core.helper' );
+					return $helper->get_taxonomies();
+				}
+			}
 		}
 
 		public function __clone() {
@@ -128,7 +132,11 @@ function plugin(): Package {
 	if ( ! $package ) {
 		$properties = PluginProperties::new( __FILE__ );
 		$package    = Package::new( $properties )
+		                     ->addModule( new CoreModule() )
+		                     ->addModule( new TemplateModule() )
 		                     ->addModule( new AdminModule() )
+		                     ->addModule( new FrontendModule() )
+		                     ->addModule( new ShortcodeModule() )
 		                     ->addModule( new PDFModule() )
 		                     ->addModule( new WooCommerceModule() );
 	}

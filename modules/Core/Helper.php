@@ -1,17 +1,16 @@
 <?php
+declare( strict_types=1 );
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace Dinamiko\DKPDF\Core;
 
-class DKPDF_Helper {
+class Helper {
 
 	/**
 	 * Returns array of post types
 	 *
 	 * @return array Array of available post types
 	 */
-	public static function get_post_types() {
+	public function get_post_types(): array {
 		$custom_types = get_post_types( array( 'public' => true, '_builtin' => false ) );
 		$post_arr     = array( 'post' => 'post', 'page' => 'page', 'attachment' => 'attachment' );
 
@@ -27,7 +26,7 @@ class DKPDF_Helper {
 	 *
 	 * @return array Array of available taxonomies
 	 */
-	public static function get_taxonomies() {
+	public function get_taxonomies(): array {
 		$custom_taxonomies  = get_taxonomies( array( 'public' => true, '_builtin' => false ) );
 		$builtin_taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => true ) );
 		$all_taxonomies     = array_merge( $custom_taxonomies, $builtin_taxonomies );
@@ -37,8 +36,8 @@ class DKPDF_Helper {
 			$tax_arr[ $taxonomy ] = $taxonomy;
 		}
 
+		// Remove unwanted taxonomies
 		unset( $tax_arr['post_format'] );
-
 		unset( $tax_arr['product_shipping_class'] );
 		unset( $tax_arr['product_brand'] );
 

@@ -16,6 +16,7 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			'admin.api' => static fn() => new Api(),
 			'admin.settings' => static fn($container) => new Settings($container->get('admin.api')),
 			'admin.sanitizer' => static fn() => new Sanitizer(),
+			'admin.metaboxes' => static fn() => new MetaBoxes(),
 		];
 	}
 
@@ -37,6 +38,11 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($sanitizer instanceof Sanitizer);
 
 			$sanitizer->init_sanitization();
+
+			$metaboxes = $container->get( 'admin.metaboxes' );
+			assert($metaboxes instanceof MetaBoxes);
+
+			$metaboxes->init();
 		}, 20 );
 
 		add_action( 'admin_init', function() use ($container) {
