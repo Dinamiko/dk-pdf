@@ -3,15 +3,19 @@ declare( strict_types=1 );
 
 namespace Dinamiko\DKPDF\Admin;
 
+use Dinamiko\DKPDF\Core\Helper;
+
 class Settings {
 	public string $base = '';
 	public array $settings = array();
 	private Api $api;
+    private Helper $helper;
 
-	public function __construct(Api $api) {
+    public function __construct(Api $api, Helper $helper) {
 		$this->base = 'dkpdf_';
 		$this->api = $api;
-	}
+        $this->helper = $helper;
+    }
 
 	/**
 	 * Initialise settings
@@ -78,8 +82,8 @@ class Settings {
 	 * @return array Fields to be displayed on settings page
 	 */
 	private function settings_fields() {
-		$post_types_arr = dkpdf_get_post_types();
-		$taxonomies_arr = dkpdf_get_taxonomies();
+		$post_types_arr = $this->helper->get_post_types();
+		$taxonomies_arr = $this->helper->get_taxonomies();
 
 		// pdf button settings
 		$settings['pdfbtn'] = array(

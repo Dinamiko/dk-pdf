@@ -17,6 +17,10 @@ class Container {
 		return self::$container;
 	}
 
+	public static function get_container(): ContainerInterface {
+		return self::container();
+	}
+
 	/**
 	 * Init the container.
 	 *

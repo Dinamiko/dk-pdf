@@ -200,7 +200,7 @@ class Generator {
 	}
 
 	private function output_html_debug(): void {
-		$template_content = dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
+		$template_content = \dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 		echo preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content );
 		exit;
 	}
@@ -250,12 +250,12 @@ class Generator {
 
 	private function add_content_to_mpdf( Mpdf $mpdf ): void {
 		// Set header and footer
-		$mpdf->SetHTMLHeader( dkpdf_get_template( 'dkpdf-header' ) );
-		$mpdf->SetHTMLFooter( dkpdf_get_template( 'dkpdf-footer' ) );
+		$mpdf->SetHTMLHeader( \dkpdf_get_template( 'dkpdf-header' ) );
+		$mpdf->SetHTMLFooter( \dkpdf_get_template( 'dkpdf-footer' ) );
 
 		// Write content
 		$mpdf->WriteHTML( apply_filters( 'dkpdf_before_content', '' ) );
-		$mpdf->WriteHTML( dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
+		$mpdf->WriteHTML( \dkpdf_get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
 		$mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );
 	}
 

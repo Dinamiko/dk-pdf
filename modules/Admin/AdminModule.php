@@ -14,7 +14,10 @@ class AdminModule implements ServiceModule, ExecutableModule {
 	public function services(): array {
 		return [
 			'admin.api' => static fn() => new Api(),
-			'admin.settings' => static fn($container) => new Settings($container->get('admin.api')),
+			'admin.settings' => static fn($container) => new Settings(
+				$container->get('admin.api'),
+				$container->get('core.helper')
+			),
 			'admin.sanitizer' => static fn() => new Sanitizer(),
 			'admin.metaboxes' => static fn() => new MetaBoxes(),
 		];
