@@ -1,29 +1,34 @@
 {
-    "name": "dinamiko/dk-pdf",
-    "require-dev": {
-        "mpdf/mpdf": "^8.2",
-        "johnpbloch/wordpress": "^6.8"
-    },
-    "extra": {
-        "mozart": {
-            "dep_namespace": "Dinamiko\\DKPDF\\Vendor\\",
-            "dep_directory": "/lib/packages/",
-            "classmap_directory": "/lib/classes/",
-            "classmap_prefix": "DKPDF_",
-            "packages": [
-                "mpdf/mpdf"
-            ],
-            "delete_vendor_directories": true
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Dinamiko\\DKPDF\\Vendor\\": "lib/packages/"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "johnpbloch/wordpress-core-installer": true
-        }
+  "name": "dinamiko/dk-pdf",
+  "require": {
+    "inpsyde/modularity": "^1.12",
+    "psr/container": "^2.0"
+  },
+  "require-dev": {
+    "mpdf/mpdf": "^8.2",
+    "johnpbloch/wordpress": "^6.8"
+  },
+  "extra": {
+    "mozart": {
+      "dep_namespace": "Dinamiko\\DKPDF\\Vendor\\",
+      "dep_directory": "/lib/packages/",
+      "classmap_directory": "/lib/classes/",
+      "classmap_prefix": "DKPDF_",
+      "packages": [
+        "mpdf/mpdf"
+      ],
+      "delete_vendor_directories": true
     }
+  },
+  "autoload": {
+    "psr-4": {
+      "Dinamiko\\DKPDF\\Vendor\\": "lib/packages/",
+      "Dinamiko\\DKPDF\\": "modules/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "johnpbloch/wordpress-core-installer": true
+    }
+  }
 }

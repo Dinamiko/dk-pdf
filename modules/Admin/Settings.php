@@ -1,37 +1,16 @@
 <?php
+declare( strict_types=1 );
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace Dinamiko\DKPDF\Admin;
 
-class DKPDF_Settings {
+class Settings {
+	public string $base = '';
+	public array $settings = array();
+	private Api $api;
 
-	private static $_instance = null;
-	public $parent = null;
-	public $base = '';
-	public $settings = array();
-
-	public function __construct( $parent ) {
-
-		$this->parent = $parent;
-
+	public function __construct(Api $api) {
 		$this->base = 'dkpdf_';
-
-		// Initialise settings
-		add_action( 'init', array( $this, 'init_settings' ), 20 );
-
-		// Register plugin settings
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-
-		// Add settings page to menu
-		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
-
-		// Add settings link to plugins page
-		add_filter( 'plugin_action_links_' . plugin_basename( DKPDF_PLUGIN_FILE ), array(
-			$this,
-			'add_settings_link'
-		) );
-
+		$this->api = $api;
 	}
 
 	/**
@@ -47,7 +26,6 @@ class DKPDF_Settings {
 	 * @return void
 	 */
 	public function add_menu_item() {
-
 		// main menu
 		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings', array(
 			$this,
@@ -358,12 +336,12 @@ class DKPDF_Settings {
 					'description' => '',
 					'type'        => 'checkbox_multi',
 					'options'     => [
-                        'title'      => 'Title',
-                        'content'      => 'Content',
-                        'post_author'      => 'Post author',
-                        'post_date'      => 'Post date',
-                        'featured_img' => 'Featured image',
-                    ],
+						'title'      => 'Title',
+						'content'      => 'Content',
+						'post_author'      => 'Post author',
+						'post_date'      => 'Post date',
+						'featured_img' => 'Featured image',
+					],
 					'default'     => array(),
 					'depends_on'  => 'dkpdf_selected_template',
 				),
@@ -495,7 +473,7 @@ class DKPDF_Settings {
 
 						// Add field to page
 						add_settings_field( $field['id'], $field['label'], array(
-							$this->parent->admin,
+							$this->api,
 							'display_field'
 						), 'dkpdf' . '_settings', $section, array( 'field' => $field, 'prefix' => $this->base ) );
 					}
@@ -522,9 +500,9 @@ class DKPDF_Settings {
 	public function settings_page() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['settings-updated'] ) ) { ?>
-            <div id="message" class="updated">
-                <p><?php esc_html_e( 'Settings saved.', 'dkpdf' ); ?></p>
-            </div>
+			<div id="message" class="updated">
+				<p><?php esc_html_e( 'Settings saved.', 'dkpdf' ); ?></p>
+			</div>
 		<?php }
 
 		// Build page HTML
@@ -579,8 +557,8 @@ class DKPDF_Settings {
 
 		// Get settings fields
 		ob_start();
-		settings_fields( 'dkpdf' . '_settings' );
-		do_settings_sections( 'dkpdf' . '_settings' );
+		settings_fields( 'dkpdf_settings' );
+		do_settings_sections( 'dkpdf_settings' );
 		$html .= ob_get_clean();
 
 		$html .= '<p class="submit">' . "\n";
@@ -594,32 +572,5 @@ class DKPDF_Settings {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 	}
-
-	/**
-	 * Main DKPDF_Settings Instance
-	 */
-	public static function instance( $parent ) {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self( $parent );
-		}
-
-		return self::$_instance;
-	} // End instance()
-
-	/**
-	 * Cloning is forbidden.
-	 */
-	public function __clone() {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?' ), $this->parent->_version );
-	} // End __clone()
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 */
-	public function __wakeup() {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?' ), $this->parent->_version );
-	} // End __wakeup()
 
 }

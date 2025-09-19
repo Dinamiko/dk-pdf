@@ -24,3 +24,8 @@ npx playwright test --debug
 # Run specific test
 npx playwright test -g "PDF button generates PDF for posts"
 ```
+
+### How to run Composer
+```
+wp-env run cli --env-cwd=wp-content/plugins/dk-pdf composer
+```

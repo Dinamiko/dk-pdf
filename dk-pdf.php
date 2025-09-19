@@ -13,16 +13,27 @@
  * Domain Path: /languages/
  */
 
+declare( strict_types=1 );
+
+namespace Dinamiko\DKPDF;
+
+use Dinamiko\DKPDF\Admin\AdminModule;
+use Dinamiko\DKPDF\PDF\PDFModule;
+use Dinamiko\DKPDF\WooCommerce\WooCommerceModule;
+use Inpsyde\Modularity\Package;
+use Inpsyde\Modularity\Properties\PluginProperties;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 if ( ! class_exists( 'DKPDF' ) ) {
 
-    #[AllowDynamicProperties]
+	#[AllowDynamicProperties]
 	final class DKPDF {
 
 		private static $instance;
+		public $admin;
 
 		public static function instance() {
 
@@ -70,18 +81,23 @@ if ( ! class_exists( 'DKPDF' ) ) {
 			// settings / metaboxes
 			if ( is_admin() ) {
 
-				require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-settings.php';
-				$settings = new DKPDF_Settings( $this );
-
-				require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-admin-api.php';
-				$this->admin = new DKPDF_Admin_API();
-
 				require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-metaboxes.php';
 
 			}
 
 			// load css / js
 			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-load-js-css.php';
+
+			// core classes
+			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-data-sanitizer.php';
+			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-helper.php';
+			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-button-manager.php';
+			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-wordpress-integration.php';
+
+			// initialize core functionality
+			new \DKPDF_Data_Sanitizer();
+			new \DKPDF_Button_Manager();
+			new \DKPDF_WordPress_Integration();
 
 			// functions
 			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-functions.php';
@@ -93,12 +109,12 @@ if ( ! class_exists( 'DKPDF' ) ) {
 		}
 
 		public function __clone() {
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
 		}
 
 		public function __wakeup() {
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			_doing_it_wrong( __FUNCTION__, esc_attr__( 'Cheatin&#8217; huh?', 'dkpdf' ), DKPDF_VERSION );
 		}
 
@@ -107,3 +123,31 @@ if ( ! class_exists( 'DKPDF' ) ) {
 }
 
 DKPDF::instance();
+
+function plugin(): Package {
+	static $package;
+
+	if ( ! $package ) {
+		$properties = PluginProperties::new( __FILE__ );
+		$package    = Package::new( $properties )
+		                     ->addModule( new AdminModule() )
+		                     ->addModule( new PDFModule() )
+		                     ->addModule( new WooCommerceModule() );
+	}
+
+	/** @var Package $package */
+	return $package;
+}
+
+add_action(
+	'plugins_loaded',
+	static function (): void {
+		if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+			include_once __DIR__ . '/vendor/autoload.php';
+		}
+
+		plugin()->boot();
+
+		Container::init( plugin()->container() );
+	}
+);
