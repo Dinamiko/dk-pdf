@@ -1,19 +1,14 @@
 <?php
+declare( strict_types=1 );
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace Dinamiko\DKPDF\Admin;
 
-class DKPDF_Data_Sanitizer {
-
-	public function __construct() {
-		add_action( 'init', array( $this, 'init_sanitization' ) );
-	}
+class Sanitizer {
 
 	/**
 	 * Initialize all sanitization filters
 	 */
-	public function init_sanitization() {
+	public function init_sanitization(): void {
 		$this->register_text_field_sanitization();
 		$this->register_int_field_sanitization();
 		$this->register_special_field_sanitization();
@@ -23,7 +18,7 @@ class DKPDF_Data_Sanitizer {
 	/**
 	 * Register sanitization for text fields
 	 */
-	private function register_text_field_sanitization() {
+	private function register_text_field_sanitization(): void {
 		$text_fields = array(
 			'pdfbutton_text',
 			'pdfbutton_action',
@@ -46,7 +41,7 @@ class DKPDF_Data_Sanitizer {
 	/**
 	 * Register sanitization for integer fields
 	 */
-	private function register_int_field_sanitization() {
+	private function register_int_field_sanitization(): void {
 		$int_fields = array(
 			'font_size',
 			'margin_left',
@@ -64,7 +59,7 @@ class DKPDF_Data_Sanitizer {
 	/**
 	 * Register sanitization for special fields that need custom handling
 	 */
-	private function register_special_field_sanitization() {
+	private function register_special_field_sanitization(): void {
 		add_filter( 'pre_update_option_dkpdf_pdf_footer_text', array( $this, 'sanitize_footer_text' ), 10, 2 );
 		add_filter( 'pre_update_option_dkpdf_pdf_custom_css', array( $this, 'sanitize_custom_css' ), 10, 2 );
 	}
@@ -72,8 +67,10 @@ class DKPDF_Data_Sanitizer {
 	/**
 	 * Register sanitization for array fields
 	 */
-	private function register_array_field_sanitization() {
+	private function register_array_field_sanitization(): void {
 		add_filter( 'pre_update_option_dkpdf_pdfbutton_post_types', array( $this, 'sanitize_array_field' ), 10, 2 );
+		add_filter( 'pre_update_option_dkpdf_pdfbutton_taxonomies', array( $this, 'sanitize_array_field' ), 10, 2 );
+		add_filter( 'pre_update_option_dkpdf_grant_permissions', array( $this, 'sanitize_array_field' ), 10, 2 );
 	}
 
 	/**
@@ -83,7 +80,7 @@ class DKPDF_Data_Sanitizer {
 	 * @param mixed $old_value The old value
 	 * @return string Sanitized text
 	 */
-	public function sanitize_text_field( $new_value, $old_value = null ) {
+	public function sanitize_text_field( $new_value, $old_value = null ): string {
 		return sanitize_text_field( $new_value );
 	}
 
@@ -94,7 +91,7 @@ class DKPDF_Data_Sanitizer {
 	 * @param mixed $old_value The old value
 	 * @return int Sanitized integer
 	 */
-	public function sanitize_int_field( $new_value, $old_value = null ) {
+	public function sanitize_int_field( $new_value, $old_value = null ): int {
 		return intval( $new_value );
 	}
 
@@ -105,7 +102,7 @@ class DKPDF_Data_Sanitizer {
 	 * @param mixed $old_value The old value
 	 * @return string Sanitized footer text
 	 */
-	public function sanitize_footer_text( $new_value, $old_value = null ) {
+	public function sanitize_footer_text( $new_value, $old_value = null ): string {
 		$allowed_html = array(
 			'a'      => array( 'href' => array(), 'title' => array(), 'class' => array(), 'style' => array() ),
 			'br'     => array(),
@@ -130,10 +127,10 @@ class DKPDF_Data_Sanitizer {
 	 * @param mixed $old_value The old value
 	 * @return string Sanitized CSS
 	 */
-	public function sanitize_custom_css( $new_value, $old_value = null ) {
+	public function sanitize_custom_css( $new_value, $old_value = null ): string {
 		$new_value = wp_filter_nohtml_kses( $new_value );
-		$new_value = str_replace( '\"', '"', $new_value );
-		$new_value = str_replace( "\'", "'", $new_value );
+		$new_value = str_replace( '\\\"', '\"', $new_value );
+		$new_value = str_replace( "\\\'", "'", $new_value );
 
 		return $new_value;
 	}
@@ -145,7 +142,7 @@ class DKPDF_Data_Sanitizer {
 	 * @param mixed $old_value The old value
 	 * @return array Sanitized array
 	 */
-	public function sanitize_array_field( $new_value, $old_value = null ) {
+	public function sanitize_array_field( $new_value, $old_value = null ): array {
 		return is_array( $new_value ) ? $new_value : array();
 	}
 }

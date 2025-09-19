@@ -89,13 +89,11 @@ if ( ! class_exists( 'DKPDF' ) ) {
 			require_once DKPDF_PLUGIN_DIR . 'includes/dkpdf-load-js-css.php';
 
 			// core classes
-			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-data-sanitizer.php';
 			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-helper.php';
 			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-button-manager.php';
 			require_once DKPDF_PLUGIN_DIR . 'includes/class-dkpdf-wordpress-integration.php';
 
 			// initialize core functionality
-			new \DKPDF_Data_Sanitizer();
 			new \DKPDF_Button_Manager();
 			new \DKPDF_WordPress_Integration();
 

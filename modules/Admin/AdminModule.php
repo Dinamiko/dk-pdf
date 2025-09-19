@@ -15,6 +15,7 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		return [
 			'admin.api' => static fn() => new Api(),
 			'admin.settings' => static fn($container) => new Settings($container->get('admin.api')),
+			'admin.sanitizer' => static fn() => new Sanitizer(),
 		];
 	}
 
@@ -31,6 +32,11 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($settings instanceof Settings);
 
 			$settings->init_settings();
+
+			$sanitizer = $container->get( 'admin.sanitizer' );
+			assert($sanitizer instanceof Sanitizer);
+
+			$sanitizer->init_sanitization();
 		}, 20 );
 
 		add_action( 'admin_init', function() use ($container) {
