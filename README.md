@@ -23,7 +23,11 @@ npx playwright test --debug
 
 # Run specific test
 npx playwright test -g "PDF button generates PDF for posts"
+
+# Generate screenshot in test for debugging
+await page.screenshot({ path: 'test-results/screeshot.png', fullPage: true });
 ```
+
 
 ### How to run Composer
 ```

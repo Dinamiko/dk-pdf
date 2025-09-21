@@ -148,8 +148,6 @@ test.describe('Shortcode Functionality', () => {
         // Test in PDF HTML output context - should have columnbreak markup
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
 
-        await page.screenshot({ path: 'test-results/columnbreak-pdf-output.png', fullPage: true });
-
         await expect(page.locator('body')).toContainText('First column content');
         await expect(page.locator('body')).toContainText('Second column content');
         const htmlContent = await page.locator('body').innerHTML();
