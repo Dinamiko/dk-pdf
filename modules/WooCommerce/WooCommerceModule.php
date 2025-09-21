@@ -18,7 +18,6 @@ class WooCommerceModule implements ServiceModule, ExecutableModule {
 	}
 
 	public function run( ContainerInterface $container ): bool {
-		// Only initialize if WooCommerce is active
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			return true;
 		}
