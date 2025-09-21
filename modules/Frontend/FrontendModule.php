@@ -49,16 +49,16 @@ class FrontendModule implements ServiceModule, ExecutableModule {
 		$wordpress_integration = $container->get( 'frontend.wordpress_integration' );
 		assert( $wordpress_integration instanceof WordPressIntegration );
 
-		add_filter( 'query_vars', function ( array $vars ) use $wordpress_integration{
-		$wordpress_integration->add_query_vars( $vars );
+		add_filter( 'query_vars', function ( array $vars ) use ( $wordpress_integration ) {
+			$wordpress_integration->add_query_vars( $vars );
 		} );
 
-		add_filter( 'dkpdf_content_template', function ( string $template ) use $wordpress_integration{
-		$wordpress_integration->determine_template( $template );
+		add_filter( 'dkpdf_content_template', function ( string $template ) use ( $wordpress_integration ) {
+			$wordpress_integration->determine_template( $template );
 		} );
 
-		add_filter( 'get_the_archive_description', function ( string $description ) use $wordpress_integration{
-		$wordpress_integration->add_archive_button( $description );
+		add_filter( 'get_the_archive_description', function ( string $description ) use ( $wordpress_integration ) {
+			$wordpress_integration->add_archive_button( $description );
 		} );
 
 		return true;
