@@ -45,7 +45,7 @@ test.describe('Shortcode Functionality', () => {
         await page.goto('/wp-admin/post-new.php');
         await page.fill('#title', 'Remove Shortcode Test');
         await page.click('#content-html');
-        await page.fill('#content', 'Before remove [dkpdf-remove tag="gallery"]Gallery content to remove[/dkpdf-remove] After remove');
+        await page.fill('#content', 'Before remove [dkpdf-remove]Gallery content to remove[/dkpdf-remove] After remove');
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
