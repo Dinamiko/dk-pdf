@@ -24,4 +24,17 @@ test.describe('PDF Generation - Core Functionality', () => {
         expect(download.suggestedFilename()).toContain('.pdf');
         expect(download.suggestedFilename()).toContain('Hello world'); // Post title
     });
+
+    test('PDF HTML output contains expected content', async ({page}) => {
+        await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
+        await page.locator('#pdfbutton_post_types_post').check();
+        await page.getByRole('radio', {name: 'Download PDF directly'}).check();
+        await page.getByRole('button', {name: 'Save Settings'}).click();
+
+        // Navigate to a post and generate HTML output instead of PDF
+        await page.goto('/?p=1&pdf=1&output=html');
+
+        await expect(page.locator('body')).toContainText('Welcome to WordPress');
+        await expect(page.locator('.dkpdf-button')).not.toBeVisible();
+    });
 });
