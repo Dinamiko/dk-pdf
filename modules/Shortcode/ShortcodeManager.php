@@ -13,14 +13,6 @@ class ShortcodeManager {
 		$this->template_loader = $template_loader;
 	}
 
-	public function init(): void {
-		add_shortcode( 'dkpdf-button', array( $this, 'button_shortcode' ) );
-		add_shortcode( 'dkpdf-remove', array( $this, 'remove_shortcode' ) );
-		add_shortcode( 'dkpdf-pagebreak', array( $this, 'pagebreak_shortcode' ) );
-		add_shortcode( 'dkpdf-columns', array( $this, 'columns_shortcode' ) );
-		add_shortcode( 'dkpdf-columnbreak', array( $this, 'columnbreak_shortcode' ) );
-	}
-
 	/**
 	 * [dkpdf-button]
 	 * This shortcode is used to display DK PDF Button

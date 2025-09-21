@@ -13,15 +13,33 @@ class ShortcodeModule implements ServiceModule, ExecutableModule {
 
 	public function services(): array {
 		return [
-			'shortcode.manager' => static fn($container) => new ShortcodeManager($container->get('template.loader')),
+			'shortcode.manager' => static fn( $container ) => new ShortcodeManager( $container->get( 'template.loader' ) ),
 		];
 	}
 
 	public function run( ContainerInterface $container ): bool {
 		$shortcode_manager = $container->get( 'shortcode.manager' );
-		assert($shortcode_manager instanceof ShortcodeManager);
+		assert( $shortcode_manager instanceof ShortcodeManager );
 
-		$shortcode_manager->init();
+		add_shortcode( 'dkpdf-button', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
+			$shortcode_manager->button_shortcode();
+		} );
+
+		add_shortcode( 'dkpdf-remove', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
+			$shortcode_manager->remove_shortcode($atts, $content);
+		} );
+
+		add_shortcode( 'dkpdf-pagebreak', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
+			$shortcode_manager->pagebreak_shortcode();
+		} );
+
+		add_shortcode( 'dkpdf-columns', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
+			$shortcode_manager->columns_shortcode($atts, $content);
+		} );
+
+		add_shortcode( 'dkpdf-columnbreak', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
+			$shortcode_manager->columnbreak_shortcode();
+		} );
 
 		return true;
 	}
