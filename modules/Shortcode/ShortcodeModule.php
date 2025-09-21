@@ -22,23 +22,23 @@ class ShortcodeModule implements ServiceModule, ExecutableModule {
 		assert( $shortcode_manager instanceof ShortcodeManager );
 
 		add_shortcode( 'dkpdf-button', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
-			$shortcode_manager->button_shortcode($atts, $content);
+			return $shortcode_manager->button_shortcode($atts, $content);
 		} );
 
 		add_shortcode( 'dkpdf-remove', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
-			$shortcode_manager->remove_shortcode($atts, $content);
+			return $shortcode_manager->remove_shortcode($atts, $content);
 		} );
 
 		add_shortcode( 'dkpdf-pagebreak', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
-			$shortcode_manager->pagebreak_shortcode($atts, $content);
+			return $shortcode_manager->pagebreak_shortcode($atts, $content);
 		} );
 
 		add_shortcode( 'dkpdf-columns', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
-			$shortcode_manager->columns_shortcode($atts, $content);
+			return $shortcode_manager->columns_shortcode($atts, $content);
 		} );
 
 		add_shortcode( 'dkpdf-columnbreak', function (array $atts, ?string $content = null) use ( $shortcode_manager ) {
-			$shortcode_manager->columnbreak_shortcode($atts, $content);
+			return $shortcode_manager->columnbreak_shortcode($atts, $content);
 		} );
 
 		return true;
