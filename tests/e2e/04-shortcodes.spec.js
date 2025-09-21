@@ -85,14 +85,16 @@ test.describe('Shortcode Functionality', () => {
         await expect(page.locator('body')).toContainText('Before pagebreak');
         await expect(page.locator('body')).toContainText('After pagebreak');
         const htmlContent = await page.locator('body').innerHTML();
-        expect(htmlContent).toContain('<pagebreak />');
+        expect(htmlContent).toContain('<pagebreak>');
+        expect(htmlContent).toContain('</pagebreak');
 
         // Test in normal context - should not have pagebreak markup
         await page.goto(postUrl);
         await expect(page.locator('text=Before pagebreak')).toBeVisible();
         await expect(page.locator('text=After pagebreak')).toBeVisible();
         const normalContent = await page.locator('.entry-content').innerHTML();
-        expect(normalContent).not.toContain('<pagebreak />');
+        expect(normalContent).not.toContain('<pagebreak>');
+        expect(normalContent).not.toContain('</pagebreak>');
     });
 
     test('dkpdf-columns shortcode adds column markup in PDF context', async ({page}) => {
@@ -145,16 +147,21 @@ test.describe('Shortcode Functionality', () => {
 
         // Test in PDF HTML output context - should have columnbreak markup
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
+
+        await page.screenshot({ path: 'test-results/columnbreak-pdf-output.png', fullPage: true });
+
         await expect(page.locator('body')).toContainText('First column content');
         await expect(page.locator('body')).toContainText('Second column content');
         const htmlContent = await page.locator('body').innerHTML();
-        expect(htmlContent).toContain('<columnbreak />');
+        expect(htmlContent).toContain('<columnbreak>');
+        expect(htmlContent).toContain('</columnbreak>');
 
         // Test in normal context - should have normal content without columnbreak markup
         await page.goto(postUrl);
         await expect(page.locator('text=First column content')).toBeVisible();
         await expect(page.locator('text=Second column content')).toBeVisible();
         const normalContent = await page.locator('.entry-content').innerHTML();
-        expect(normalContent).not.toContain('<columnbreak />');
+        expect(normalContent).not.toContain('<columnbreak>');
+        expect(normalContent).not.toContain('</columnbreak>');
     });
 });
