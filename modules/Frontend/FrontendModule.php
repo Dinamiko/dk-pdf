@@ -24,7 +24,7 @@ class FrontendModule implements ServiceModule, ExecutableModule {
 		assert( $button_manager instanceof ButtonManager );
 
 		add_filter( 'the_content', function ( string $content ) use ( $button_manager ) {
-			$button_manager->display_pdf_button( $content );
+			return $button_manager->display_pdf_button( $content );
 		} );
 
 		$asset_loader = $container->get( 'frontend.asset_loader' );
@@ -50,15 +50,15 @@ class FrontendModule implements ServiceModule, ExecutableModule {
 		assert( $wordpress_integration instanceof WordPressIntegration );
 
 		add_filter( 'query_vars', function ( array $vars ) use ( $wordpress_integration ) {
-			$wordpress_integration->add_query_vars( $vars );
+			return $wordpress_integration->add_query_vars( $vars );
 		} );
 
 		add_filter( 'dkpdf_content_template', function ( string $template ) use ( $wordpress_integration ) {
-			$wordpress_integration->determine_template( $template );
+			return $wordpress_integration->determine_template( $template );
 		} );
 
 		add_filter( 'get_the_archive_description', function ( string $description ) use ( $wordpress_integration ) {
-			$wordpress_integration->add_archive_button( $description );
+			return $wordpress_integration->add_archive_button( $description );
 		} );
 
 		return true;
