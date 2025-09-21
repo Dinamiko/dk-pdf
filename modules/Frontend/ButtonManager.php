@@ -13,10 +13,6 @@ class ButtonManager {
 		$this->template_loader = $template_loader;
 	}
 
-	public function init(): void {
-		add_filter( 'the_content', array( $this, 'display_pdf_button' ) );
-	}
-
 	/**
 	 * Displays PDF button based on settings and context
 	 *

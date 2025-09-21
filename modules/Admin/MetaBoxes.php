@@ -5,28 +5,6 @@ namespace Dinamiko\DKPDF\Admin;
 
 class MetaBoxes {
 
-	public function init(): void {
-		add_action( 'add_meta_boxes', array( $this, 'meta_box_setup' ) );
-		add_action( 'save_post', array( $this, 'meta_box_save' ) );
-	}
-
-	/**
-	 * Return array with all fields in metabox
-	 */
-	private function get_custom_fields_settings(): array {
-		$fields = array();
-
-		$fields['_hide_pdfbutton'] = array(
-			'name' => __( 'Disable DK PDF Button:' , 'dkpdf' ),
-			'description' => '',
-			'type' => 'checkbox',
-			'default' => '',
-			'section' => ''
-		);
-
-		return $fields;
-	}
-
 	/**
 	 * Add metabox to post types
 	 */
@@ -40,47 +18,6 @@ class MetaBoxes {
 				add_meta_box( 'post-data', __( 'DK PDF', 'dkpdf' ), array( $this, 'meta_box_content' ), $post_type, 'normal', 'high' );
 			}
 		}
-	}
-
-	/**
-	 * Add content to metabox
-	 */
-	public function meta_box_content(): void {
-		global $post_id;
-		$fields = get_post_custom( $post_id );
-		$field_data = $this->get_custom_fields_settings();
-
-		$html = '';
-
-		$html .= '<input type="hidden" name="' . 'dkpdf' . '_nonce" id="' . 'dkpdf' . '_nonce" value="' . wp_create_nonce( plugin_basename( __FILE__ ) ) . '" />';
-
-		if ( 0 < count( $field_data ) ) {
-			$html .= '<table class="form-table">' . "\n";
-			$html .= '<tbody>' . "\n";
-
-			foreach ( $field_data as $k => $v ) {
-				$data = $v['default'];
-
-				if ( isset( $fields[$k] ) && isset( $fields[$k][0] ) ) {
-					$data = $fields[$k][0];
-				}
-
-				if( $v['type'] == 'checkbox' ) {
-					$html .= '<tr valign="top"><th scope="row">' . $v['name'] . '</th><td><input name="' . esc_attr( $k ) . '" type="checkbox" id="' . esc_attr( $k ) . '" ' . checked( 'on' , $data , false ) . ' /> <label for="' . esc_attr( $k ) . '"><span class="description">' . $v['description'] . '</span></label>' . "\n";
-					$html .= '</td></tr>' . "\n";
-				} else {
-					$html .= '<tr valign="top"><th scope="row"><label for="' . esc_attr( $k ) . '">' . $v['name'] . '</label></th><td><input name="' . esc_attr( $k ) . '" type="text" id="' . esc_attr( $k ) . '" class="regular-text" value="' . esc_attr( $data ) . '" />' . "\n";
-					$html .= '<p class="description">' . $v['description'] . '</p>' . "\n";
-					$html .= '</td></tr>' . "\n";
-				}
-			}
-
-			$html .= '</tbody>' . "\n";
-			$html .= '</table>' . "\n";
-		}
-
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
 	}
 
 	/**
@@ -127,5 +64,63 @@ class MetaBoxes {
 		}
 
 		return $post_id;
+	}
+
+	/**
+	 * Add content to metabox
+	 */
+	public function meta_box_content(): void {
+		global $post_id;
+		$fields = get_post_custom( $post_id );
+		$field_data = $this->get_custom_fields_settings();
+
+		$html = '';
+
+		$html .= '<input type="hidden" name="' . 'dkpdf' . '_nonce" id="' . 'dkpdf' . '_nonce" value="' . wp_create_nonce( plugin_basename( __FILE__ ) ) . '" />';
+
+		if ( 0 < count( $field_data ) ) {
+			$html .= '<table class="form-table">' . "\n";
+			$html .= '<tbody>' . "\n";
+
+			foreach ( $field_data as $k => $v ) {
+				$data = $v['default'];
+
+				if ( isset( $fields[$k] ) && isset( $fields[$k][0] ) ) {
+					$data = $fields[$k][0];
+				}
+
+				if( $v['type'] == 'checkbox' ) {
+					$html .= '<tr valign="top"><th scope="row">' . $v['name'] . '</th><td><input name="' . esc_attr( $k ) . '" type="checkbox" id="' . esc_attr( $k ) . '" ' . checked( 'on' , $data , false ) . ' /> <label for="' . esc_attr( $k ) . '"><span class="description">' . $v['description'] . '</span></label>' . "\n";
+					$html .= '</td></tr>' . "\n";
+				} else {
+					$html .= '<tr valign="top"><th scope="row"><label for="' . esc_attr( $k ) . '">' . $v['name'] . '</label></th><td><input name="' . esc_attr( $k ) . '" type="text" id="' . esc_attr( $k ) . '" class="regular-text" value="' . esc_attr( $data ) . '" />' . "\n";
+					$html .= '<p class="description">' . $v['description'] . '</p>' . "\n";
+					$html .= '</td></tr>' . "\n";
+				}
+			}
+
+			$html .= '</tbody>' . "\n";
+			$html .= '</table>' . "\n";
+		}
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $html;
+	}
+
+	/**
+	 * Return array with all fields in metabox
+	 */
+	private function get_custom_fields_settings(): array {
+		$fields = array();
+
+		$fields['_hide_pdfbutton'] = array(
+			'name' => __( 'Disable DK PDF Button:' , 'dkpdf' ),
+			'description' => '',
+			'type' => 'checkbox',
+			'default' => '',
+			'section' => ''
+		);
+
+		return $fields;
 	}
 }

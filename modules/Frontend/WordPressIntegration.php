@@ -13,33 +13,6 @@ class WordPressIntegration {
 		$this->template_loader = $template_loader;
 	}
 
-	public function init(): void {
-		$this->init_query_vars();
-		$this->init_template_filters();
-		$this->init_archive_integration();
-	}
-
-	/**
-	 * Initialize query variable registration
-	 */
-	private function init_query_vars(): void {
-		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
-	}
-
-	/**
-	 * Initialize template selection filters
-	 */
-	private function init_template_filters(): void {
-		add_filter( 'dkpdf_content_template', array( $this, 'determine_template' ) );
-	}
-
-	/**
-	 * Initialize archive page integration
-	 */
-	private function init_archive_integration(): void {
-		add_filter( 'get_the_archive_description', array( $this, 'add_archive_button' ) );
-	}
-
 	/**
 	 * Adds 'pdf' query variable to WordPress
 	 *

@@ -45,7 +45,13 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			$metaboxes = $container->get( 'admin.metaboxes' );
 			assert($metaboxes instanceof MetaBoxes);
 
-			$metaboxes->init();
+			add_action( 'add_meta_boxes', function() use($metaboxes) {
+				$metaboxes->meta_box_setup();
+			});
+
+			add_action( 'save_post', function( int $post_id ) use($metaboxes) {
+				$metaboxes->meta_box_save($post_id);
+			});
 		}, 20 );
 
 		add_action( 'admin_init', function() use ($container) {

@@ -35,7 +35,7 @@ class Api {
 	 * @param  boolean $echo  Whether to echo the field HTML or return it
 	 * @return void
 	 */
-	public function display_field ( $data = array(), $post = false, $echo = true ) {
+	public function display_field( $data = array(), $post = false, $echo = true ) {
 		// Get field info
 		if ( isset( $data['field'] ) ) {
 			$field = $data['field'];
@@ -238,23 +238,6 @@ class Api {
 	}
 
 	/**
-	 * Validate form field
-	 * @param  string $data Submitted value
-	 * @param  string $type Type of field to validate
-	 * @return string       Validated value
-	 */
-	public function validate_field ( $data = '', $type = 'text' ) {
-
-		switch( $type ) {
-			case 'text': $data = esc_attr( $data ); break;
-			case 'url': $data = esc_url( $data ); break;
-			case 'email': $data = is_email( $data ); break;
-		}
-
-		return $data;
-	}
-
-	/**
 	 * Add meta box to the dashboard
 	 * @param string $id            Unique ID for metabox
 	 * @param string $title         Display title of metabox
@@ -324,4 +307,20 @@ class Api {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $field;
 	}
+
+    /**
+     * Validate form field
+     * @param  string $data Submitted value
+     * @param  string $type Type of field to validate
+     * @return string       Validated value
+     */
+    private function validate_field( $data = '', $type = 'text' ) {
+        switch( $type ) {
+            case 'text': $data = esc_attr( $data ); break;
+            case 'url': $data = esc_url( $data ); break;
+            case 'email': $data = is_email( $data ); break;
+        }
+
+        return $data;
+    }
 }
