@@ -15,7 +15,7 @@
     "phpmyadminPort": 9000
   },
   "lifecycleScripts": {
-    "afterStart": "node bin/test-env-after-start.js",
+    "afterStart": "node bin/test-env-clean.js",
     "afterClean": "node bin/test-env-clean.js"
   }
 }

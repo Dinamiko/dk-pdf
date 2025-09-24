@@ -28,6 +28,9 @@ test.describe('PDF Button Display', () => {
         await expect(page.getByText('Settings saved.')).toBeVisible();
 
         await page.goto('/?cat=1');
+
+        await page.screenshot({ path: 'test-results/screeshot.png', fullPage: true });
+
         await expect(page.locator('.dkpdf-button-container')).toBeVisible();
     });
 
