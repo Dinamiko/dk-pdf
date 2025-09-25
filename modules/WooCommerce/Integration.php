@@ -86,8 +86,8 @@ class Integration {
 	 * @return string Button HTML
 	 */
 	private function get_button_html(): string {
-		ob_start();
-		( new \DKPDF_Template_Loader() )->get_template_part( 'dkpdf-button-archive' );
-		return ob_get_clean();
+		$container = \Dinamiko\DKPDF\Container::get_container();
+		$template_renderer = $container->get( 'template.renderer' );
+		return $template_renderer->get_template( 'dkpdf-button-archive' );
 	}
 }

@@ -112,8 +112,6 @@ class Generator {
 		$wp_query->is_tag = false;
 		$wp_query->is_post_type_archive = false;
 		$wp_query->post = null;
-		$wp_query->posts = array();
-		$wp_query->post_count = 0;
 
 		// Handle different archive types
 		switch ( $archive_type ) {
@@ -136,6 +134,9 @@ class Generator {
 				$wp_query->queried_object = $shop_page;
 				$wp_query->is_shop = true;
 				$wp_query->is_post_type_archive = true;
+
+				// Query shop products
+				$this->query_archive_posts( 'product', null, null );
 				break;
 
 			default:
@@ -150,6 +151,9 @@ class Generator {
 					$wp_query->queried_object_id = $term_id;
 					$wp_query->is_category = true;
 					$wp_query->is_tax = true;
+
+					// Query posts for this product category
+					$this->query_archive_posts( 'product', 'product_cat', $term_id );
 				} elseif ( strpos( $archive_type, 'product_tag_' ) === 0 ) {
 					$term_id = (int) str_replace( 'product_tag_', '', $archive_type );
 					$term = get_term( $term_id, 'product_tag' );
@@ -160,6 +164,9 @@ class Generator {
 					$wp_query->queried_object_id = $term_id;
 					$wp_query->is_tag = true;
 					$wp_query->is_tax = true;
+
+					// Query posts for this product tag
+					$this->query_archive_posts( 'product', 'product_tag', $term_id );
 				} elseif ( strpos( $archive_type, 'category_' ) === 0 ) {
 					$term_id = (int) str_replace( 'category_', '', $archive_type );
 					$term = get_term( $term_id, 'category' );
@@ -170,6 +177,9 @@ class Generator {
 					$wp_query->queried_object_id = $term_id;
 					$wp_query->is_category = true;
 					$wp_query->is_tax = true;
+
+					// Query posts for this category
+					$this->query_archive_posts( 'post', 'category', $term_id );
 				} elseif ( strpos( $archive_type, 'tag_' ) === 0 ) {
 					$term_id = (int) str_replace( 'tag_', '', $archive_type );
 					$term = get_term( $term_id, 'post_tag' );
@@ -180,6 +190,9 @@ class Generator {
 					$wp_query->queried_object_id = $term_id;
 					$wp_query->is_tag = true;
 					$wp_query->is_tax = true;
+
+					// Query posts for this tag
+					$this->query_archive_posts( 'post', 'post_tag', $term_id );
 				} else {
 					// Handle generic taxonomy_termid format
 					$parts = explode( '_', $archive_type );
@@ -198,6 +211,10 @@ class Generator {
 						} elseif ( $taxonomy === 'post_tag' ) {
 							$wp_query->is_tag = true;
 						}
+
+						// Query posts for this taxonomy term
+						$post_type = $this->get_post_type_for_taxonomy( $taxonomy );
+						$this->query_archive_posts( $post_type, $taxonomy, $term_id );
 					} else {
 						throw new \Exception( 'Unknown archive type: ' . $archive_type );
 					}
@@ -330,5 +347,78 @@ class Generator {
 		$action = get_option( 'dkpdf_pdfbutton_action', 'open' ) == 'open' ? 'I' : 'D';
 		$mpdf->Output( $title . '.pdf', $action );
 		exit;
+	}
+
+	/**
+	 * Query posts for archive pages
+	 *
+	 * @param string $post_type The post type to query
+	 * @param string|null $taxonomy The taxonomy name, null for post type archives
+	 * @param int|null $term_id The term ID for taxonomy archives
+	 */
+	private function query_archive_posts( string $post_type, ?string $taxonomy = null, ?int $term_id = null ): void {
+		global $wp_query;
+
+		$args = array(
+			'post_type'      => $post_type,
+			'post_status'    => 'publish',
+			'posts_per_page' => apply_filters( 'dkpdf_posts_per_page', get_option( 'posts_per_page', 10 ) ),
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		);
+
+		// Add taxonomy query if this is a taxonomy archive
+		if ( $taxonomy && $term_id ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $term_id,
+				),
+			);
+		}
+
+		// Apply filters to allow customization
+		$args = apply_filters( 'dkpdf_archive_query_args', $args, $post_type, $taxonomy, $term_id );
+
+		// Create a new WP_Query to get the posts
+		$query = new \WP_Query( $args );
+
+		// Update the global $wp_query with our results
+		$wp_query->posts = $query->posts;
+		$wp_query->post_count = $query->post_count;
+		$wp_query->found_posts = $query->found_posts;
+		$wp_query->max_num_pages = $query->max_num_pages;
+		$wp_query->current_post = -1;
+
+		// Reset the post data
+		if ( ! empty( $wp_query->posts ) ) {
+			$wp_query->post = $wp_query->posts[0];
+		}
+	}
+
+	/**
+	 * Get the appropriate post type for a given taxonomy
+	 *
+	 * @param string $taxonomy The taxonomy name
+	 * @return string The post type
+	 */
+	private function get_post_type_for_taxonomy( string $taxonomy ): string {
+		// Get taxonomy object to determine associated post types
+		$tax_object = get_taxonomy( $taxonomy );
+		if ( $tax_object && ! empty( $tax_object->object_type ) ) {
+			// Return the first associated post type
+			return $tax_object->object_type[0];
+		}
+
+		// Fallback mappings for common taxonomies
+		$taxonomy_post_type_map = array(
+			'category'    => 'post',
+			'post_tag'    => 'post',
+			'product_cat' => 'product',
+			'product_tag' => 'product',
+		);
+
+		return $taxonomy_post_type_map[ $taxonomy ] ?? 'post';
 	}
 }
