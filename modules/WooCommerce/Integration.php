@@ -88,6 +88,14 @@ class Integration {
 	private function get_button_html(): string {
 		$container = \Dinamiko\DKPDF\Container::get_container();
 		$template_renderer = $container->get( 'template.renderer' );
-		return $template_renderer->get_template( 'dkpdf-button-archive' );
+
+		// Use different templates for single product vs archive pages
+		if ( function_exists( 'is_product' ) && is_product() ) {
+			// Single product page - use regular button template
+			return $template_renderer->get_template( 'dkpdf-button' );
+		} else {
+			// Archive/shop pages - use archive button template
+			return $template_renderer->get_template( 'dkpdf-button-archive' );
+		}
 	}
 }
