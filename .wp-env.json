@@ -8,6 +8,9 @@
   "themes": [
     "https://downloads.wordpress.org/theme/storefront.4.6.1.zip"
   ],
+  "mappings": {
+    "wp-content/plugins/disable-rest-permissions": "./plugins/disable-rest-permissions"
+  },
   "phpVersion": "8.2",
   "config": {
     "WP_DEBUG": true,
