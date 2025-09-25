@@ -1,6 +1,6 @@
 // @ts-check
 import {test, expect} from '@playwright/test';
-import {loginAsAdmin, createWooCommerceTestData, cleanWooCommerceTestData, getProductUrl, getCategoryUrl} from "./utils";
+import {loginAsAdmin, getProductUrl, getCategoryUrl} from "./utils";
 
 test.describe('WooCommerce Integration', () => {
     test.beforeEach(async ({page}) => {
