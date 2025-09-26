@@ -25,8 +25,10 @@ test.describe('Shortcode Functionality', () => {
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
-        const postUrl = await page.locator('.notice-success a').getAttribute('href');
-        const postId = new URL(postUrl).searchParams.get('p');
+        // Get post ID from current URL after publishing
+        const currentUrl = page.url();
+        const postId = new URL(currentUrl).searchParams.get('post');
+        const postUrl = `/?p=${postId}`;
 
         // Test in PDF HTML output context
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
@@ -52,8 +54,10 @@ test.describe('Shortcode Functionality', () => {
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
-        const postUrl = await page.locator('.notice-success a').getAttribute('href');
-        const postId = new URL(postUrl).searchParams.get('p');
+        // Get post ID from current URL after publishing
+        const currentUrl = page.url();
+        const postId = new URL(currentUrl).searchParams.get('post');
+        const postUrl = `/?p=${postId}`;
 
         // Test in PDF HTML output context - content should be removed
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
@@ -80,8 +84,10 @@ test.describe('Shortcode Functionality', () => {
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
-        const postUrl = await page.locator('.notice-success a').getAttribute('href');
-        const postId = new URL(postUrl).searchParams.get('p');
+        // Get post ID from current URL after publishing
+        const currentUrl = page.url();
+        const postId = new URL(currentUrl).searchParams.get('post');
+        const postUrl = `/?p=${postId}`;
 
         // Test in PDF HTML output context - should have pagebreak markup
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
@@ -112,8 +118,10 @@ test.describe('Shortcode Functionality', () => {
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
-        const postUrl = await page.locator('.notice-success a').getAttribute('href');
-        const postId = new URL(postUrl).searchParams.get('p');
+        // Get post ID from current URL after publishing
+        const currentUrl = page.url();
+        const postId = new URL(currentUrl).searchParams.get('post');
+        const postUrl = `/?p=${postId}`;
 
         // Test in PDF HTML output context - should have column markup
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
@@ -145,8 +153,10 @@ test.describe('Shortcode Functionality', () => {
         await page.click('#publish');
         await page.waitForSelector('.notice-success');
 
-        const postUrl = await page.locator('.notice-success a').getAttribute('href');
-        const postId = new URL(postUrl).searchParams.get('p');
+        // Get post ID from current URL after publishing
+        const currentUrl = page.url();
+        const postId = new URL(currentUrl).searchParams.get('post');
+        const postUrl = `/?p=${postId}`;
 
         // Test in PDF HTML output context - should have columnbreak markup
         await page.goto(`/?p=${postId}&pdf=${postId}&output=html`);
