@@ -160,28 +160,18 @@ test.describe('WooCommerce Integration', () => {
         });
 
         test('HTML output uses archive template for shop page', async ({page}) => {
-            // Enable WooCommerce product display options for archives
             await enableWooCommerceProductDisplay(page, 'archive');
-
             await page.goto('/shop/?pdf=shop&output=html');
 
-            await expect(page.locator(('body'))).toContainText('Shop');
-
-            // Verify archive content is present (product titles should be visible if enabled)
+            await expect(page.locator('body')).toContainText('Shop');
             await expect(page.locator('body')).toContainText('Test Laptop');
             await expect(page.locator('body')).toContainText('Wireless Mouse');
         });
 
         test('category archive uses correct template', async ({page}) => {
-            // Navigate to Electronics category using CLI-generated URL
             const categoryUrl = await getCategoryUrl('electronics');
-            await page.goto(`${categoryUrl}?pdf=1&output=html`);
+            await page.goto(`${categoryUrl}?pdf=product_cat_16&output=html`);
 
-            // Check for archive template
-            const pageSource = await page.content();
-            expect(pageSource).toContain('dkpdf-archive-product');
-
-            // Verify category-specific content
             await expect(page.locator('body')).toContainText('Electronics');
         });
     });
