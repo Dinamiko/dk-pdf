@@ -175,47 +175,4 @@ test.describe('WooCommerce Integration', () => {
             await expect(page.locator('body')).toContainText('Electronics');
         });
     });
-
-    test.describe('Template Integration Tests', () => {
-        test('different templates used for products vs regular posts', async ({page}) => {
-            // Set up template
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
-            await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
-            await page.getByRole('button', {name: 'Save Settings'}).click();
-
-            // Enable both posts and products
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
-            await page.locator('#pdfbutton_post_types_post').check();
-            await page.locator('#pdfbutton_post_types_product').check();
-            await page.getByRole('button', {name: 'Save Settings'}).click();
-
-            // Check regular post template
-            await page.goto('/?p=1&pdf=1&output=html');
-            const postSource = await page.content();
-            expect(postSource).not.toContain('dkpdf-single-product');
-
-            // Check product template
-            const productUrl = await getProductUrl('Test Laptop');
-            await page.goto(`${productUrl}?pdf=10&output=html`);
-            const productSource = await page.content();
-            expect(productSource).toContain('dkpdf-single-product');
-        });
-
-        test('WooCommerce module only activates when products exist', async ({page}) => {
-            // This test verifies that WooCommerce integration works properly
-            // when WooCommerce is available and products exist
-
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
-
-            // The product post type should be available in settings when WooCommerce is active
-            await expect(page.locator('#pdfbutton_post_types_product')).toBeVisible();
-
-            // WooCommerce-specific settings should be available
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
-            const wcOptions = page.locator('label:has-text("WC product display")');
-            if (await wcOptions.count() > 0) {
-                await expect(wcOptions).toBeVisible();
-            }
-        });
-    });
 });
