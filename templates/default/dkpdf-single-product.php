@@ -111,7 +111,6 @@
 
 		            <?php if (in_array('description', $wc_product_display_options)) : ?>
 		                <div class="product-description">
-		                    <h2>Product Description</h2>
 		                    <?php
 		                    // First try to get short description
 		                    $short_description = $product->get_short_description();

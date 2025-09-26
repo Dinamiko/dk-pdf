@@ -1,3 +1,5 @@
+import {expect} from "@playwright/test";
+
 export async function loginAsAdmin(page) {
     await page.goto('/wp-login.php');
     await page.fill('#user_login', 'admin');
@@ -24,4 +26,50 @@ export async function getCategoryUrl(categorySlug) {
     };
 
     return categoryUrls[categorySlug] || `/product-category/${categorySlug}/`;
+}
+
+export async function enableWooCommerceProductDisplay(page, options = 'all') {
+    // Navigate to PDF templates tab
+    await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
+    await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
+
+    await page.getByRole('button', {name: 'Save Settings'}).click();
+
+    // Define available display options
+    const singleProductOptions = [
+        'wc_product_display_title',
+        'wc_product_display_description',
+        'wc_product_display_price',
+        'wc_product_display_sku',
+        'wc_product_display_product_img',
+        'wc_product_display_categories'
+    ];
+
+    const archiveProductOptions = [
+        'wc_product_display_title',
+        'wc_product_display_price',
+        'wc_product_display_product_thumbnail',
+        'wc_product_display_sku'
+    ];
+
+    let optionsToEnable = [];
+
+    if (options === 'all' || options === 'single') {
+        optionsToEnable = optionsToEnable.concat(singleProductOptions);
+    }
+
+    if (options === 'all' || options === 'archive') {
+        optionsToEnable = optionsToEnable.concat(archiveProductOptions);
+    }
+
+    // Enable the specified options
+    for (const option of optionsToEnable) {
+        const checkbox = page.locator(`#${option}`);
+        if (await checkbox.count() > 0) {
+            await checkbox.check();
+        }
+    }
+
+    await page.getByRole('button', {name: 'Save Settings'}).click();
+    await expect(page.locator('.updated')).toContainText('Settings saved');
 }
