@@ -46,10 +46,10 @@ export async function enableWooCommerceProductDisplay(page, options = 'all') {
     ];
 
     const archiveProductOptions = [
-        'wc_product_display_title',
-        'wc_product_display_price',
-        'wc_product_display_product_thumbnail',
-        'wc_product_display_sku'
+        'wc_archive_display_title',
+        'wc_archive_display_price',
+        'wc_archive_display_product_thumbnail',
+        'wc_archive_display_sku'
     ];
 
     let optionsToEnable = [];

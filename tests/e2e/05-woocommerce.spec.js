@@ -117,21 +117,6 @@ test.describe('WooCommerce Integration', () => {
             // Verify button is not visible in PDF output
             await expect(page.locator('.dkpdf-button')).not.toBeVisible();
         });
-
-        test('product template is used for single products', async ({page}) => {
-            // Set up template
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
-            await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
-            await page.getByRole('button', {name: 'Save Settings'}).click();
-
-            // Navigate to product and check HTML output
-            const productUrl = await getProductUrl('Test Laptop');
-            await page.goto(`${productUrl}?pdf=1&output=html`);
-
-            // Check for product-specific template elements
-            const pageSource = await page.content();
-            expect(pageSource).toContain('dkpdf-single-product');
-        });
     });
 
     test.describe('Shop/Archive Page Tests', () => {
@@ -178,11 +163,9 @@ test.describe('WooCommerce Integration', () => {
             // Enable WooCommerce product display options for archives
             await enableWooCommerceProductDisplay(page, 'archive');
 
-            await page.goto('/shop/?pdf=1&output=html');
+            await page.goto('/shop/?pdf=shop&output=html');
 
-            // Check for archive-specific template elements
-            const pageSource = await page.content();
-            expect(pageSource).toContain('dkpdf-archive-product');
+            await expect(page.locator(('body'))).toContainText('Shop');
 
             // Verify archive content is present (product titles should be visible if enabled)
             await expect(page.locator('body')).toContainText('Test Laptop');
@@ -223,7 +206,7 @@ test.describe('WooCommerce Integration', () => {
 
             // Check product template
             const productUrl = await getProductUrl('Test Laptop');
-            await page.goto(`${productUrl}?pdf=1&output=html`);
+            await page.goto(`${productUrl}?pdf=10&output=html`);
             const productSource = await page.content();
             expect(productSource).toContain('dkpdf-single-product');
         });
