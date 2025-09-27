@@ -13,7 +13,6 @@ test.describe('Template Overrides in Child Theme', () => {
     });
 
     test.afterEach(async ({ page }) => {
-        // Reset to main theme after each test
         execSync('wp-env run tests-cli -- wp theme activate storefront', { stdio: 'inherit' });
     });
 
