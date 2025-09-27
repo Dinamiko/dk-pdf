@@ -4,7 +4,7 @@ Tags: pdf, wordpress pdf generator, pdf generator, woocommerce pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 License: MIT
 
 DK PDF allows your site visitors generate PDF files from WordPress posts, pages, custom post types and WooCommerce products using a button.
@@ -61,7 +61,7 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 
 == Changelog ==
 
-= 2.0.2 =
+= 2.1.0 =
 - Fix - Wrong post content in single templates.
 
 = 2.0.1 =

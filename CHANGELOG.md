@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.3
+## 2.1.0
 - Fix - Display pdf button in wc taxonomies to apply.
 
 ## 2.0.2
