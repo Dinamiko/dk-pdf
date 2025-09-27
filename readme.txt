@@ -62,6 +62,9 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 == Changelog ==
 
 = 2.1.0 =
+- Fix - Display pdf button in wc taxonomies to apply.
+
+= 2.0.2 =
 - Fix - Wrong post content in single templates.
 
 = 2.0.1 =
