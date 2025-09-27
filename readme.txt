@@ -37,6 +37,9 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 * Developers: Build custom PDF solutions for clients using template overrides and WordPress hooks.
 * Educational Sites: Convert course materials, lessons, and resources into portable PDF formats.
 
+== DK PDF Custom Services ==
+Need custom functionality for the DK PDF Plugin? I provide [professional customization services](https://dinamiko.dev/dk-pdf-custom-services/) to extend and enhance your PDF generation capabilities.
+
 == Installation ==
 
 Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
