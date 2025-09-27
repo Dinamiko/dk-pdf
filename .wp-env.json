@@ -9,7 +9,8 @@
     "https://downloads.wordpress.org/theme/storefront.4.6.1.zip"
   ],
   "mappings": {
-    "wp-content/plugins/disable-rest-permissions": "./plugins/disable-rest-permissions"
+    "wp-content/plugins/disable-rest-permissions": "./plugins/disable-rest-permissions",
+    "wp-content/themes/storefront-child": "./themes/storefront-child"
   },
   "phpVersion": "8.2",
   "config": {
