@@ -5,6 +5,8 @@ import {execSync} from "node:child_process";
 
 test.describe('WooCommerce Integration', () => {
     test.beforeAll(() => {
+        execSync('wp-env clean tests', { stdio: 'inherit' });
+
         try {
             // Create product categories using WP-CLI
             execSync('npm run wp-env run tests-cli -- wp wc product_cat create --name="Electronics" --slug="electronics" --description="Electronic products and gadgets"', {stdio: 'inherit'});
