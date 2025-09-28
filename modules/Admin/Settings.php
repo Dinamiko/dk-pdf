@@ -56,11 +56,97 @@ class Settings {
 		// If you're not including an image upload then you can leave this function call out
 		wp_enqueue_media();
 
+		// Enqueue Select2 for enhanced dropdowns
+		wp_enqueue_style( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0' );
+		wp_enqueue_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0' );
+
+		// Add responsive CSS for Select2
+		wp_add_inline_style( 'select2', '
+			/* Force responsive container */
+			.dkpdf-select2-ajax {
+				width: 100% !important;
+				max-width: 100% !important;
+			}
+
+			/* Container responsive rules */
+			.select2-container.select2-container--default {
+				width: 100% !important;
+				max-width: 100% !important;
+				min-width: 0 !important;
+				box-sizing: border-box !important;
+			}
+
+			/* Selection box responsive rules */
+			.select2-container--default .select2-selection--multiple {
+				width: 100% !important;
+				max-width: 100% !important;
+				min-width: 0 !important;
+				min-height: 30px !important;
+				box-sizing: border-box !important;
+				overflow: hidden !important;
+				flex-wrap: wrap !important;
+				display: flex !important;
+				align-items: flex-start !important;
+			}
+
+			/* Selected items responsive */
+			.select2-container--default .select2-selection--multiple .select2-selection__choice {
+				max-width: 100% !important;
+				min-width: 0 !important;
+				flex-shrink: 1 !important;
+				word-wrap: break-word !important;
+				word-break: break-word !important;
+				white-space: normal !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+				box-sizing: border-box !important;
+			}
+
+			/* Input field responsive */
+			.select2-container--default .select2-selection--multiple .select2-search__field {
+				min-width: 50px !important;
+				max-width: 100% !important;
+				flex-grow: 1 !important;
+			}
+
+			/* Dropdown responsive */
+			.select2-dropdown {
+				width: auto !important;
+				min-width: 100% !important;
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+			/* Mobile specific rules */
+			@media (max-width: 782px) {
+				.select2-container--default .select2-selection--multiple {
+					min-height: 40px !important;
+					padding: 2px !important;
+				}
+				.select2-container--default .select2-selection--multiple .select2-selection__choice {
+					padding: 5px 8px !important;
+					margin: 2px !important;
+					font-size: 14px !important;
+				}
+				.select2-container--default .select2-selection--multiple .select2-search__field {
+					min-height: 36px !important;
+					font-size: 16px !important;
+				}
+			}
+		' );
+
 		wp_register_script( 'dkpdf' . '-settings-js', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array(
 			'farbtastic',
-			'jquery'
+			'jquery',
+			'select2'
 		), '1.0.0' );
 		wp_enqueue_script( 'dkpdf' . '-settings-js' );
+
+		// Localize script for AJAX
+		wp_localize_script( 'dkpdf' . '-settings-js', 'dkpdf_ajax', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'dkpdf_ajax_nonce' )
+		) );
 	}
 
 	/**
@@ -443,11 +529,13 @@ class Settings {
 				$custom_fields_settings['fields'][] = array(
 					'id'          => 'custom_fields_' . $post_type,
 					'label'       => sprintf( __( '%s', 'dkpdf' ), ucfirst( $post_type ) ),
-					'description' => sprintf( __( 'Select custom fields to display for %s in PDF.', 'dkpdf' ), $post_type ),
-					'type'        => 'select_multi',
+					'description' => __( 'Click to select custom fields or type to search. Selected fields will be displayed in PDFs after the main content.', 'dkpdf' ),
+					'type'        => 'select2_multi',
 					'options'     => $field_options,
 					'default'     => array(),
 					'depends_on'  => 'dkpdf_selected_template',
+					'ajax_action' => 'dkpdf_get_custom_fields',
+					'post_type'   => $post_type,
 				);
 			}
 

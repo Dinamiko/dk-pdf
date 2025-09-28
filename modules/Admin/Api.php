@@ -196,6 +196,34 @@ class Api {
 				$html .= '</select> ';
 				break;
 
+			case 'select2_multi':
+				// Add Select2 attributes for AJAX functionality
+				$ajax_attributes = '';
+				if ( isset( $field['ajax_action'] ) ) {
+					$ajax_attributes .= ' data-ajax-action="' . esc_attr( $field['ajax_action'] ) . '"';
+				}
+				if ( isset( $field['post_type'] ) ) {
+					$ajax_attributes .= ' data-post-type="' . esc_attr( $field['post_type'] ) . '"';
+				}
+
+				$html .= '<select name="' . esc_attr( $option_name ) . '[]" id="' . esc_attr( $field['id'] ) . '" multiple="multiple" class="dkpdf-select2-ajax"' . $ajax_attributes . '>';
+
+				// Ensure data is an array for multi-select
+				if ( ! is_array( $data ) ) {
+					$data = array();
+				}
+
+				// Pre-populate with currently selected options
+				foreach ( $field['options'] as $k => $v ) {
+					$selected = false;
+					if ( in_array( $k, $data ) ) {
+						$selected = true;
+						$html .= '<option ' . selected( $selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
+					}
+				}
+				$html .= '</select> ';
+				break;
+
 			case 'image':
 				$image_thumb = '';
 				if ( $data ) {

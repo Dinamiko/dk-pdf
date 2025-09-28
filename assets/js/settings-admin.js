@@ -100,4 +100,75 @@ jQuery(document).ready(function($) {
 
         return false;
     });
+
+    /***** Select2 for Custom Fields with AJAX *****/
+
+    // Initialize Select2 for custom fields dropdowns
+    jQuery('.dkpdf-select2-ajax').each(function() {
+        var $select = $(this);
+        var postType = $select.data('post-type');
+        var ajaxAction = $select.data('ajax-action');
+
+        if (!postType || !ajaxAction) {
+            // Fallback to regular Select2 if no AJAX data
+            $select.select2({
+                placeholder: 'Select custom fields...',
+                width: '100%'
+            });
+            return;
+        }
+
+        $select.select2({
+            placeholder: '',
+            width: '100%',
+            minimumInputLength: 0,
+            dropdownAutoWidth: true,
+            ajax: {
+                url: dkpdf_ajax.ajax_url,
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term || '',
+                        post_type: postType,
+                        action: ajaxAction,
+                        nonce: dkpdf_ajax.nonce
+                    };
+                },
+                processResults: function(data) {
+                    if (data.success && data.data) {
+                        return {
+                            results: data.data
+                        };
+                    }
+                    return {
+                        results: []
+                    };
+                },
+                cache: true
+            }
+        });
+
+        // Force responsive behavior after initialization
+        $select.on('select2:open', function() {
+            $('.select2-dropdown').css('width', '100%');
+        });
+    });
+
+    // Handle window resize for responsive behavior
+    $(window).on('resize', function() {
+        $('.dkpdf-select2-ajax').each(function() {
+            var $select = $(this);
+            if ($select.hasClass('select2-hidden-accessible')) {
+                // Trigger resize to force Select2 to recalculate dimensions
+                $select.select2('destroy').select2({
+                    placeholder: '',
+                    width: '100%',
+                    minimumInputLength: 0,
+                    dropdownAutoWidth: true,
+                    data: $select.data('current-selection') || []
+                });
+            }
+        });
+    });
 });
