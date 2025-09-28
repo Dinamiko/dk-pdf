@@ -130,7 +130,6 @@ class Helper {
 		// Only return content if we have fields to display
 		if ( $field_count > 0 ) {
 			return '<div class="custom-fields-section">' . "\n" .
-			       '<h3>' . esc_html__( 'Custom Fields', 'dkpdf' ) . '</h3>' . "\n" .
 			       $output .
 			       '</div>' . "\n";
 		}
