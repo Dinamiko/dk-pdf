@@ -235,6 +235,12 @@ class Api {
 				$html .= '<input id="' . $option_name . '" class="image_data_field" type="hidden" name="' . $option_name . '" value="' . $data . '"/><br/>' . "\n";
 				break;
 
+			case 'info_text':
+				$html .= '<div class="info-text" style="padding: 10px; background-color: #f0f8ff; border: 1px solid #cce7ff; border-radius: 4px; color: #333;">';
+				$html .= '<p style="margin: 0; font-style: italic;">' . esc_html( $field['description'] ) . '</p>';
+				$html .= '</div>';
+				break;
+
 			case 'color':
 				?><div class="color-picker" style="position:relative;">
 				<?php // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?>
