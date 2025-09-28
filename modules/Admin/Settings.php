@@ -81,12 +81,13 @@ class Settings {
 				width: 100% !important;
 				max-width: 100% !important;
 				min-width: 0 !important;
-				min-height: 30px !important;
+				min-height: 28px !important;
 				box-sizing: border-box !important;
 				overflow: hidden !important;
 				flex-wrap: wrap !important;
 				display: flex !important;
 				align-items: flex-start !important;
+				padding: 2px 6px !important;
 			}
 
 			/* Selected items responsive */
@@ -100,6 +101,8 @@ class Settings {
 				overflow: hidden !important;
 				text-overflow: ellipsis !important;
 				box-sizing: border-box !important;
+				padding-left: 25px !important;
+				padding-right: 5px !important;
 			}
 
 			/* Input field responsive */
@@ -120,16 +123,16 @@ class Settings {
 			/* Mobile specific rules */
 			@media (max-width: 782px) {
 				.select2-container--default .select2-selection--multiple {
-					min-height: 40px !important;
-					padding: 2px !important;
+					min-height: 32px !important;
+					padding: 3px 8px !important;
 				}
 				.select2-container--default .select2-selection--multiple .select2-selection__choice {
-					padding: 5px 8px !important;
-					margin: 2px !important;
+					padding: 3px 6px !important;
+					margin: 1px !important;
 					font-size: 14px !important;
 				}
 				.select2-container--default .select2-selection--multiple .select2-search__field {
-					min-height: 36px !important;
+					min-height: 28px !important;
 					font-size: 16px !important;
 				}
 			}
