@@ -419,6 +419,44 @@ class Settings {
 			);
 		}
 
+		// Custom Fields settings - only show when not using legacy templates
+		$selected_template = get_option( 'dkpdf_selected_template' );
+		$selected_post_types = get_option( 'dkpdf_pdfbutton_post_types', array() );
+
+		if ( ! empty( $selected_template ) && ! empty( $selected_post_types ) ) {
+			$custom_fields_settings = array(
+				'title'       => __( 'Custom Fields', 'dkpdf' ),
+				'description' => __( 'Select custom fields to include in PDF for each post type.', 'dkpdf' ),
+				'fields'      => array()
+			);
+
+			// Add a field for each selected post type
+			foreach ( $selected_post_types as $post_type ) {
+				$custom_fields = $this->helper->get_custom_fields_for_post_type( $post_type );
+
+				// Always create a field, even if no custom fields exist yet
+				$field_options = array( '' => __( '-- Select Custom Field --', 'dkpdf' ) );
+				if ( ! empty( $custom_fields ) ) {
+					$field_options = array_merge( $field_options, $custom_fields );
+				}
+
+				$custom_fields_settings['fields'][] = array(
+					'id'          => 'custom_fields_' . $post_type,
+					'label'       => sprintf( __( '%s', 'dkpdf' ), ucfirst( $post_type ) ),
+					'description' => sprintf( __( 'Select custom fields to display for %s in PDF.', 'dkpdf' ), $post_type ),
+					'type'        => 'select_multi',
+					'options'     => $field_options,
+					'default'     => array(),
+					'depends_on'  => 'dkpdf_selected_template',
+				);
+			}
+
+			// Only add the custom fields section if there are fields to show
+			if ( ! empty( $custom_fields_settings['fields'] ) ) {
+				$settings['custom_fields'] = $custom_fields_settings;
+			}
+		}
+
 		return apply_filters( 'dkpdf_settings_fields', $settings );
 	}
 

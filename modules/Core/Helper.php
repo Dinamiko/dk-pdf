@@ -43,4 +43,36 @@ class Helper {
 
 		return apply_filters( 'dkpdf_taxonomies_arr', $tax_arr );
 	}
+
+	/**
+	 * Returns array of custom fields for a specific post type
+	 *
+	 * @param string $post_type The post type to get custom fields for
+	 * @return array Array of custom fields formatted for select options
+	 */
+	public function get_custom_fields_for_post_type( string $post_type ): array {
+		global $wpdb;
+
+		// Get all distinct meta keys for the specified post type
+		// Exclude WordPress internal keys (starting with _) and plugin keys (starting with dkpdf_)
+		$meta_keys = $wpdb->get_col( $wpdb->prepare(
+			"SELECT DISTINCT pm.meta_key
+			FROM {$wpdb->postmeta} pm
+			INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+			WHERE p.post_type = %s
+			AND pm.meta_key NOT LIKE '\_%'
+			AND pm.meta_key NOT LIKE 'dkpdf\_%'
+			ORDER BY pm.meta_key",
+			$post_type
+		) );
+
+		$custom_fields = array();
+
+		// Format meta keys for select options
+		foreach ( $meta_keys as $meta_key ) {
+			$custom_fields[ $meta_key ] = $meta_key;
+		}
+
+		return apply_filters( 'dkpdf_custom_fields_for_post_type', $custom_fields, $post_type );
+	}
 }

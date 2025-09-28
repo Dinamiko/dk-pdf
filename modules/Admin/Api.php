@@ -91,7 +91,12 @@ class Api {
 		if ( $data === false && isset( $field['default'] ) ) {
 			$data = $field['default'];
 		} elseif ( $data === false ) {
-			$data = '';
+			// Set appropriate default based on field type
+			if ( in_array( $field['type'], array( 'select_multi', 'checkbox_multi' ) ) ) {
+				$data = array();
+			} else {
+				$data = '';
+			}
 		}
 
 		$html = '';
@@ -175,6 +180,12 @@ class Api {
 
 			case 'select_multi':
 				$html .= '<select name="' . esc_attr( $option_name ) . '[]" id="' . esc_attr( $field['id'] ) . '" multiple="multiple">';
+
+				// Ensure data is an array for multi-select
+				if ( ! is_array( $data ) ) {
+					$data = array();
+				}
+
 				foreach ( $field['options'] as $k => $v ) {
 					$selected = false;
 					if ( in_array( $k, $data ) ) {
