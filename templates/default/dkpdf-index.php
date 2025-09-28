@@ -5,6 +5,23 @@
     <style>
         a, code, ins, kbd, tt {background-color: transparent;}
 
+        .custom-fields-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .custom-fields-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .custom-field-item {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
         <?php
             $css = get_option( 'dkpdf_pdf_custom_css', '' );
             echo esc_attr($css);
@@ -59,6 +76,15 @@
                             <?php the_content(); ?>
                         </div>
                         <?php
+                    }
+
+                    // Display custom fields if not using legacy template and fields are selected
+                    $selected_template = get_option( 'dkpdf_selected_template', '' );
+                    if ( ! empty( $selected_template ) ) {
+                        $custom_fields_html = apply_filters( 'dkpdf_get_custom_fields_display', '', get_the_ID() );
+                        if ( ! empty( $custom_fields_html ) ) {
+                            echo $custom_fields_html;
+                        }
                     }
                     ?>
                 </article>

@@ -75,4 +75,82 @@ class Helper {
 
 		return apply_filters( 'dkpdf_custom_fields_for_post_type', $custom_fields, $post_type );
 	}
+
+	/**
+	 * Get formatted custom fields display for a post
+	 *
+	 * @param int $post_id The post ID to get custom fields for
+	 * @return string Formatted HTML for custom fields display
+	 */
+	public function get_custom_fields_display( int $post_id ): string {
+		// Check if we should display custom fields (not using legacy template)
+		$selected_template = get_option( 'dkpdf_selected_template', '' );
+		if ( empty( $selected_template ) ) {
+			return '';
+		}
+
+		$post = get_post( $post_id );
+		if ( ! $post ) {
+			return '';
+		}
+
+		// Get selected custom fields for this post type
+		$selected_fields = get_option( 'dkpdf_custom_fields_' . $post->post_type, array() );
+		if ( ! is_array( $selected_fields ) || empty( $selected_fields ) ) {
+			return '';
+		}
+
+		$output = '';
+		$field_count = 0;
+
+		foreach ( $selected_fields as $field_key ) {
+			// Skip empty field keys
+			if ( empty( $field_key ) ) {
+				continue;
+			}
+
+			$field_value = get_post_meta( $post_id, $field_key, true );
+
+			// Skip empty values
+			if ( empty( $field_value ) ) {
+				continue;
+			}
+
+			// Convert field key to readable format (snake_case to Title Case)
+			$field_label = $this->format_field_label( $field_key );
+
+			$output .= '<div class="custom-field-item">';
+			$output .= '<strong>' . esc_html( $field_label ) . ':</strong> ';
+			$output .= esc_html( $field_value );
+			$output .= '</div>' . "\n";
+
+			$field_count++;
+		}
+
+		// Only return content if we have fields to display
+		if ( $field_count > 0 ) {
+			return '<div class="custom-fields-section">' . "\n" .
+			       '<h3>' . esc_html__( 'Custom Fields', 'dkpdf' ) . '</h3>' . "\n" .
+			       $output .
+			       '</div>' . "\n";
+		}
+
+		return '';
+	}
+
+	/**
+	 * Convert field key to readable label format
+	 *
+	 * @param string $field_key The field key to format
+	 * @return string Formatted field label
+	 */
+	private function format_field_label( string $field_key ): string {
+		// Replace underscores with spaces
+		$label = str_replace( '_', ' ', $field_key );
+
+		// Convert to title case
+		$label = ucwords( $label );
+
+		return $label;
+	}
 }
