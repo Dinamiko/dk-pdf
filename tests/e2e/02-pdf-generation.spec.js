@@ -4,9 +4,9 @@ import {loginAsAdmin} from "./utils";
 import {execSync} from "node:child_process";
 
 test.describe('PDF Generation - Core Functionality', () => {
-    // test.beforeAll(() => {
-    //     execSync('wp-env clean tests', { stdio: 'inherit' });
-    // });
+    test.beforeAll(() => {
+        execSync('wp-env clean tests', { stdio: 'inherit' });
+    });
 
     test.beforeEach(async ({page}) => {
         await loginAsAdmin(page);
