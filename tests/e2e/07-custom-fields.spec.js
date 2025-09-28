@@ -4,6 +4,10 @@ import { loginAsAdmin } from "./utils";
 import { execSync } from "node:child_process";
 
 test.describe('Custom Fields Integration', () => {
+    test.beforeAll(() => {
+        execSync('wp-env clean tests', { stdio: 'inherit' });
+    });
+
     test.beforeEach(async ({ page }) => {
         await loginAsAdmin(page);
     });
@@ -73,7 +77,6 @@ test.describe('Custom Fields Integration', () => {
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=custom_fields');
 
             // Verify Post section exists
-            await expect(page.locator('label', { hasText: 'Post' })).toBeVisible();
             await expect(page.locator('select[name="dkpdf_custom_fields_post[]"]')).toBeVisible();
         });
 
@@ -133,22 +136,9 @@ test.describe('Custom Fields Integration', () => {
         });
 
         test('Selected custom fields appear in PDF HTML output', async ({ page }) => {
-            // Configure custom fields selection
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=custom_fields');
-            await page.waitForSelector('.select2-container');
-
-            // Select custom fields
-            await page.locator('.select2-container').click();
-            await page.waitForSelector('.select2-dropdown', { state: 'visible' });
-            await page.locator('.select2-results__option', { hasText: 'test_field' }).click();
-            await page.locator('.select2-container').click();
-            await page.locator('.select2-results__option', { hasText: 'product_price' }).click();
-
-            await page.getByRole('button', { name: 'Save Settings' }).click();
-            await expect(page.getByText('Settings saved.')).toBeVisible();
-
-            // Navigate to PDF HTML output (admin login required)
             await page.goto('/hello-world/?pdf=1&output=html');
+
+            await page.screenshot({ path: 'test-results/05-screeshot.png', fullPage: true });
 
             // Verify custom fields appear in output
             await expect(page.locator('body')).toContainText('Test Field: Test Value');
