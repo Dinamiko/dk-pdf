@@ -62,23 +62,46 @@ class Settings {
 
 		// Add responsive CSS for Select2
 		wp_add_inline_style( 'select2', '
-			/* Force responsive container */
-			.dkpdf-select2-ajax {
+			/* Prevent horizontal overflow on settings page */
+			#dkpdf_settings {
+				overflow-x: hidden !important;
+			}
+
+			/* Constrain the wrapper and form */
+			#dkpdf_settings .wrap {
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+			}
+
+			#dkpdf_settings form {
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+			}
+
+			/* Force form table to respect container width */
+			#dkpdf_settings .form-table {
 				width: 100% !important;
 				max-width: 100% !important;
+				box-sizing: border-box !important;
+				margin: 0 !important;
+			}
+
+			#dkpdf_settings .form-table th,
+			#dkpdf_settings .form-table td {
+				box-sizing: border-box !important;
+				padding-right: 0 !important;
 			}
 
 			/* Container responsive rules */
 			.select2-container.select2-container--default {
-				width: 100% !important;
 				max-width: 100% !important;
 				min-width: 0 !important;
 				box-sizing: border-box !important;
+				margin: 0 !important;
 			}
 
 			/* Selection box responsive rules */
 			.select2-container--default .select2-selection--multiple {
-				width: 100% !important;
 				max-width: 100% !important;
 				min-width: 0 !important;
 				min-height: 28px !important;
@@ -112,12 +135,53 @@ class Settings {
 				flex-grow: 1 !important;
 			}
 
-			/* Dropdown responsive */
-			.select2-dropdown {
-				width: auto !important;
-				min-width: 100% !important;
+			/* Dropdown responsive - constrain both container and dropdown */
+			.select2-container--open {
 				max-width: 100% !important;
 				box-sizing: border-box !important;
+			}
+
+			.select2-dropdown {
+				max-width: 100vw !important;
+				box-sizing: border-box !important;
+				left: 0 !important;
+				right: auto !important;
+			}
+
+			/* Constrain dropdown width when attached to body */
+			body > .select2-container--open .select2-dropdown {
+				max-width: calc(100vw - 180px) !important;
+				box-sizing: border-box !important;
+			}
+
+			/* Constrain search field in dropdown */
+			.select2-search--dropdown {
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+			.select2-search--dropdown .select2-search__field {
+				max-width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+			/* Constrain results */
+			.select2-results {
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+				box-sizing: border-box !important;
+			}
+
+			.select2-results__options {
+				max-width: 100% !important;
+				overflow-x: hidden !important;
+			}
+
+			.select2-results__option {
+				max-width: 100% !important;
+				overflow-wrap: break-word !important;
+				word-wrap: break-word !important;
+				white-space: normal !important;
 			}
 
 			/* Mobile specific rules */
@@ -134,6 +198,11 @@ class Settings {
 				.select2-container--default .select2-selection--multiple .select2-search__field {
 					min-height: 28px !important;
 					font-size: 16px !important;
+				}
+
+				/* More aggressive constraints on mobile */
+				body > .select2-container--open .select2-dropdown {
+					max-width: calc(100vw - 40px) !important;
 				}
 			}
 		' );
