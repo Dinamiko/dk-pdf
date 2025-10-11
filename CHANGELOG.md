@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2.1.0
+- Enhancement - Add custom fields support.
 - Fix - Display pdf button in wc taxonomies to apply.
 
 ## 2.0.2

@@ -61,10 +61,12 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 9. WooCommerce Product PDF
 10. WooCommerce Shop PDF
 11. Disable PDF Button Metabox
+12. Custom Fields support
 
 == Changelog ==
 
 = 2.1.0 =
+- Enhancement - Add custom fields support.
 - Fix - Display pdf button in wc taxonomies to apply.
 
 = 2.0.2 =
