@@ -14,13 +14,15 @@ class PDFModule implements ServiceModule, ExecutableModule {
 	public function services(): array {
 		return [
 			'pdf.context_manager'  => static fn( $container ) => new ContextManager(),
+			'pdf.title_resolver'   => static fn( $container ) => new TitleResolver(),
 			'pdf.document_builder' => static fn( $container ) => new DocumentBuilder(
 				$container->get( 'template.renderer' )
 			),
 			'pdf.generator'        => static fn( $container ) => new Generator(
 				$container->get( 'template.renderer' ),
 				$container->get( 'pdf.document_builder' ),
-				$container->get( 'pdf.context_manager' )
+				$container->get( 'pdf.context_manager' ),
+				$container->get( 'pdf.title_resolver' )
 			),
 		];
 	}

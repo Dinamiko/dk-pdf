@@ -12,11 +12,13 @@ class Generator {
 	private TemplateRenderer $renderer;
 	private DocumentBuilder $documentBuilder;
 	private ContextManager $contextManager;
+	private TitleResolver $titleResolver;
 
-	public function __construct( TemplateRenderer $renderer, DocumentBuilder $documentBuilder, ContextManager $contextManager ) {
+	public function __construct( TemplateRenderer $renderer, DocumentBuilder $documentBuilder, ContextManager $contextManager, TitleResolver $titleResolver ) {
 		$this->renderer        = $renderer;
 		$this->documentBuilder = $documentBuilder;
 		$this->contextManager  = $contextManager;
+		$this->titleResolver   = $titleResolver;
 	}
 
 	public function handle_pdf_request( $wp = null ): void {
@@ -45,7 +47,7 @@ class Generator {
 
 	private function generate_pdf(): void {
 		try {
-			$title = $this->get_pdf_title();
+			$title = $this->titleResolver->resolveTitle();
 			$this->documentBuilder->generate( $title );
 		} catch ( \Exception $e ) {
 			// Clean any output buffers before showing error
@@ -65,39 +67,5 @@ class Generator {
 		$template_content = $this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 		echo preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content );
 		exit;
-	}
-
-	/**
-	 * Get the PDF title based on current context
-	 *
-	 * @return string The PDF title
-	 */
-	private function get_pdf_title(): string {
-		global $post, $wp_query;
-		$title = '';
-
-		// Determine title based on context
-		if ( $post && isset( $post->ID ) ) {
-			// Single post/page context
-			$title = get_the_title( $post->ID );
-		} elseif ( isset( $wp_query->queried_object ) ) {
-			// Archive context
-			if ( $wp_query->queried_object instanceof \WP_Term ) {
-				$title = $wp_query->queried_object->name;
-			} elseif ( $wp_query->queried_object instanceof \WP_Post ) {
-				$title = $wp_query->queried_object->post_title;
-			}
-		}
-
-		// Fallback if no title available
-		if ( empty( $title ) ) {
-			if ( function_exists( 'is_shop' ) && is_shop() ) {
-				$title = __( 'Shop', 'dkpdf' );
-			} else {
-				$title = 'PDF Document';
-			}
-		}
-
-		return apply_filters( 'dkpdf_pdf_filename', $title );
 	}
 }
