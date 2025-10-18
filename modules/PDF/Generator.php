@@ -10,6 +10,40 @@ use Dinamiko\DKPDF\Vendor\Mpdf\Mpdf;
 
 class Generator {
 
+	// Archive type constants
+	private const ARCHIVE_TYPE_SHOP = 'shop';
+	private const PREFIX_PRODUCT_CAT = 'product_cat_';
+	private const PREFIX_PRODUCT_TAG = 'product_tag_';
+	private const PREFIX_CATEGORY = 'category_';
+	private const PREFIX_TAG = 'tag_';
+
+	// Debug output constant
+	private const DEBUG_OUTPUT_HTML = 'html';
+
+	// Taxonomy configuration map
+	private const TAXONOMY_CONFIG = [
+		self::PREFIX_PRODUCT_CAT => [
+			'taxonomy'  => 'product_cat',
+			'post_type' => 'product',
+			'is_tag'    => false,
+		],
+		self::PREFIX_PRODUCT_TAG => [
+			'taxonomy'  => 'product_tag',
+			'post_type' => 'product',
+			'is_tag'    => true,
+		],
+		self::PREFIX_CATEGORY => [
+			'taxonomy'  => 'category',
+			'post_type' => 'post',
+			'is_tag'    => false,
+		],
+		self::PREFIX_TAG => [
+			'taxonomy'  => 'post_tag',
+			'post_type' => 'post',
+			'is_tag'    => true,
+		],
+	];
+
 	private TemplateRenderer $renderer;
 
 	public function __construct(TemplateRenderer $renderer) {
@@ -32,7 +66,7 @@ class Generator {
 
 		// For debugging - output HTML only if admin and output=html param is provided
 		$output = isset( $_GET['output'] ) ? sanitize_text_field( $_GET['output'] ) : '';
-		if ( $output === 'html' && current_user_can( 'manage_options' ) ) {
+		if ( $output === self::DEBUG_OUTPUT_HTML && current_user_can( 'manage_options' ) ) {
 			$this->output_html_debug();
 			return;
 		}
@@ -99,6 +133,72 @@ class Generator {
 		$wp_query->queried_object_id = $post_id;
 	}
 
+	/**
+	 * Set up shop archive context
+	 */
+	private function setup_shop_archive(): void {
+		global $wp_query;
+
+		if ( ! function_exists( 'wc_get_page_id' ) ) {
+			throw new \Exception( 'WooCommerce not active, cannot generate shop PDF' );
+		}
+
+		$shop_page_id = wc_get_page_id( 'shop' );
+		if ( $shop_page_id <= 0 ) {
+			throw new \Exception( 'Shop page not configured in WooCommerce' );
+		}
+
+		$shop_page = get_post( $shop_page_id );
+		if ( ! $shop_page || $shop_page->post_status !== 'publish' ) {
+			throw new \Exception( 'Shop page not found or not published' );
+		}
+
+		$wp_query->queried_object_id = $shop_page_id;
+		$wp_query->queried_object = $shop_page;
+		$wp_query->is_shop = true;
+		$wp_query->is_post_type_archive = true;
+
+		// Query shop products
+		$this->query_archive_posts( 'product', null, null );
+	}
+
+	/**
+	 * Set up taxonomy archive context
+	 *
+	 * @param string $prefix The taxonomy prefix (e.g., 'product_cat_', 'category_')
+	 * @param string $archive_type The full archive type string
+	 */
+	private function setup_taxonomy_archive( string $prefix, string $archive_type ): void {
+		global $wp_query;
+
+		$config = self::TAXONOMY_CONFIG[ $prefix ] ?? null;
+		if ( ! $config ) {
+			throw new \Exception( 'Unknown taxonomy prefix: ' . $prefix );
+		}
+
+		// Extract term ID from archive type
+		$term_id = (int) str_replace( $prefix, '', $archive_type );
+		$term = get_term( $term_id, $config['taxonomy'] );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			throw new \Exception( ucfirst( $config['taxonomy'] ) . ' not found: ' . $term_id );
+		}
+
+		// Set query properties
+		$wp_query->queried_object = $term;
+		$wp_query->queried_object_id = $term_id;
+		$wp_query->is_tax = true;
+
+		if ( $config['is_tag'] ) {
+			$wp_query->is_tag = true;
+		} else {
+			$wp_query->is_category = true;
+		}
+
+		// Query posts for this taxonomy term
+		$this->query_archive_posts( $config['post_type'], $config['taxonomy'], $term_id );
+	}
+
 	private function setup_archive_context( string $archive_type ): void {
 		global $wp_query;
 
@@ -113,114 +213,58 @@ class Generator {
 		$wp_query->is_post_type_archive = false;
 		$wp_query->post = null;
 
-		// Handle different archive types
-		switch ( $archive_type ) {
-			case 'shop':
-				if ( ! function_exists( 'wc_get_page_id' ) ) {
-					throw new \Exception( 'WooCommerce not active, cannot generate shop PDF' );
-				}
-
-				$shop_page_id = wc_get_page_id( 'shop' );
-				if ( $shop_page_id <= 0 ) {
-					throw new \Exception( 'Shop page not configured in WooCommerce' );
-				}
-
-				$shop_page = get_post( $shop_page_id );
-				if ( ! $shop_page || $shop_page->post_status !== 'publish' ) {
-					throw new \Exception( 'Shop page not found or not published' );
-				}
-
-				$wp_query->queried_object_id = $shop_page_id;
-				$wp_query->queried_object = $shop_page;
-				$wp_query->is_shop = true;
-				$wp_query->is_post_type_archive = true;
-
-				// Query shop products
-				$this->query_archive_posts( 'product', null, null );
-				break;
-
-			default:
-				// Handle taxonomy archives (product categories, tags, regular categories/tags, etc.)
-				if ( strpos( $archive_type, 'product_cat_' ) === 0 ) {
-					$term_id = (int) str_replace( 'product_cat_', '', $archive_type );
-					$term = get_term( $term_id, 'product_cat' );
-					if ( ! $term || is_wp_error( $term ) ) {
-						throw new \Exception( 'Product category not found: ' . $term_id );
-					}
-					$wp_query->queried_object = $term;
-					$wp_query->queried_object_id = $term_id;
-					$wp_query->is_category = true;
-					$wp_query->is_tax = true;
-
-					// Query posts for this product category
-					$this->query_archive_posts( 'product', 'product_cat', $term_id );
-				} elseif ( strpos( $archive_type, 'product_tag_' ) === 0 ) {
-					$term_id = (int) str_replace( 'product_tag_', '', $archive_type );
-					$term = get_term( $term_id, 'product_tag' );
-					if ( ! $term || is_wp_error( $term ) ) {
-						throw new \Exception( 'Product tag not found: ' . $term_id );
-					}
-					$wp_query->queried_object = $term;
-					$wp_query->queried_object_id = $term_id;
-					$wp_query->is_tag = true;
-					$wp_query->is_tax = true;
-
-					// Query posts for this product tag
-					$this->query_archive_posts( 'product', 'product_tag', $term_id );
-				} elseif ( strpos( $archive_type, 'category_' ) === 0 ) {
-					$term_id = (int) str_replace( 'category_', '', $archive_type );
-					$term = get_term( $term_id, 'category' );
-					if ( ! $term || is_wp_error( $term ) ) {
-						throw new \Exception( 'Category not found: ' . $term_id );
-					}
-					$wp_query->queried_object = $term;
-					$wp_query->queried_object_id = $term_id;
-					$wp_query->is_category = true;
-					$wp_query->is_tax = true;
-
-					// Query posts for this category
-					$this->query_archive_posts( 'post', 'category', $term_id );
-				} elseif ( strpos( $archive_type, 'tag_' ) === 0 ) {
-					$term_id = (int) str_replace( 'tag_', '', $archive_type );
-					$term = get_term( $term_id, 'post_tag' );
-					if ( ! $term || is_wp_error( $term ) ) {
-						throw new \Exception( 'Tag not found: ' . $term_id );
-					}
-					$wp_query->queried_object = $term;
-					$wp_query->queried_object_id = $term_id;
-					$wp_query->is_tag = true;
-					$wp_query->is_tax = true;
-
-					// Query posts for this tag
-					$this->query_archive_posts( 'post', 'post_tag', $term_id );
-				} else {
-					// Handle generic taxonomy_termid format
-					$parts = explode( '_', $archive_type );
-					if ( count( $parts ) >= 2 ) {
-						$term_id = (int) array_pop( $parts );
-						$taxonomy = implode( '_', $parts );
-						$term = get_term( $term_id, $taxonomy );
-						if ( ! $term || is_wp_error( $term ) ) {
-							throw new \Exception( 'Term not found: ' . $taxonomy . ' - ' . $term_id );
-						}
-						$wp_query->queried_object = $term;
-						$wp_query->queried_object_id = $term_id;
-						$wp_query->is_tax = true;
-						if ( $taxonomy === 'category' ) {
-							$wp_query->is_category = true;
-						} elseif ( $taxonomy === 'post_tag' ) {
-							$wp_query->is_tag = true;
-						}
-
-						// Query posts for this taxonomy term
-						$post_type = $this->get_post_type_for_taxonomy( $taxonomy );
-						$this->query_archive_posts( $post_type, $taxonomy, $term_id );
-					} else {
-						throw new \Exception( 'Unknown archive type: ' . $archive_type );
-					}
-				}
-				break;
+		// Route to appropriate handler based on archive type
+		if ( $archive_type === self::ARCHIVE_TYPE_SHOP ) {
+			$this->setup_shop_archive();
+			return;
 		}
+
+		// Check for known taxonomy prefixes
+		foreach ( array_keys( self::TAXONOMY_CONFIG ) as $prefix ) {
+			if ( str_starts_with( $archive_type, $prefix ) ) {
+				$this->setup_taxonomy_archive( $prefix, $archive_type );
+				return;
+			}
+		}
+
+		// Handle generic taxonomy_termid format for custom taxonomies
+		$this->setup_generic_taxonomy_archive( $archive_type );
+	}
+
+	/**
+	 * Set up generic taxonomy archive for custom taxonomies
+	 *
+	 * @param string $archive_type The archive type string
+	 */
+	private function setup_generic_taxonomy_archive( string $archive_type ): void {
+		global $wp_query;
+
+		$parts = explode( '_', $archive_type );
+		if ( count( $parts ) < 2 ) {
+			throw new \Exception( 'Unknown archive type: ' . $archive_type );
+		}
+
+		$term_id = (int) array_pop( $parts );
+		$taxonomy = implode( '_', $parts );
+		$term = get_term( $term_id, $taxonomy );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			throw new \Exception( 'Term not found: ' . $taxonomy . ' - ' . $term_id );
+		}
+
+		$wp_query->queried_object = $term;
+		$wp_query->queried_object_id = $term_id;
+		$wp_query->is_tax = true;
+
+		if ( $taxonomy === 'category' ) {
+			$wp_query->is_category = true;
+		} elseif ( $taxonomy === 'post_tag' ) {
+			$wp_query->is_tag = true;
+		}
+
+		// Query posts for this taxonomy term
+		$post_type = $this->get_post_type_for_taxonomy( $taxonomy );
+		$this->query_archive_posts( $post_type, $taxonomy, $term_id );
 	}
 
 	private function output_html_debug(): void {
