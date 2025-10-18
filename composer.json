@@ -29,7 +29,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Dinamiko\\DKPDF\\Tests\\Unit\\": "tests/unit/"
+      "Dinamiko\\DKPDF\\Tests\\Unit\\": "tests/unit/",
+      "Dinamiko\\DKPDF\\Tests\\Integration\\": "tests/integration/"
     }
   },
   "config": {
