@@ -284,60 +284,13 @@ class Generator {
 	}
 
 	private function set_document_properties( Mpdf $mpdf ): void {
-		global $post, $wp_query;
-		$title = '';
-
-		// Determine title based on context
-		if ( $post && isset( $post->ID ) ) {
-			// Single post/page context
-			$title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
-		} elseif ( isset( $wp_query->queried_object ) ) {
-			// Archive context
-			if ( $wp_query->queried_object instanceof \WP_Term ) {
-				$title = apply_filters( 'dkpdf_pdf_filename', $wp_query->queried_object->name );
-			} elseif ( $wp_query->queried_object instanceof \WP_Post ) {
-				$title = apply_filters( 'dkpdf_pdf_filename', $wp_query->queried_object->post_title );
-			}
-		}
-
-		// Fallback if no title available
-		if ( empty( $title ) ) {
-			if ( function_exists( 'is_shop' ) && is_shop() ) {
-				$title = __( 'Shop', 'dkpdf' );
-			} else {
-				$title = 'PDF Document';
-			}
-		}
-
+		$title = $this->get_pdf_title();
 		$mpdf->SetTitle( $title );
 		$mpdf->SetAuthor( apply_filters( 'dkpdf_pdf_author', get_bloginfo( 'name' ) ) );
 	}
 
 	private function output_pdf( Mpdf $mpdf ): void {
-		global $post, $wp_query;
-		$title = '';
-
-		// Determine filename based on context
-		if ( $post && isset( $post->ID ) ) {
-			// Single post/page context
-			$title = apply_filters( 'dkpdf_pdf_filename', get_the_title( $post->ID ) );
-		} elseif ( isset( $wp_query->queried_object ) ) {
-			// Archive context
-			if ( $wp_query->queried_object instanceof \WP_Term ) {
-				$title = apply_filters( 'dkpdf_pdf_filename', $wp_query->queried_object->name );
-			} elseif ( $wp_query->queried_object instanceof \WP_Post ) {
-				$title = apply_filters( 'dkpdf_pdf_filename', $wp_query->queried_object->post_title );
-			}
-		}
-
-		// Fallback if no title available
-		if ( empty( $title ) ) {
-			if ( function_exists( 'is_shop' ) && is_shop() ) {
-				$title = __( 'Shop', 'dkpdf' );
-			} else {
-				$title = 'PDF Document';
-			}
-		}
+		$title = $this->get_pdf_title();
 
 		// Clean any previous output before sending PDF
 		if ( ob_get_level() ) {
@@ -347,6 +300,40 @@ class Generator {
 		$action = get_option( 'dkpdf_pdfbutton_action', 'open' ) == 'open' ? 'I' : 'D';
 		$mpdf->Output( $title . '.pdf', $action );
 		exit;
+	}
+
+	/**
+	 * Get the PDF title based on current context
+	 *
+	 * @return string The PDF title
+	 */
+	private function get_pdf_title(): string {
+		global $post, $wp_query;
+		$title = '';
+
+		// Determine title based on context
+		if ( $post && isset( $post->ID ) ) {
+			// Single post/page context
+			$title = get_the_title( $post->ID );
+		} elseif ( isset( $wp_query->queried_object ) ) {
+			// Archive context
+			if ( $wp_query->queried_object instanceof \WP_Term ) {
+				$title = $wp_query->queried_object->name;
+			} elseif ( $wp_query->queried_object instanceof \WP_Post ) {
+				$title = $wp_query->queried_object->post_title;
+			}
+		}
+
+		// Fallback if no title available
+		if ( empty( $title ) ) {
+			if ( function_exists( 'is_shop' ) && is_shop() ) {
+				$title = __( 'Shop', 'dkpdf' );
+			} else {
+				$title = 'PDF Document';
+			}
+		}
+
+		return apply_filters( 'dkpdf_pdf_filename', $title );
 	}
 
 	/**
