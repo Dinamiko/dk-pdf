@@ -19,3 +19,4 @@ wordpress
 
 .phpunit.cache
 phpunit.xml.bak
+/coverage/
