@@ -16,3 +16,6 @@ wordpress
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+.phpunit.cache
+phpunit.xml.bak

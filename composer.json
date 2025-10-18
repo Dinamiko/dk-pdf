@@ -6,7 +6,8 @@
   },
   "require-dev": {
     "mpdf/mpdf": "^8.2",
-    "johnpbloch/wordpress": "^6.8"
+    "johnpbloch/wordpress": "^6.8",
+    "phpunit/phpunit": "^11.4"
   },
   "extra": {
     "mozart": {
@@ -24,6 +25,11 @@
     "psr-4": {
       "Dinamiko\\DKPDF\\Vendor\\": "lib/packages/",
       "Dinamiko\\DKPDF\\": "modules/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dinamiko\\DKPDF\\Tests\\Unit\\": "tests/unit/"
     }
   },
   "config": {

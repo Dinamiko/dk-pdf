@@ -17,6 +17,7 @@
     "archive": "zip -r $npm_package_name.zip . -x **.git/\\* **node_modules/\\*",
     "postarchive": "npm run archive:cleanup && rm -rf $npm_package_name && unzip $npm_package_name.zip -d $npm_package_name && rm $npm_package_name.zip && zip -r $npm_package_name.zip $npm_package_name && rm -rf $npm_package_name",
     "archive:cleanup": "zip -d $npm_package_name.zip \\*.idea/\\* .wp-env.json CLAUDE.md CHANGELOG.md .claude/\\* .playwright-mcp/\\* bin/\\* wordpress/\\* playwright-report/\\* tmp/\\* wordpress_org_assets/\\* test-results/\\* fonts/\\* themes/\\* plugins/\\* tests/\\* .github/\\* wordpress_org_assets/\\* \\*.DS_Store \\*README.md \\*.gitignore \\*composer.json \\*composer.lock phpunit.xml.dist .phpunit.result.cache playwright.config.js \\*package.json \\*package-lock.json",
-    "tests:e2e": "wp-env clean tests && npx playwright test"
+    "tests:e2e": "wp-env clean tests && npx playwright test",
+    "tests:unit": "vendor/bin/phpunit --colors=always"
   }
 }
