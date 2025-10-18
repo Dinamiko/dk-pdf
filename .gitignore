@@ -10,6 +10,7 @@ themes/*
 plugins/*
 fonts/*
 wordpress
+docs
 
 # Playwright
 /test-results/
