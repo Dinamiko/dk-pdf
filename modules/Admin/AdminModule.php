@@ -13,24 +13,18 @@ class AdminModule implements ServiceModule, ExecutableModule {
 
 	public function services(): array {
 		return [
-			'admin.api' => static fn() => new Api(),
-			'admin.settings' => static fn($container) => new Settings(
-				$container->get('admin.api'),
-				$container->get('core.helper')
+			'admin.field_renderer' => static fn() => new FieldRenderer(),
+			'admin.field_validator' => static fn() => new FieldValidator(),
+			'admin.settings'        => static fn( $container ) => new Settings(
+				$container->get( 'admin.field_renderer' ),
+				$container->get( 'core.helper' )
 			),
-			'admin.sanitizer' => static fn() => new Sanitizer(),
-			'admin.metaboxes' => static fn() => new MetaBoxes(),
+			'admin.sanitizer'       => static fn() => new Sanitizer(),
+			'admin.metaboxes'       => static fn() => new MetaBoxes(),
 		];
 	}
 
 	public function run( ContainerInterface $container ): bool {
-		add_action( 'save_post', function () use ( $container ) {
-			$api = $container->get( 'admin.api' );
-			assert($api instanceof Api);
-
-			$api->save_meta_boxes();
-		} );
-
 		add_action( 'init', function() use ($container) {
 			$settings = $container->get( 'admin.settings' );
 			assert($settings instanceof Settings);

@@ -8,14 +8,14 @@ use Dinamiko\DKPDF\Core\Helper;
 class Settings {
 	public string $base = '';
 	public array $settings = array();
-	private Api $api;
-    private Helper $helper;
+	private FieldRenderer $field_renderer;
+	private Helper $helper;
 
-    public function __construct(Api $api, Helper $helper) {
-		$this->base = 'dkpdf_';
-		$this->api = $api;
-        $this->helper = $helper;
-    }
+	public function __construct( FieldRenderer $field_renderer, Helper $helper ) {
+		$this->base           = 'dkpdf_';
+		$this->field_renderer = $field_renderer;
+		$this->helper         = $helper;
+	}
 
 	/**
 	 * Initialise settings
@@ -675,7 +675,7 @@ class Settings {
 
 						// Add field to page
 						add_settings_field( $field['id'], $field['label'], array(
-							$this->api,
+							$this->field_renderer,
 							'display_field'
 						), 'dkpdf' . '_settings', $section, array( 'field' => $field, 'prefix' => $this->base ) );
 					}
