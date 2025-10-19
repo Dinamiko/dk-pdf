@@ -9,12 +9,14 @@ class Settings {
 	public string $base = '';
 	public array $settings = array();
 	private FieldRenderer $field_renderer;
+	private FieldValidator $field_validator;
 	private Helper $helper;
 
-	public function __construct( FieldRenderer $field_renderer, Helper $helper ) {
-		$this->base           = 'dkpdf_';
-		$this->field_renderer = $field_renderer;
-		$this->helper         = $helper;
+	public function __construct( FieldRenderer $field_renderer, FieldValidator $field_validator, Helper $helper ) {
+		$this->base            = 'dkpdf_';
+		$this->field_renderer  = $field_renderer;
+		$this->field_validator = $field_validator;
+		$this->helper          = $helper;
 	}
 
 	/**
@@ -663,15 +665,14 @@ class Settings {
 
 					// Only register and add the field if dependency is satisfied
 					if ( $should_register ) {
-						// Validation callback for field
-						$validation = '';
-						if ( isset( $field['callback'] ) ) {
-							$validation = $field['callback'];
-						}
+						// Get sanitization callback based on field type
+						$sanitize_callback = $this->get_sanitize_callback( $field );
 
-						// Register field
+						// Register field with sanitization
 						$option_name = $this->base . $field['id'];
-						register_setting( 'dkpdf' . '_settings', $option_name, $validation );
+						register_setting( 'dkpdf' . '_settings', $option_name, array(
+							'sanitize_callback' => $sanitize_callback,
+						) );
 
 						// Add field to page
 						add_settings_field( $field['id'], $field['label'], array(
@@ -773,6 +774,27 @@ class Settings {
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
+	}
+
+	/**
+	 * Get sanitization callback for a field based on its type
+	 *
+	 * @param array $field Field configuration
+	 * @return callable|string Sanitization callback
+	 */
+	private function get_sanitize_callback( array $field ) {
+		// If field has explicit callback, use it
+		if ( isset( $field['callback'] ) && is_callable( $field['callback'] ) ) {
+			return $field['callback'];
+		}
+
+		// Get field type
+		$type = $field['type'] ?? 'text';
+
+		// Return closure that uses FieldValidator
+		return function ( $value ) use ( $type ) {
+			return $this->field_validator->validate_field( $value, $type );
+		};
 	}
 
 }

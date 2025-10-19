@@ -13,13 +13,13 @@ class AdminModule implements ServiceModule, ExecutableModule {
 
 	public function services(): array {
 		return [
-			'admin.field_renderer' => static fn() => new FieldRenderer(),
+			'admin.field_renderer'  => static fn() => new FieldRenderer(),
 			'admin.field_validator' => static fn() => new FieldValidator(),
 			'admin.settings'        => static fn( $container ) => new Settings(
 				$container->get( 'admin.field_renderer' ),
+				$container->get( 'admin.field_validator' ),
 				$container->get( 'core.helper' )
 			),
-			'admin.sanitizer'       => static fn() => new Sanitizer(),
 			'admin.metaboxes'       => static fn() => new MetaBoxes(),
 		];
 	}
@@ -30,11 +30,6 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($settings instanceof Settings);
 
 			$settings->init_settings();
-
-			$sanitizer = $container->get( 'admin.sanitizer' );
-			assert($sanitizer instanceof Sanitizer);
-
-			$sanitizer->init_sanitization();
 
 			$metaboxes = $container->get( 'admin.metaboxes' );
 			assert($metaboxes instanceof MetaBoxes);
