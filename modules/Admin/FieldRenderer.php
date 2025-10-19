@@ -166,7 +166,8 @@ class FieldRenderer {
 			case 'radio':
 				foreach ( $field['options'] as $k => $v ) {
 					$checked = false;
-					if ( $k === $data ) {
+					// TODO strict comparison does not work here: $k is int (1) while $data is string ("1")
+					if ( $k == $data ) {
 						$checked = true;
 					}
 					$html .= '<label for="' . esc_attr( $field['id'] . '_' . $k ) . '"><input type="radio" ' . checked( $checked, true, false ) . ' name="' . esc_attr( $option_name ) . '" value="' . esc_attr( $k ) . '" id="' . esc_attr( $field['id'] . '_' . $k ) . '" /> ' . $v . '</label> ';
@@ -177,7 +178,8 @@ class FieldRenderer {
 				$html .= '<select name="' . esc_attr( $option_name ) . '" id="' . esc_attr( $field['id'] ) . '">';
 				foreach ( $field['options'] as $k => $v ) {
 					$selected = false;
-					if ( $k === $data ) {
+					// TODO strict comparison does not work here: $k is int (1) while $data is string ("1")
+					if ( $k == $data ) {
 						$selected = true;
 					}
 					$html .= '<option ' . selected( $selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
