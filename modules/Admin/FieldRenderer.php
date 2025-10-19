@@ -177,8 +177,14 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_text_field( array $field, $data, string $option_name ): string {
-		$placeholder = $field['placeholder'] ?? '';
-		return '<input id="' . esc_attr( $field['id'] ) . '" type="text" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $placeholder ) . '" value="' . esc_attr( $data ) . '" />' . "\n";
+		$attrs = $this->build_input_attributes(
+			$field['id'],
+			$option_name,
+			'text',
+			$data,
+			array( 'placeholder' => $this->get_placeholder( $field ) )
+		);
+		return '<input ' . $attrs . ' />' . "\n";
 	}
 
 	/**
@@ -190,11 +196,26 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_input_field( array $field, $data, string $option_name ): string {
-		$min = isset( $field['min'] ) ? ' min="' . esc_attr( $field['min'] ) . '"' : '';
-		$max = isset( $field['max'] ) ? ' max="' . esc_attr( $field['max'] ) . '"' : '';
-		$placeholder = $field['placeholder'] ?? '';
+		$extra_attrs = array(
+			'placeholder' => $this->get_placeholder( $field ),
+		);
 
-		return '<input id="' . esc_attr( $field['id'] ) . '" type="' . esc_attr( $field['type'] ) . '" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $placeholder ) . '" value="' . esc_attr( $data ) . '"' . $min . '' . $max . '/>' . "\n";
+		// Add min/max for number fields
+		if ( isset( $field['min'] ) ) {
+			$extra_attrs['min'] = $field['min'];
+		}
+		if ( isset( $field['max'] ) ) {
+			$extra_attrs['max'] = $field['max'];
+		}
+
+		$attrs = $this->build_input_attributes(
+			$field['id'],
+			$option_name,
+			$field['type'],
+			$data,
+			$extra_attrs
+		);
+		return '<input ' . $attrs . ' />' . "\n";
 	}
 
 	/**
@@ -205,8 +226,14 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_text_secret_field( array $field, string $option_name ): string {
-		$placeholder = $field['placeholder'] ?? '';
-		return '<input id="' . esc_attr( $field['id'] ) . '" type="text" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $placeholder ) . '" value="" />' . "\n";
+		$attrs = $this->build_input_attributes(
+			$field['id'],
+			$option_name,
+			'text',
+			'', // Always empty for secret fields
+			array( 'placeholder' => $this->get_placeholder( $field ) )
+		);
+		return '<input ' . $attrs . ' />' . "\n";
 	}
 
 	/**
@@ -218,9 +245,14 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_textarea_code_field( array $field, $data, string $option_name ): string {
-		$placeholder = $field['placeholder'] ?? '';
-		$html = '<div id="' . 'editor' . '">' . esc_textarea( $data ) . '</div>' . "\n";
-		$html .= '<textarea id="' . esc_attr( $option_name ) . '" rows="5" cols="50" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $data ) . '</textarea>' . "\n";
+		$attrs = $this->build_textarea_attributes(
+			$option_name,
+			$option_name,
+			array( 'placeholder' => $this->get_placeholder( $field ) )
+		);
+
+		$html = '<div id="editor">' . esc_textarea( $data ) . '</div>' . "\n";
+		$html .= '<textarea ' . $attrs . '>' . esc_textarea( $data ) . '</textarea>' . "\n";
 		return $html;
 	}
 
@@ -233,8 +265,12 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_textarea_field( array $field, $data, string $option_name ): string {
-		$placeholder = $field['placeholder'] ?? '';
-		return '<textarea id="' . esc_attr( $field['id'] ) . '" rows="5" cols="50" name="' . esc_attr( $option_name ) . '" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $data ) . '</textarea><br/>' . "\n";
+		$attrs = $this->build_textarea_attributes(
+			$field['id'],
+			$option_name,
+			array( 'placeholder' => $this->get_placeholder( $field ) )
+		);
+		return '<textarea ' . $attrs . '>' . esc_textarea( $data ) . '</textarea><br/>' . "\n";
 	}
 
 	/**
@@ -300,11 +336,7 @@ class FieldRenderer {
 	 */
 	private function render_select_field( array $field, $data, string $option_name ): string {
 		$html = '<select name="' . esc_attr( $option_name ) . '" id="' . esc_attr( $field['id'] ) . '">';
-		foreach ( $field['options'] as $k => $v ) {
-			// Use loose comparison to handle int/string type differences
-			$selected = ( (string) $k === (string) $data );
-			$html .= '<option ' . selected( $selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
-		}
+		$html .= $this->build_select_options( $field['options'], $data, false );
 		$html .= '</select> ';
 		return $html;
 	}
@@ -318,16 +350,8 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_select_multi_field( array $field, $data, string $option_name ): string {
-		// Ensure data is an array for multi-select
-		if ( ! is_array( $data ) ) {
-			$data = array();
-		}
-
 		$html = '<select name="' . esc_attr( $option_name ) . '[]" id="' . esc_attr( $field['id'] ) . '" multiple="multiple">';
-		foreach ( $field['options'] as $k => $v ) {
-			$selected = in_array( $k, $data, true );
-			$html .= '<option ' . selected( $selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
-		}
+		$html .= $this->build_select_options( $field['options'], $data, true );
 		$html .= '</select> ';
 		return $html;
 	}
@@ -357,10 +381,10 @@ class FieldRenderer {
 
 		$html = '<select name="' . esc_attr( $option_name ) . '[]" id="' . esc_attr( $field['id'] ) . '" multiple="multiple" class="dkpdf-select2-ajax"' . $ajax_attributes . '>';
 
-		// Pre-populate with currently selected options only
+		// Pre-populate with currently selected options only (for AJAX fields)
 		foreach ( $field['options'] as $k => $v ) {
 			if ( in_array( $k, $data, true ) ) {
-				$html .= '<option ' . selected( true, true, false ) . ' value="' . esc_attr( $k ) . '">' . $v . '</option>';
+				$html .= '<option ' . selected( true, true, false ) . ' value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
 			}
 		}
 		$html .= '</select> ';
@@ -454,5 +478,109 @@ class FieldRenderer {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Build common HTML attributes for input fields
+	 *
+	 * @param string $id          Field ID
+	 * @param string $name        Field name
+	 * @param string $type        Input type
+	 * @param mixed  $value       Field value
+	 * @param array  $extra_attrs Additional attributes (e.g., placeholder, min, max)
+	 * @return string HTML attributes string
+	 */
+	private function build_input_attributes( string $id, string $name, string $type, $value = '', array $extra_attrs = array() ): string {
+		$attrs = array(
+			'id'   => esc_attr( $id ),
+			'type' => esc_attr( $type ),
+			'name' => esc_attr( $name ),
+		);
+
+		// Add value attribute if provided
+		if ( $value !== '' || $type === 'text' || $type === 'hidden' || $type === 'password' || $type === 'number' ) {
+			$attrs['value'] = esc_attr( $value );
+		}
+
+		// Add extra attributes
+		foreach ( $extra_attrs as $key => $val ) {
+			if ( $val !== '' && $val !== null ) {
+				$attrs[ $key ] = esc_attr( $val );
+			}
+		}
+
+		// Build attribute string
+		$attr_string = '';
+		foreach ( $attrs as $key => $val ) {
+			$attr_string .= $key . '="' . $val . '" ';
+		}
+
+		return trim( $attr_string );
+	}
+
+	/**
+	 * Build HTML attributes for textarea fields
+	 *
+	 * @param string $id          Field ID
+	 * @param string $name        Field name
+	 * @param array  $extra_attrs Additional attributes (e.g., placeholder, rows, cols)
+	 * @return string HTML attributes string
+	 */
+	private function build_textarea_attributes( string $id, string $name, array $extra_attrs = array() ): string {
+		$attrs = array(
+			'id'   => esc_attr( $id ),
+			'name' => esc_attr( $name ),
+			'rows' => $extra_attrs['rows'] ?? '5',
+			'cols' => $extra_attrs['cols'] ?? '50',
+		);
+
+		// Add placeholder if provided
+		if ( isset( $extra_attrs['placeholder'] ) && $extra_attrs['placeholder'] !== '' ) {
+			$attrs['placeholder'] = esc_attr( $extra_attrs['placeholder'] );
+		}
+
+		// Build attribute string
+		$attr_string = '';
+		foreach ( $attrs as $key => $val ) {
+			$attr_string .= $key . '="' . $val . '" ';
+		}
+
+		return trim( $attr_string );
+	}
+
+	/**
+	 * Build HTML option elements for select fields
+	 *
+	 * @param array $options       Array of option key => label pairs
+	 * @param mixed $selected_data Currently selected value(s)
+	 * @param bool  $is_multi      Whether this is a multi-select
+	 * @return string HTML option elements
+	 */
+	private function build_select_options( array $options, $selected_data, bool $is_multi = false ): string {
+		$html = '';
+		$selected_array = $is_multi && is_array( $selected_data ) ? $selected_data : array();
+
+		foreach ( $options as $k => $v ) {
+			if ( $is_multi ) {
+				$is_selected = in_array( $k, $selected_array, true );
+			} else {
+				// Use string comparison to handle int/string type differences
+				$is_selected = ( (string) $k === (string) $selected_data );
+			}
+
+			$html .= '<option ' . selected( $is_selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Get placeholder value from field configuration
+	 *
+	 * @param array $field Field configuration
+	 * @return string Placeholder text
+	 */
+	private function get_placeholder( array $field ): string {
+		return $field['placeholder'] ?? '';
 	}
 }
