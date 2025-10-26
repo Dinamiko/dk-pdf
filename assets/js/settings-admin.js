@@ -148,27 +148,5 @@ jQuery(document).ready(function($) {
                 cache: true
             }
         });
-
-        // Force responsive behavior after initialization
-        $select.on('select2:open', function() {
-            $('.select2-dropdown').css('width', '100%');
-        });
-    });
-
-    // Handle window resize for responsive behavior
-    $(window).on('resize', function() {
-        $('.dkpdf-select2-ajax').each(function() {
-            var $select = $(this);
-            if ($select.hasClass('select2-hidden-accessible')) {
-                // Trigger resize to force Select2 to recalculate dimensions
-                $select.select2('destroy').select2({
-                    placeholder: '',
-                    width: '100%',
-                    minimumInputLength: 0,
-                    dropdownAutoWidth: true,
-                    data: $select.data('current-selection') || []
-                });
-            }
-        });
     });
 });

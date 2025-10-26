@@ -62,152 +62,8 @@ class Settings {
 		wp_enqueue_style( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0' );
 		wp_enqueue_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0' );
 
-		// Add responsive CSS for Select2
-		wp_add_inline_style( 'select2', '
-			/* Prevent horizontal overflow on settings page */
-			#dkpdf_settings {
-				overflow-x: hidden !important;
-			}
-
-			/* Constrain the wrapper and form */
-			#dkpdf_settings .wrap {
-				max-width: 100% !important;
-				overflow-x: hidden !important;
-			}
-
-			#dkpdf_settings form {
-				max-width: 100% !important;
-				overflow-x: hidden !important;
-			}
-
-			/* Force form table to respect container width */
-			#dkpdf_settings .form-table {
-				width: 100% !important;
-				max-width: 100% !important;
-				box-sizing: border-box !important;
-				margin: 0 !important;
-			}
-
-			#dkpdf_settings .form-table th,
-			#dkpdf_settings .form-table td {
-				box-sizing: border-box !important;
-				padding-right: 0 !important;
-			}
-
-			/* Container responsive rules */
-			.select2-container.select2-container--default {
-				max-width: 100% !important;
-				min-width: 0 !important;
-				box-sizing: border-box !important;
-				margin: 0 !important;
-			}
-
-			/* Selection box responsive rules */
-			.select2-container--default .select2-selection--multiple {
-				max-width: 100% !important;
-				min-width: 0 !important;
-				min-height: 28px !important;
-				box-sizing: border-box !important;
-				overflow: hidden !important;
-				flex-wrap: wrap !important;
-				display: flex !important;
-				align-items: flex-start !important;
-				padding: 2px 6px !important;
-			}
-
-			/* Selected items responsive */
-			.select2-container--default .select2-selection--multiple .select2-selection__choice {
-				max-width: 100% !important;
-				min-width: 0 !important;
-				flex-shrink: 1 !important;
-				word-wrap: break-word !important;
-				word-break: break-word !important;
-				white-space: normal !important;
-				overflow: hidden !important;
-				text-overflow: ellipsis !important;
-				box-sizing: border-box !important;
-				padding-left: 25px !important;
-				padding-right: 5px !important;
-			}
-
-			/* Input field responsive */
-			.select2-container--default .select2-selection--multiple .select2-search__field {
-				min-width: 50px !important;
-				max-width: 100% !important;
-				flex-grow: 1 !important;
-			}
-
-			/* Dropdown responsive - constrain both container and dropdown */
-			.select2-container--open {
-				max-width: 100% !important;
-				box-sizing: border-box !important;
-			}
-
-			.select2-dropdown {
-				max-width: 100vw !important;
-				box-sizing: border-box !important;
-				left: 0 !important;
-				right: auto !important;
-			}
-
-			/* Constrain dropdown width when attached to body */
-			body > .select2-container--open .select2-dropdown {
-				max-width: calc(100vw - 180px) !important;
-				box-sizing: border-box !important;
-			}
-
-			/* Constrain search field in dropdown */
-			.select2-search--dropdown {
-				max-width: 100% !important;
-				box-sizing: border-box !important;
-			}
-
-			.select2-search--dropdown .select2-search__field {
-				max-width: 100% !important;
-				box-sizing: border-box !important;
-			}
-
-			/* Constrain results */
-			.select2-results {
-				max-width: 100% !important;
-				overflow-x: hidden !important;
-				box-sizing: border-box !important;
-			}
-
-			.select2-results__options {
-				max-width: 100% !important;
-				overflow-x: hidden !important;
-			}
-
-			.select2-results__option {
-				max-width: 100% !important;
-				overflow-wrap: break-word !important;
-				word-wrap: break-word !important;
-				white-space: normal !important;
-			}
-
-			/* Mobile specific rules */
-			@media (max-width: 782px) {
-				.select2-container--default .select2-selection--multiple {
-					min-height: 32px !important;
-					padding: 3px 8px !important;
-				}
-				.select2-container--default .select2-selection--multiple .select2-selection__choice {
-					padding: 3px 6px !important;
-					margin: 1px !important;
-					font-size: 14px !important;
-				}
-				.select2-container--default .select2-selection--multiple .select2-search__field {
-					min-height: 28px !important;
-					font-size: 16px !important;
-				}
-
-				/* More aggressive constraints on mobile */
-				body > .select2-container--open .select2-dropdown {
-					max-width: calc(100vw - 40px) !important;
-				}
-			}
-		' );
+		// Enqueue admin CSS
+		wp_enqueue_style( 'dkpdf-admin-css', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), '1.0.0' );
 
 		wp_register_script( 'dkpdf' . '-settings-js', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array(
 			'farbtastic',
@@ -752,6 +608,10 @@ class Settings {
 
 				++ $c;
 			}
+
+			// Add right-aligned links
+			$html .= '<span class="dkpdf-nav-links">';
+			$html .= '<a href="https://dinamiko.dev/docs-categories/dk-pdf-documentation/" target="_blank"><i class="fa fa-file-o"></i> Documentation</a> | <a href="https://wordpress.org/support/plugin/dk-pdf/" target="_blank"><i class="fa fa-comment-o"></i> Support</a> | <a href="https://dinamiko.dev/dk-pdf-custom-services/" target="_blank"><i class="fa fa-star-o"></i> Need Customization?</a>';
 
 			$html .= '</h2>' . "\n";
 		}

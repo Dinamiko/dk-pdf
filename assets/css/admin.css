@@ -22,8 +22,41 @@
 	display: inline-block;
 }
 
-@media only screen and (min-width: 996px) {
+.nav-tab-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+}
 
+.dkpdf-nav-links {
+	margin-left: auto;
+	padding: 0 10px;
+	font-size: 0.85rem;
+}
+
+.dkpdf-nav-links a {
+	text-decoration: none;
+}
+
+.dkpdf-nav-links a:hover {
+	text-decoration: underline;
+}
+
+@media (max-width: 1300px) {
+	.nav-tab-wrapper {
+		justify-content: flex-start;
+	}
+
+	.dkpdf-nav-links {
+		order: -1;
+		margin-left: 0;
+		margin-bottom: 10px;
+		flex-basis: 100%;
+	}
+}
+
+@media only screen and (min-width: 996px) {
 	.dkpdf-item {
 		width:29%;
 		padding:5%;
@@ -34,5 +67,4 @@
 	#editor {
 		height:400px;
 	}
-
 }

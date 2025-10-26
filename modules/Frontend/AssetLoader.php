@@ -20,6 +20,9 @@ class AssetLoader {
 
 	public function admin_enqueue_styles( string $hook = '' ): void {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'dkpdf_settings' ) {
+			wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', array(), '4.3.0' );
+			wp_enqueue_style( 'font-awesome' );
+
 			wp_register_style( 'dkpdf-admin', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), DKPDF_VERSION );
 			wp_enqueue_style( 'dkpdf-admin' );
 		}
