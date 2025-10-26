@@ -49,6 +49,11 @@ function plugin(): Package {
 		                     ->addModule( new ShortcodeModule() )
 		                     ->addModule( new PDFModule() )
 		                     ->addModule( new WooCommerceModule() );
+
+		$modules = apply_filters( 'dkpdf_modules', [] );
+		foreach ( $modules as $module ) {
+			$package->addModule( $module );
+		}
 	}
 
 	/** @var Package $package */
