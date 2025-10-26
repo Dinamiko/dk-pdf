@@ -45,6 +45,10 @@
 	text-decoration: underline;
 }
 
+.select2 {
+    width:600px !important;
+}
+
 @media (max-width: 1400px) {
 	.nav-tab-wrapper {
 		justify-content: flex-start;
@@ -56,6 +60,10 @@
 		margin-bottom: 10px;
 		flex-basis: 100%;
 	}
+
+    .select2 {
+        width:100% !important;
+    }
 }
 
 @media only screen and (min-width: 996px) {

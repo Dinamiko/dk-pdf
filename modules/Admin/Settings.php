@@ -442,7 +442,7 @@ class Settings {
 		if ( ! empty( $selected_template ) ) {
 			$custom_fields_settings = array(
 				'title'       => __( 'Custom Fields', 'dkpdf' ),
-				'description' => __( 'Select custom fields to include in PDF for each post type selected in post types to apply.', 'dkpdf' ),
+				'description' => __( 'Select custom fields to include in PDF for each post type selected in PDF Button / Post types to apply.', 'dkpdf' ),
 				'fields'      => array()
 			);
 
@@ -460,7 +460,6 @@ class Settings {
 					$custom_fields_settings['fields'][] = array(
 						'id'          => 'custom_fields_' . $post_type,
 						'label'       => sprintf( __( '%s', 'dkpdf' ), ucfirst( $post_type ) ),
-						'description' => __( 'Click to select custom fields or type to search. Selected fields will be displayed in the PDF.', 'dkpdf' ),
 						'type'        => 'select2_multi',
 						'options'     => $field_options,
 						'default'     => array(),
