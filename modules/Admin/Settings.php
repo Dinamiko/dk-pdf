@@ -116,7 +116,7 @@ class Settings {
 				),
 				array(
 					'id'          => 'pdfbutton_post_types',
-					'label'       => __( 'Post types to apply:', 'dkpdf' ),
+					'label'       => __( 'Post types to apply', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'checkbox_multi',
 					'options'     => $post_types_arr,
@@ -124,7 +124,7 @@ class Settings {
 				),
 				array(
 					'id'          => 'pdfbutton_taxonomies',
-					'label'       => __( 'Taxonomies to apply:', 'dkpdf' ),
+					'label'       => __( 'Taxonomies to apply', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'checkbox_multi',
 					'options'     => $taxonomies_arr,
