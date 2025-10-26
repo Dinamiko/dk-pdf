@@ -36,7 +36,7 @@ class Settings {
 		$page = add_menu_page( 'DK PDF', 'DK PDF', 'manage_options', 'dkpdf' . '_settings', array(
 			$this,
 			'settings_page'
-		) );
+		), 'dashicons-pdf' );
 
 		// settings assets
 		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );

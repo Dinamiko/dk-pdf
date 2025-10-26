@@ -37,6 +37,8 @@
 
 .dkpdf-nav-links a {
 	text-decoration: none;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .dkpdf-nav-links a:hover {
