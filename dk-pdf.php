@@ -18,6 +18,7 @@ declare( strict_types=1 );
 namespace Dinamiko\DKPDF;
 
 use Dinamiko\DKPDF\Admin\AdminModule;
+use Dinamiko\DKPDF\ButtonVisibility\ButtonVisibilityModule;
 use Dinamiko\DKPDF\Core\CoreModule;
 use Dinamiko\DKPDF\Frontend\FrontendModule;
 use Dinamiko\DKPDF\PDF\PDFModule;
@@ -48,7 +49,8 @@ function plugin(): Package {
 		                     ->addModule( new FrontendModule() )
 		                     ->addModule( new ShortcodeModule() )
 		                     ->addModule( new PDFModule() )
-		                     ->addModule( new WooCommerceModule() );
+		                     ->addModule( new WooCommerceModule() )
+		                     ->addModule( new ButtonVisibilityModule() );
 
 		$modules = apply_filters( 'dkpdf_modules', [] );
 		foreach ( $modules as $module ) {

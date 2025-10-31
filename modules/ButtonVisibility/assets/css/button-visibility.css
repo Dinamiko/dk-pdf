@@ -1,0 +1,18 @@
+/**
+ * Button Visibility Feature Styles
+ */
+
+/* Force Select2 dropdown to open below the field */
+.select2-container--open .select2-dropdown--below {
+    border-top: 1px solid #aaa;
+}
+
+/* Ensure dropdown has enough space and opens downward */
+#button_visibility_roles + .select2-container .select2-dropdown {
+    margin-top: 0;
+}
+
+/* Force dropdown to appear below */
+.select2-container--open.select2-container--below .select2-dropdown {
+    top: 100%;
+}
