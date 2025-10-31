@@ -16,7 +16,9 @@
       "classmap_directory": "/lib/classes/",
       "classmap_prefix": "DKPDF_",
       "packages": [
-        "mpdf/mpdf"
+        "mpdf/mpdf",
+        "inpsyde/modularity",
+        "psr/container"
       ],
       "delete_vendor_directories": true
     }

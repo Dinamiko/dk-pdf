@@ -20,7 +20,7 @@ class SizeConverter implements \Dinamiko\DKPDF\Vendor\Psr\Log\LoggerAwareInterfa
 	 */
 	private $mpdf;
 
-	public function __construct($dpi, $defaultFontSize, $mpdf, LoggerInterface $logger)
+	public function __construct($dpi, $defaultFontSize, Mpdf $mpdf, LoggerInterface $logger)
 	{
 		$this->dpi = $dpi;
 		$this->defaultFontSize = $defaultFontSize;

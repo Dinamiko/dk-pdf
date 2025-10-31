@@ -3,8 +3,8 @@ declare( strict_types=1 );
 
 namespace Dinamiko\DKPDF\Template;
 
-use Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
-use Inpsyde\Modularity\Module\ServiceModule;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 
 class TemplateModule implements ServiceModule {
 	use ModuleClassNameIdTrait;

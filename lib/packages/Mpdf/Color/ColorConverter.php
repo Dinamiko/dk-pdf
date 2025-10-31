@@ -27,7 +27,7 @@ class ColorConverter
 
 	private $cache;
 
-	public function __construct($mpdf, ColorModeConverter $colorModeConverter, ColorSpaceRestrictor $colorSpaceRestrictor)
+	public function __construct(Mpdf $mpdf, ColorModeConverter $colorModeConverter, ColorSpaceRestrictor $colorSpaceRestrictor)
 	{
 		$this->mpdf = $mpdf;
 		$this->colorModeConverter = $colorModeConverter;

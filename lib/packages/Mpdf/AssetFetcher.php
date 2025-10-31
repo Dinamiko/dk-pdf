@@ -21,7 +21,7 @@ class AssetFetcher implements \Dinamiko\DKPDF\Vendor\Psr\Log\LoggerAwareInterfac
 
 	private $http;
 
-	public function __construct($mpdf, LocalContentLoaderInterface $contentLoader, ClientInterface $http, LoggerInterface $logger)
+	public function __construct(Mpdf $mpdf, LocalContentLoaderInterface $contentLoader, ClientInterface $http, LoggerInterface $logger)
 	{
 		$this->mpdf = $mpdf;
 		$this->contentLoader = $contentLoader;

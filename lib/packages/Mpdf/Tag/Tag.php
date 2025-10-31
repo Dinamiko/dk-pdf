@@ -84,7 +84,7 @@ abstract class Tag
 	];
 
 	public function __construct(
-		$mpdf,
+		Mpdf $mpdf,
 		Cache $cache,
 		CssManager $cssManager,
 		Form $form,

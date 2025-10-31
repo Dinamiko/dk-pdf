@@ -38,7 +38,7 @@ class ColorSpaceRestrictor
 	 * @param \Dinamiko\DKPDF\Vendor\Mpdf\Color\ColorModeConverter $colorModeConverter
 	 * @param int $mode
 	 */
-	public function __construct($mpdf, ColorModeConverter $colorModeConverter)
+	public function __construct(Mpdf $mpdf, ColorModeConverter $colorModeConverter)
 	{
 		$this->mpdf = $mpdf;
 		$this->colorModeConverter = $colorModeConverter;

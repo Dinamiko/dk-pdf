@@ -32,7 +32,7 @@ class FontWriter
 	 */
 	private $fontDescriptor;
 
-	public function __construct($mpdf, BaseWriter $writer, FontCache $fontCache, $fontDescriptor)
+	public function __construct(Mpdf $mpdf, BaseWriter $writer, FontCache $fontCache, $fontDescriptor)
 	{
 		$this->mpdf = $mpdf;
 		$this->writer = $writer;

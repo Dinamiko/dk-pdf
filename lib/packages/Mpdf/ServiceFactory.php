@@ -41,7 +41,7 @@ class ServiceFactory
 	}
 
 	public function getServices(
-		$mpdf,
+		Mpdf $mpdf,
 		LoggerInterface $logger,
 		$config,
 		$languageToFont,

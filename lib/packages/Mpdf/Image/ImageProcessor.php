@@ -93,7 +93,7 @@ class ImageProcessor implements \Dinamiko\DKPDF\Vendor\Psr\Log\LoggerAwareInterf
 	private $assetFetcher;
 
 	public function __construct(
-		$mpdf,
+		Mpdf $mpdf,
 		Otl $otl,
 		CssManager $cssManager,
 		SizeConverter $sizeConverter,

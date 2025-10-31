@@ -69,7 +69,7 @@ final class ResourceWriter implements \Dinamiko\DKPDF\Vendor\Psr\Log\LoggerAware
 	private $javaScriptWriter;
 
 	public function __construct(
-		$mpdf,
+		Mpdf $mpdf,
 		BaseWriter $writer,
 		ColorWriter $colorWriter,
 		FontWriter $fontWriter,

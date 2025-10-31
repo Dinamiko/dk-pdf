@@ -37,7 +37,7 @@ class MetadataWriter implements \Dinamiko\DKPDF\Vendor\Psr\Log\LoggerAwareInterf
 	 */
 	private $protection;
 
-	public function __construct($mpdf, BaseWriter $writer, Form $form, Protection $protection, LoggerInterface $logger)
+	public function __construct(Mpdf $mpdf, BaseWriter $writer, Form $form, Protection $protection, LoggerInterface $logger)
 	{
 		$this->mpdf = $mpdf;
 		$this->writer = $writer;

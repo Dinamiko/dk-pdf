@@ -13,7 +13,7 @@ class DecToOther
 	 */
 	private $mpdf;
 
-	public function __construct($mpdf)
+	public function __construct(Mpdf $mpdf)
 	{
 		$this->mpdf = $mpdf;
 	}

@@ -20,7 +20,7 @@ final class FormWriter
 	 */
 	private $writer;
 
-	public function __construct($mpdf, BaseWriter $writer)
+	public function __construct(Mpdf $mpdf, BaseWriter $writer)
 	{
 		$this->mpdf = $mpdf;
 		$this->writer = $writer;

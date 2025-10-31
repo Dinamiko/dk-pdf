@@ -31,7 +31,7 @@ final class PageWriter
 	 */
 	private $metadataWriter;
 
-	public function __construct($mpdf, Form $form, BaseWriter $writer, MetadataWriter $metadataWriter)
+	public function __construct(Mpdf $mpdf, Form $form, BaseWriter $writer, MetadataWriter $metadataWriter)
 	{
 		$this->mpdf = $mpdf;
 		$this->form = $form;

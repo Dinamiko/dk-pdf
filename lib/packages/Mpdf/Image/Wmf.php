@@ -23,7 +23,7 @@ class Wmf
 	 */
 	private $gdiObjectArray;
 
-	public function __construct($mpdf, ColorConverter $colorConverter)
+	public function __construct(Mpdf $mpdf, ColorConverter $colorConverter)
 	{
 		$this->mpdf = $mpdf;
 		$this->colorConverter = $colorConverter;

@@ -21,7 +21,7 @@ final class BaseWriter
 	 */
 	private $protection;
 
-	public function __construct($mpdf, Protection $protection)
+	public function __construct(Mpdf $mpdf, Protection $protection)
 	{
 		$this->mpdf = $mpdf;
 		$this->protection = $protection;

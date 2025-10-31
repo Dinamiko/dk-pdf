@@ -75,7 +75,7 @@ class Tag
 	 * @param \Dinamiko\DKPDF\Vendor\Mpdf\Language\LanguageToFontInterface $languageToFont
 	 */
 	public function __construct(
-		$mpdf,
+		Mpdf $mpdf,
 		Cache $cache,
 		CssManager $cssManager,
 		Form $form,

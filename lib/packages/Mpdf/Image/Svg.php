@@ -174,7 +174,7 @@ class Svg
 	private $inDefs;
 
 	public function __construct(
-		$mpdf,
+		Mpdf $mpdf,
 		Otl $otl,
 		CssManager $cssManager,
 		ImageProcessor $imageProcessor,

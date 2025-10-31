@@ -25,8 +25,8 @@ use Dinamiko\DKPDF\PDF\PDFModule;
 use Dinamiko\DKPDF\Shortcode\ShortcodeModule;
 use Dinamiko\DKPDF\Template\TemplateModule;
 use Dinamiko\DKPDF\WooCommerce\WooCommerceModule;
-use Inpsyde\Modularity\Package;
-use Inpsyde\Modularity\Properties\PluginProperties;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Package;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Properties\PluginProperties;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

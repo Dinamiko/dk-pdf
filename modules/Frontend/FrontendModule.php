@@ -3,10 +3,10 @@ declare( strict_types=1 );
 
 namespace Dinamiko\DKPDF\Frontend;
 
-use Inpsyde\Modularity\Module\ExecutableModule;
-use Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
-use Inpsyde\Modularity\Module\ServiceModule;
-use Psr\Container\ContainerInterface;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
+use Dinamiko\DKPDF\Vendor\Inpsyde\Modularity\Module\ServiceModule;
+use Dinamiko\DKPDF\Vendor\Psr\Container\ContainerInterface;
 
 class FrontendModule implements ServiceModule, ExecutableModule {
 	use ModuleClassNameIdTrait;

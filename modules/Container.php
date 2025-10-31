@@ -4,7 +4,7 @@ declare( strict_types=1 );
 namespace Dinamiko\DKPDF;
 
 use LogicException;
-use Psr\Container\ContainerInterface;
+use Dinamiko\DKPDF\Vendor\Psr\Container\ContainerInterface;
 
 class Container {
 	private static $container = null;

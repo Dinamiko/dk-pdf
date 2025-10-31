@@ -16,7 +16,7 @@ class CurlHttpClient implements \Dinamiko\DKPDF\Vendor\Mpdf\Http\ClientInterface
 
 	private $mpdf;
 
-	public function __construct($mpdf, LoggerInterface $logger)
+	public function __construct(Mpdf $mpdf, LoggerInterface $logger)
 	{
 		$this->mpdf = $mpdf;
 		$this->logger = $logger;
