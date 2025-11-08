@@ -16,8 +16,23 @@ if ( $pdf_footer_text || $pdf_footer_show_pagination ) { ?>
 			?>
 
 			<?php
-			if ( $post && $pdf_footer_show_title ) {
-				echo wp_kses_post( get_the_title( $post->ID ) );
+			if ( $pdf_footer_show_title ) {
+				$footer_title = '';
+
+                if ( function_exists( 'is_shop' ) && is_shop() ) {
+                    $shop_page_id = get_option( 'woocommerce_shop_page_id' );
+                    $header_title = $shop_page_id ? get_the_title( $shop_page_id ) : __( 'Shop', 'dkpdf' );
+                }
+                elseif ( is_tax() || is_category() ) {
+                    $queried_object = get_queried_object();
+                    $header_title = $queried_object ? $queried_object->name : '';
+                }
+                elseif ( $post ) {
+                    $header_title = get_the_title( $post->ID );
+                }
+
+				$footer_title = apply_filters( 'dkpdf_footer_title', $footer_title );
+				echo wp_kses_post( $footer_title );
 			}
 			?>
 

@@ -1,8 +1,9 @@
 # Changelog
 
-## 2.1.0
+## 2.2.0
 - Enhancement - Add button visibility by role.
 - Fix - Fatal error with composer package versions.
+- Fix - Wrong header and footer title for categories and shop.
 
 ## 2.1.0
 - Enhancement - Add custom fields support.

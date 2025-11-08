@@ -18,8 +18,22 @@ if ( $pdf_header_image || $pdf_header_show_title || $pdf_header_show_pagination 
 
         <div style="width:75%;float:right;text-align:right;height:35px;padding-top:20px;">
 			<?php
-			if ( $post && $pdf_header_show_title ) {
-				$header_title = apply_filters( 'dkpdf_header_title', get_the_title( $post->ID ) );
+			if ( $pdf_header_show_title ) {
+				$header_title = '';
+
+				if ( function_exists( 'is_shop' ) && is_shop() ) {
+					$shop_page_id = get_option( 'woocommerce_shop_page_id' );
+					$header_title = $shop_page_id ? get_the_title( $shop_page_id ) : __( 'Shop', 'dkpdf' );
+				}
+				elseif ( is_tax() || is_category() ) {
+					$queried_object = get_queried_object();
+					$header_title = $queried_object ? $queried_object->name : '';
+				}
+				elseif ( $post ) {
+					$header_title = get_the_title( $post->ID );
+				}
+
+				$header_title = apply_filters( 'dkpdf_header_title', $header_title );
 				echo wp_kses_post( $header_title );
 			}
 			?>

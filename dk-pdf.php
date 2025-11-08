@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-! defined( 'DKPDF_VERSION' ) && define( 'DKPDF_VERSION', '2.1.0' );
+! defined( 'DKPDF_VERSION' ) && define( 'DKPDF_VERSION', '2.2.0' );
 ! defined( 'DKPDF_PLUGIN_DIR' ) && define( 'DKPDF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 ! defined( 'DKPDF_PLUGIN_URL' ) && define( 'DKPDF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 ! defined( 'DKPDF_PLUGIN_FILE' ) && define( 'DKPDF_PLUGIN_FILE', __FILE__ );

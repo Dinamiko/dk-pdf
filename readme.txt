@@ -66,6 +66,11 @@ Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugin
 
 == Changelog ==
 
+= 2.2.0 =
+- Enhancement - Add button visibility by role.
+- Fix - Fatal error with composer package versions.
+- Fix - Wrong header and footer title for categories and shop.
+
 = 2.1.0 =
 - Enhancement - Add custom fields support.
 - Fix - Display pdf button in wc taxonomies to apply.
