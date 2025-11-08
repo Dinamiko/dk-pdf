@@ -231,7 +231,7 @@ class ContextManager {
 		$args = array(
 			'post_type'      => $post_type,
 			'post_status'    => 'publish',
-			'posts_per_page' => apply_filters( 'dkpdf_posts_per_page', get_option( 'posts_per_page', 10 ) ),
+			'posts_per_page' => $this->getPostsPerPage( $post_type, $taxonomy ),
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 		);
@@ -289,5 +289,28 @@ class ContextManager {
 		);
 
 		return $taxonomy_post_type_map[ $taxonomy ] ?? 'post';
+	}
+
+	/**
+	 * Determine the appropriate posts_per_page value based on archive type
+	 *
+	 * @param string $post_type The post type being queried
+	 * @param string|null $taxonomy The taxonomy name, null for post type archives
+	 * @return int Number of posts per page
+	 */
+	private function getPostsPerPage( string $post_type, ?string $taxonomy = null ): int {
+		$default_posts_per_page = 100;
+
+		if ( $post_type === 'product' ) {
+			$posts_per_page = (int) get_option( 'dkpdf_wc_archive_posts_per_page', $default_posts_per_page );
+		} else {
+			$posts_per_page = (int) get_option( 'dkpdf_taxonomy_posts_per_page', $default_posts_per_page );
+		}
+
+		if ( $posts_per_page < 1 ) {
+			$posts_per_page = $default_posts_per_page;
+		}
+
+		return (int) apply_filters( 'dkpdf_posts_per_page', $posts_per_page, $post_type, $taxonomy );
 	}
 }

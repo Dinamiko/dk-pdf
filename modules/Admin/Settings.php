@@ -344,7 +344,7 @@ class Settings {
 			'fields'      => array(
 				array(
 					'id'          => 'selected_template',
-					'label'       => __( 'PDF Template Sets', 'dkpdf' ),
+					'label'       => __( 'PDF template sets', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'select',
 					'options'     => array( '' => 'Legacy', 'default/' => 'Default' ),
@@ -389,6 +389,17 @@ class Settings {
 					'default'     => '1',
 					'depends_on'  => 'dkpdf_selected_template',
 				),
+				array(
+					'id'          => 'taxonomy_posts_per_page',
+					'label'       => __( 'Taxonomy max. items', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'number',
+					'default'     => '100',
+					'placeholder' => '100',
+					'min'         => '1',
+					'max'         => '1000',
+					'depends_on'  => 'dkpdf_selected_template',
+				),
 			)
 		);
 
@@ -412,7 +423,7 @@ class Settings {
 			);
 			$settings['pdf_templates']['fields'][] = array(
 				'id'          => 'wc_archive_display',
-				'label'       => __( 'WC archive display', 'dkpdf' ),
+				'label'       => __( 'WC archive / shop display', 'dkpdf' ),
 				'description' => '',
 				'type'        => 'checkbox_multi',
 				'options'     => [
@@ -426,13 +437,24 @@ class Settings {
 			);
 			$settings['pdf_templates']['fields'][] = array(
 				'id'          => 'wc_archive_layout',
-				'label'       => __( 'WC archive columns', 'dkpdf' ),
+				'label'       => __( 'WC archive / shop columns', 'dkpdf' ),
 				'description' => '',
 				'type'        => 'select',
 				'options'     => array( '1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns' ),
 				'default'     => '1',
 				'depends_on'  => 'dkpdf_selected_template',
 			);
+            $settings['pdf_templates']['fields'][] = array(
+                    'id'          => 'wc_archive_posts_per_page',
+                    'label'       => __( 'WooCommerce archive / shop max. items', 'dkpdf' ),
+                    'description' => '',
+                    'type'        => 'number',
+                    'default'     => '100',
+                    'placeholder' => '100',
+                    'min'         => '1',
+                    'max'         => '1000',
+                    'depends_on'  => 'dkpdf_selected_template',
+            );
 		}
 
 		// Custom Fields settings - only show when not using legacy templates
