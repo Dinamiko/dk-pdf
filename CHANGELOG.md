@@ -2,6 +2,7 @@
 
 ## 2.2.0
 - Enhancement - Add button visibility by role.
+- Enhancement - Add max. number of items to display in the PDF.
 - Fix - Fatal error with composer package versions.
 - Fix - Wrong header and footer title for categories and shop.
 
