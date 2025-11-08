@@ -564,8 +564,11 @@ class FieldRenderer {
 			if ( $is_multi ) {
 				$is_selected = in_array( $k, $selected_array, true );
 			} else {
-				// Use string comparison to handle int/string type differences
-				$is_selected = ( (string) $k === (string) $selected_data );
+				if ( is_array( $selected_data ) ) {
+					$is_selected = in_array( $k, $selected_data, true );
+				} else {
+					$is_selected = ( (string) $k === (string) $selected_data );
+				}
 			}
 
 			$html .= '<option ' . selected( $is_selected, true, false ) . ' value="' . esc_attr( $k ) . '">' . esc_html( $v ) . '</option>';
