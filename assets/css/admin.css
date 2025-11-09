@@ -49,6 +49,11 @@
     width:600px !important;
 }
 
+.select2-selection__choice {
+    padding-left:25px !important;
+    padding-right: 10px !important;
+}
+
 @media (max-width: 1400px) {
 	.nav-tab-wrapper {
 		justify-content: flex-start;
