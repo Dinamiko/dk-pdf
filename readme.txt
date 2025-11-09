@@ -24,7 +24,7 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 * **Multi-Content Generation**: Create PDFs from posts, pages, custom post types, taxonomies, WooCommerce products, shop and categories
 * **Selective Content Display**: Choose exactly what appears in your PDFs - featured images, post dates, authors, categories, and more
 * **Custom Fields Support**: see [documentation](https://dinamiko.dev/docs/custom-fields/)
-* **Button visibility by user role**: Control which WordPress user roles can see and generate PDFs
+* **Button visibility by user role**: Control which WordPress user roles can see and generate PDFs, see [documentation](https://dinamiko.dev/docs/pdf-button-visibility-by-role/)
 * **WooCommerce Integration**: Include product details like prices, SKUs, categories, and more
 * **Header & Footer Control**: Add logo, custom text, and branding elements to headers and footers
 * **Custom CSS Support**: Apply your own styling to match your brand perfectly
@@ -34,10 +34,10 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 
 == Perfect for every use case ==
 
-* Content Creators & Bloggers: Transform your best blog posts into downloadable PDFs for lead magnets or offline reading.
-* E-commerce Sites: Create product catalogs and detailed product sheets from your WooCommerce products.
-* Developers: Build custom PDF solutions for clients using template overrides and WordPress hooks.
-* Educational Sites: Convert course materials, lessons, and resources into portable PDF formats.
+* **Content Creators & Bloggers**: Transform your best blog posts into downloadable PDFs for lead magnets or offline reading.
+* **E-commerce Sites**: Create product catalogs and detailed product sheets from your WooCommerce products.
+* **Developers**: Build custom PDF solutions for clients using template overrides and WordPress hooks.
+* **Educational Sites**: Convert course materials, lessons, and resources into portable PDF formats.
 
 == DK PDF Custom Services ==
 Need custom functionality for the DK PDF Plugin? I provide [professional customization services](https://dinamiko.dev/dk-pdf-custom-services/) to extend and enhance your PDF generation capabilities.
