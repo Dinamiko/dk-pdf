@@ -24,7 +24,7 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 * **Multi-Content Generation**: Create PDFs from posts, pages, custom post types, taxonomies, WooCommerce products, shop and categories
 * **Selective Content Display**: Choose exactly what appears in your PDFs - featured images, post dates, authors, categories, and more
 * **Custom Fields Support**: see [documentation](https://dinamiko.dev/docs/custom-fields/)
-* **Button visibility by user role**: Control which WordPress user roles can see and generate PDFs, see [documentation](https://dinamiko.dev/docs/pdf-button-visibility-by-role/)
+* **Button Visibility by User Role**: Control which WordPress user roles can see and generate PDFs, see [documentation](https://dinamiko.dev/docs/pdf-button-visibility-by-role/)
 * **WooCommerce Integration**: Include product details like prices, SKUs, categories, and more
 * **Header & Footer Control**: Add logo, custom text, and branding elements to headers and footers
 * **Custom CSS Support**: Apply your own styling to match your brand perfectly
