@@ -30,7 +30,10 @@ class ContextManagerTest extends TestCase {
 			'post_status' => 'publish',
 		]);
 
-		$this->manager->setupContext( $post_id );
+		$result = $this->manager->setupContext( $post_id );
+
+		// Should return true on success
+		$this->assertTrue( $result );
 
 		global $wp_query, $post;
 
@@ -58,27 +61,65 @@ class ContextManagerTest extends TestCase {
 		wp_delete_post( $post_id, true );
 	}
 
-	public function test_throws_exception_for_nonexistent_post(): void {
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Post not found' );
+	public function test_returns_error_for_nonexistent_post(): void {
+		$result = $this->manager->setupContext( 999999 );
 
-		$this->manager->setupContext( 999999 );
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'post_not_found', $result->get_error_code() );
+		$this->assertStringContainsString( 'not found', $result->get_error_message() );
 	}
 
-	public function test_throws_exception_for_draft_post(): void {
+	public function test_returns_error_for_draft_post_without_permission(): void {
 		$post_id = wp_insert_post([
 			'post_title' => 'Draft Post',
 			'post_status' => 'draft',
 		]);
 
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'not published' );
+		// Simulate user without permission (not logged in)
+		wp_set_current_user( 0 );
 
-		try {
-			$this->manager->setupContext( $post_id );
-		} finally {
-			wp_delete_post( $post_id, true );
+		$result = $this->manager->setupContext( $post_id );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'no_permission', $result->get_error_code() );
+		$this->assertStringContainsString( 'permission', $result->get_error_message() );
+
+		wp_delete_post( $post_id, true );
+	}
+
+	public function test_setup_private_post_context_with_permission(): void {
+		// Create a user with edit_posts capability
+		$user_id = wp_insert_user([
+			'user_login' => 'testuser',
+			'user_pass' => 'password',
+			'role' => 'editor',
+		]);
+		wp_set_current_user( $user_id );
+
+		$post_id = wp_insert_post([
+			'post_title' => 'Private Post',
+			'post_content' => 'Private content',
+			'post_status' => 'private',
+			'post_author' => $user_id,
+		]);
+
+		$result = $this->manager->setupContext( $post_id );
+
+		// Should succeed because user has permission
+		$this->assertTrue( $result );
+
+		global $wp_query, $post;
+		$this->assertEquals( $post_id, $post->ID );
+		$this->assertEquals( 'Private Post', $post->post_title );
+
+		// Clean up
+		wp_delete_post( $post_id, true );
+		// Load user functions if not loaded
+		if ( ! function_exists( 'wp_delete_user' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/user.php';
 		}
+		wp_delete_user( $user_id );
+		wp_set_current_user( 0 );
 	}
 
 	// ===== CATEGORY ARCHIVE TESTS =====
@@ -98,7 +139,10 @@ class ContextManagerTest extends TestCase {
 			'post_category' => [ $category_id ],
 		]);
 
-		$this->manager->setupContext( "category_{$category_id}" );
+		$result = $this->manager->setupContext( "category_{$category_id}" );
+
+		// Should return true on success
+		$this->assertTrue( $result );
 
 		global $wp_query;
 
@@ -124,11 +168,12 @@ class ContextManagerTest extends TestCase {
 		wp_delete_term( $category_id, 'category' );
 	}
 
-	public function test_throws_exception_for_nonexistent_category(): void {
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'not found' );
+	public function test_returns_error_for_nonexistent_category(): void {
+		$result = $this->manager->setupContext( 'category_999999' );
 
-		$this->manager->setupContext( 'category_999999' );
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'term_not_found', $result->get_error_code() );
+		$this->assertStringContainsString( 'not found', $result->get_error_message() );
 	}
 
 	// ===== TAG ARCHIVE TESTS =====
@@ -144,7 +189,10 @@ class ContextManagerTest extends TestCase {
 			'tags_input' => [ 'test-tag' ],
 		]);
 
-		$this->manager->setupContext( "tag_{$tag_id}" );
+		$result = $this->manager->setupContext( "tag_{$tag_id}" );
+
+		// Should return true on success
+		$this->assertTrue( $result );
 
 		global $wp_query;
 
@@ -170,7 +218,10 @@ class ContextManagerTest extends TestCase {
 			$this->markTestSkipped( 'WooCommerce not active' );
 		}
 
-		$this->manager->setupContext( 'shop' );
+		$result = $this->manager->setupContext( 'shop' );
+
+		// Should return true on success
+		$this->assertTrue( $result );
 
 		global $wp_query;
 
@@ -185,15 +236,16 @@ class ContextManagerTest extends TestCase {
 		$this->assertEquals( $shop_page_id, $wp_query->queried_object_id );
 	}
 
-	public function test_throws_exception_for_shop_without_woocommerce(): void {
+	public function test_returns_error_for_shop_without_woocommerce(): void {
 		if ( function_exists( 'wc_get_page_id' ) ) {
 			$this->markTestSkipped( 'WooCommerce is active, cannot test this scenario' );
 		}
 
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'WooCommerce not active' );
+		$result = $this->manager->setupContext( 'shop' );
 
-		$this->manager->setupContext( 'shop' );
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'woocommerce_not_active', $result->get_error_code() );
+		$this->assertStringContainsString( 'WooCommerce', $result->get_error_message() );
 	}
 
 	public function test_setup_product_category_archive(): void {
@@ -205,7 +257,10 @@ class ContextManagerTest extends TestCase {
 		$term = wp_insert_term( 'Test Product Category', 'product_cat' );
 		$term_id = $term['term_id'];
 
-		$this->manager->setupContext( "product_cat_{$term_id}" );
+		$result = $this->manager->setupContext( "product_cat_{$term_id}" );
+
+		// Should return true on success
+		$this->assertTrue( $result );
 
 		global $wp_query;
 
@@ -220,11 +275,12 @@ class ContextManagerTest extends TestCase {
 
 	// ===== EDGE CASES =====
 
-	public function test_invalid_archive_type(): void {
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Unknown archive type' );
+	public function test_returns_error_for_invalid_archive_type(): void {
+		// Archive type with no underscore triggers "invalid_archive_type" error
+		$result = $this->manager->setupContext( 'invalidarchivetype' );
 
-		// Archive type with no underscore triggers "Unknown archive type"
-		$this->manager->setupContext( 'invalidarchivetype' );
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'invalid_archive_type', $result->get_error_code() );
+		$this->assertStringContainsString( 'Invalid', $result->get_error_message() );
 	}
 }

@@ -32,9 +32,10 @@ npm run tests:e2e -- -g "HTML output uses archive template for shop page"
 await page.screenshot({ path: 'test-results/screeshot.png', fullPage: true });
 ```
 
-### How to run PHPUnit tests
+### How to run PHPUnit unit and integration tests
 ```
 npm run tests:unit
+npm run tests:integration
 ```
 
 ### How to run Composer

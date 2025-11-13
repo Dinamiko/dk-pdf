@@ -46,25 +46,63 @@ class ContextManager {
 	 * Set up WordPress context for PDF generation
 	 *
 	 * @param mixed $pdf_param The PDF parameter (post ID or archive type)
-	 * @throws \Exception If context setup fails
+	 * @return true|\WP_Error True on success, WP_Error on failure
 	 */
-	public function setupContext( $pdf_param ): void {
+	public function setupContext( $pdf_param ) {
 		if ( is_numeric( $pdf_param ) ) {
 			// Single post/page context
-			$this->setupPostContext( (int) $pdf_param );
+			return $this->setupPostContext( (int) $pdf_param );
 		} else {
 			// Archive context (shop, category, tag, etc.)
-			$this->setupArchiveContext( $pdf_param );
+			return $this->setupArchiveContext( $pdf_param );
 		}
 	}
 
-	private function setupPostContext( int $post_id ): void {
+	/**
+	 * Check if the current user can read a post
+	 *
+	 * @param \WP_Post $post The post object
+	 * @return bool True if user can read the post
+	 */
+	private function can_user_read_post( \WP_Post $post ): bool {
+		// Public posts can be viewed by anyone
+		if ( is_post_publicly_viewable( $post ) ) {
+			return true;
+		}
+
+		$post_type_object = get_post_type_object( $post->post_type );
+		if ( ! $post_type_object ) {
+			return false;
+		}
+
+		// Check based on post status
+		if ( $post->post_status === 'private' ) {
+			// User must have capability to read private posts OR be the author
+			$read_private_cap = $post_type_object->cap->read_private_posts ?? 'read_private_posts';
+			return current_user_can( $read_private_cap ) || ( get_current_user_id() === (int) $post->post_author );
+		}
+
+		// For other non-public statuses (draft, pending, future, etc.)
+		// Check if user can edit the post (which includes authors and editors)
+		$edit_cap = $post_type_object->cap->edit_post ?? 'edit_post';
+		return current_user_can( $edit_cap, $post->ID );
+	}
+
+	/**
+	 * @return true|\WP_Error
+	 */
+	private function setupPostContext( int $post_id ) {
 		global $post, $wp_query;
 
 		// Get the post object
 		$post = get_post( $post_id );
-		if ( ! $post || $post->post_status !== 'publish' ) {
-			throw new \Exception( 'Post not found or not published: ' . $post_id );
+		if ( ! $post ) {
+			return new \WP_Error( 'post_not_found', __( 'The requested content was not found.', 'dk-pdf' ) );
+		}
+
+		// Check if user can read this post (respects WordPress permissions)
+		if ( ! $this->can_user_read_post( $post ) ) {
+			return new \WP_Error( 'no_permission', __( 'You do not have permission to view this content.', 'dk-pdf' ) );
 		}
 
 		// Set up global post data
@@ -82,26 +120,30 @@ class ContextManager {
 		$wp_query->found_posts = 1;
 		$wp_query->queried_object = $post;
 		$wp_query->queried_object_id = $post_id;
+
+		return true;
 	}
 
 	/**
 	 * Set up shop archive context
+	 *
+	 * @return true|\WP_Error
 	 */
-	private function setupShopArchive(): void {
+	private function setupShopArchive() {
 		global $wp_query;
 
 		if ( ! function_exists( 'wc_get_page_id' ) ) {
-			throw new \Exception( 'WooCommerce not active, cannot generate shop PDF' );
+			return new \WP_Error( 'woocommerce_not_active', __( 'WooCommerce is not active.', 'dk-pdf' ) );
 		}
 
 		$shop_page_id = wc_get_page_id( 'shop' );
 		if ( $shop_page_id <= 0 ) {
-			throw new \Exception( 'Shop page not configured in WooCommerce' );
+			return new \WP_Error( 'shop_not_configured', __( 'Shop page is not configured in WooCommerce settings.', 'dk-pdf' ) );
 		}
 
 		$shop_page = get_post( $shop_page_id );
-		if ( ! $shop_page || $shop_page->post_status !== 'publish' ) {
-			throw new \Exception( 'Shop page not found or not published' );
+		if ( ! $shop_page ) {
+			return new \WP_Error( 'shop_page_not_found', __( 'Shop page not found.', 'dk-pdf' ) );
 		}
 
 		$wp_query->queried_object_id = $shop_page_id;
@@ -111,6 +153,8 @@ class ContextManager {
 
 		// Query shop products
 		$this->queryArchivePosts( 'product', null, null );
+
+		return true;
 	}
 
 	/**
@@ -118,13 +162,14 @@ class ContextManager {
 	 *
 	 * @param string $prefix The taxonomy prefix (e.g., 'product_cat_', 'category_')
 	 * @param string $archive_type The full archive type string
+	 * @return true|\WP_Error
 	 */
-	private function setupTaxonomyArchive( string $prefix, string $archive_type ): void {
+	private function setupTaxonomyArchive( string $prefix, string $archive_type ) {
 		global $wp_query;
 
 		$config = self::TAXONOMY_CONFIG[ $prefix ] ?? null;
 		if ( ! $config ) {
-			throw new \Exception( 'Unknown taxonomy prefix: ' . $prefix );
+			return new \WP_Error( 'unknown_taxonomy', __( 'The requested taxonomy was not found.', 'dk-pdf' ) );
 		}
 
 		// Extract term ID from archive type
@@ -132,7 +177,7 @@ class ContextManager {
 		$term = get_term( $term_id, $config['taxonomy'] );
 
 		if ( ! $term || is_wp_error( $term ) ) {
-			throw new \Exception( ucfirst( $config['taxonomy'] ) . ' not found: ' . $term_id );
+			return new \WP_Error( 'term_not_found', __( 'The requested category or tag was not found.', 'dk-pdf' ) );
 		}
 
 		// Set query properties
@@ -148,9 +193,14 @@ class ContextManager {
 
 		// Query posts for this taxonomy term
 		$this->queryArchivePosts( $config['post_type'], $config['taxonomy'], $term_id );
+
+		return true;
 	}
 
-	private function setupArchiveContext( string $archive_type ): void {
+	/**
+	 * @return true|\WP_Error
+	 */
+	private function setupArchiveContext( string $archive_type ) {
 		global $wp_query;
 
 		// Reset query flags for archive context
@@ -166,33 +216,32 @@ class ContextManager {
 
 		// Route to appropriate handler based on archive type
 		if ( $archive_type === self::ARCHIVE_TYPE_SHOP ) {
-			$this->setupShopArchive();
-			return;
+			return $this->setupShopArchive();
 		}
 
 		// Check for known taxonomy prefixes
 		foreach ( array_keys( self::TAXONOMY_CONFIG ) as $prefix ) {
 			if ( str_starts_with( $archive_type, $prefix ) ) {
-				$this->setupTaxonomyArchive( $prefix, $archive_type );
-				return;
+				return $this->setupTaxonomyArchive( $prefix, $archive_type );
 			}
 		}
 
 		// Handle generic taxonomy_termid format for custom taxonomies
-		$this->setupGenericTaxonomyArchive( $archive_type );
+		return $this->setupGenericTaxonomyArchive( $archive_type );
 	}
 
 	/**
 	 * Set up generic taxonomy archive for custom taxonomies
 	 *
 	 * @param string $archive_type The archive type string
+	 * @return true|\WP_Error
 	 */
-	private function setupGenericTaxonomyArchive( string $archive_type ): void {
+	private function setupGenericTaxonomyArchive( string $archive_type ) {
 		global $wp_query;
 
 		$parts = explode( '_', $archive_type );
 		if ( count( $parts ) < 2 ) {
-			throw new \Exception( 'Unknown archive type: ' . $archive_type );
+			return new \WP_Error( 'invalid_archive_type', __( 'Invalid PDF request.', 'dk-pdf' ) );
 		}
 
 		$term_id = (int) array_pop( $parts );
@@ -200,7 +249,7 @@ class ContextManager {
 		$term = get_term( $term_id, $taxonomy );
 
 		if ( ! $term || is_wp_error( $term ) ) {
-			throw new \Exception( 'Term not found: ' . $taxonomy . ' - ' . $term_id );
+			return new \WP_Error( 'term_not_found', __( 'The requested archive was not found.', 'dk-pdf' ) );
 		}
 
 		$wp_query->queried_object = $term;
@@ -216,6 +265,8 @@ class ContextManager {
 		// Query posts for this taxonomy term
 		$post_type = $this->getPostTypeForTaxonomy( $taxonomy );
 		$this->queryArchivePosts( $post_type, $taxonomy, $term_id );
+
+		return true;
 	}
 
 	/**

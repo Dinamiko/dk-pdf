@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.1
+- Fix - Fatal error when generating PDFs for posts with non-publish status.
+
 ## 2.2.0
 - Enhancement - Add button visibility by role.
 - Enhancement - Add max. number of items to display in the PDF.

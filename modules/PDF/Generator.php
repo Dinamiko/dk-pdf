@@ -33,7 +33,11 @@ class Generator {
 		}
 
 		// Set up the appropriate context for PDF generation
-		$this->contextManager->setupContext( $pdf );
+		$result = $this->contextManager->setupContext( $pdf );
+		if ( is_wp_error( $result ) ) {
+			$this->handle_error( $result );
+			return;
+		}
 
 		// For debugging - output HTML only if admin and output=html param is provided
 		$output = isset( $_GET['output'] ) ? sanitize_text_field( $_GET['output'] ) : '';
@@ -67,5 +71,35 @@ class Generator {
 		$template_content = $this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) );
 		echo preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $template_content );
 		exit;
+	}
+
+	/**
+	 * Handle errors gracefully with appropriate user messages
+	 *
+	 * @param \WP_Error $error The error object
+	 */
+	private function handle_error( \WP_Error $error ): void {
+		// Clean any output buffers
+		while ( ob_get_level() ) {
+			ob_end_clean();
+		}
+
+		if ( current_user_can( 'manage_options' ) ) {
+			wp_die(
+				sprintf(
+					'<strong>%s</strong><br><br>%s',
+					esc_html__( 'PDF Generation Error', 'dk-pdf' ),
+					esc_html( $error->get_error_message() )
+				),
+				esc_html__( 'PDF Generation Error', 'dk-pdf' ),
+				array( 'response' => 404 )
+			);
+		} else {
+			wp_die(
+				esc_html( $error->get_error_message() ),
+				esc_html__( 'PDF Not Available', 'dk-pdf' ),
+				array( 'response' => 404 )
+			);
+		}
 	}
 }
