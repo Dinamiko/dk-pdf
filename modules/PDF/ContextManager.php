@@ -94,8 +94,13 @@ class ContextManager {
 	private function setupPostContext( int $post_id ) {
 		global $post, $wp_query;
 
-		// Get the post object
-		$post = get_post( $post_id );
+		// Get the post object with 'any' status to bypass WordPress filtering
+		// Ensures we get posts with private, draft, future, etc. statuses
+		$post = get_post( $post_id, OBJECT, 'any' );
+
+		// Allow to customize post retrieval
+		$post = apply_filters( 'dkpdf_get_post_for_pdf', $post, $post_id );
+
 		if ( ! $post ) {
 			return new \WP_Error( 'post_not_found', __( 'The requested content was not found.', 'dk-pdf' ) );
 		}
