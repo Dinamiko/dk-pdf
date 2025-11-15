@@ -5,9 +5,6 @@
     <style>
         a, code, ins, kbd, tt {background-color: transparent;}
 
-        .product-container {
-            font-family: Arial, sans-serif;
-        }
         .product-header {
             margin-bottom: 20px;
         }
@@ -36,11 +33,11 @@
         }
         .product-meta {
             margin-top: 20px;
-            font-size: 14px;
-            color: #666;
         }
-        .product-meta-item {
+
+        .custom-field-item {
             margin-bottom: 5px;
+            line-height: 1.4;
         }
 
         <?php
@@ -132,7 +129,7 @@
 
 		            <div class="product-meta">
 		                <?php if (in_array('sku', $wc_product_display_options) && $product->get_sku()) : ?>
-		                    <div class="product-meta-item product-sku">
+		                    <div class="custom-field-item product-sku">
 		                        <strong>SKU:</strong> <?php echo esc_html($product->get_sku()); ?>
 		                    </div>
 		                <?php endif; ?>
@@ -146,7 +143,7 @@
 		                        foreach ($categories as $category) {
 		                            $cat_names[] = $category->name;
 		                        }
-		                        echo '<div class="product-meta-item product-categories">';
+		                        echo '<div class="custom-field-item product-categories">';
 		                        echo '<strong>Categories:</strong> ' . esc_html(implode(', ', $cat_names));
 		                        echo '</div>';
 		                    }
@@ -162,13 +159,23 @@
 		                        foreach ($tags as $tag) {
 		                            $tag_names[] = $tag->name;
 		                        }
-		                        echo '<div class="product-meta-item product-tags">';
+		                        echo '<div class="custom-field-item product-tags">';
 		                        echo '<strong>Tags:</strong> ' . esc_html(implode(', ', $tag_names));
 		                        echo '</div>';
 		                    }
 		                    ?>
 		                <?php endif; ?>
 		            </div>
+
+		            <?php
+		            $selected_template = get_option( 'dkpdf_selected_template', '' );
+		            if ( ! empty( $selected_template ) ) {
+		                $custom_fields_html = apply_filters( 'dkpdf_get_custom_fields_display', '', get_the_ID() );
+		                if ( ! empty( $custom_fields_html ) ) {
+		                    echo $custom_fields_html;
+		                }
+		            }
+		            ?>
 		        </article>
 		        <?php
 		    }
