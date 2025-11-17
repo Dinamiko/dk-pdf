@@ -160,6 +160,10 @@ class FieldRenderer {
 			case 'color':
 				$html = $this->render_color_field( $field, $data, $option_name );
 				break;
+
+			case 'font_downloader':
+				$html = $this->render_font_downloader_field( $field );
+				break;
 		}
 
 		// Add field description
@@ -585,5 +589,54 @@ class FieldRenderer {
 	 */
 	private function get_placeholder( array $field ): string {
 		return $field['placeholder'] ?? '';
+	}
+
+	/**
+	 * Render font downloader field
+	 *
+	 * @param array $field Field configuration
+	 * @return string Field HTML
+	 */
+	private function render_font_downloader_field( array $field ): string {
+		// Get FontDownloader service from container
+		$container = \Dinamiko\DKPDF\Container::get_container();
+		$fontDownloader = $container->get( 'admin.font_downloader' );
+
+		$fontsInstalled = $fontDownloader->areFontsInstalled();
+
+		// Hide entire row when fonts are installed
+		if ( $fontsInstalled ) {
+			return '<div id="dkpdf-fonts-hidden-marker" style="display:none;"></div>
+			<script>
+				(function() {
+					var marker = document.getElementById("dkpdf-fonts-hidden-marker");
+					if (marker) {
+						var row = marker.closest("tr");
+						if (row) {
+							row.style.display = "none";
+						}
+					}
+				})();
+			</script>';
+		}
+
+		// Show download UI when fonts are not installed
+		$html = '<div class="dkpdf-fonts-not-installed">';
+		$html .= '<button type="button" id="dkpdf-download-fonts" class="button button-secondary">';
+		$html .= esc_html__( 'Download Fonts', 'dkpdf' );
+		$html .= '</button>';
+		$html .= '<p class="description">';
+		$html .= esc_html__( 'Download additional fonts for better multi-language support in PDFs.', 'dkpdf' );
+		$html .= '</p>';
+		$html .= '<div id="dkpdf-download-progress" style="display:none;">';
+		$html .= '<div class="dkpdf-progress-bar">';
+		$html .= '<div class="dkpdf-progress-fill"></div>';
+		$html .= '</div>';
+		$html .= '<p class="dkpdf-progress-text">0%</p>';
+		$html .= '</div>';
+		$html .= '<div id="dkpdf-download-status"></div>';
+		$html .= '</div>';
+
+		return $html;
 	}
 }

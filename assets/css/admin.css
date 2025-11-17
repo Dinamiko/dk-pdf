@@ -83,3 +83,72 @@
 		height:400px;
 	}
 }
+
+/* Font Downloader */
+.dkpdf-fonts-not-installed {
+	padding: 0;
+}
+
+#dkpdf-download-fonts {
+	margin: 0;
+}
+
+#dkpdf-download-progress {
+	margin-top: 15px;
+}
+
+.dkpdf-progress-bar {
+	height: 24px;
+	background: #f0f0f1;
+	border-radius: 3px;
+	overflow: hidden;
+	position: relative;
+}
+
+.dkpdf-progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, #2271b1 0%, #135e96 100%);
+	width: 0%;
+	transition: width 0.3s ease;
+	position: relative;
+}
+
+.dkpdf-progress-fill::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.3) 50%,
+		transparent 100%
+	);
+	animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+.dkpdf-progress-text {
+	margin: 8px 0 0;
+	font-weight: 600;
+	color: #2c3338;
+}
+
+#dkpdf-download-status {
+	margin-top: 10px;
+}
+
+#dkpdf-download-status .notice {
+	margin: 0;
+	padding: 8px 12px;
+}

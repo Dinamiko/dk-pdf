@@ -168,6 +168,13 @@ class Settings {
 			'description' => '',
 			'fields'      => array(
 				array(
+					'id'          => 'font_downloader',
+					'label'       => __( 'mPDF Default Fonts', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'font_downloader',
+					'default'     => ''
+				),
+				array(
 					'id'          => 'page_orientation',
 					'label'       => __( 'Page orientation', 'dkpdfg' ),
 					'description' => '',

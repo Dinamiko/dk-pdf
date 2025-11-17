@@ -15,6 +15,7 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		return [
 			'admin.field_renderer'  => static fn() => new FieldRenderer(),
 			'admin.field_validator' => static fn() => new FieldValidator(),
+			'admin.font_downloader' => static fn() => new FontDownloader(),
 			'admin.settings'        => static fn( $container ) => new Settings(
 				$container->get( 'admin.field_renderer' ),
 				$container->get( 'admin.field_validator' ),
@@ -72,6 +73,30 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			$this->handle_custom_fields_ajax( $helper );
 		});
 
+		// Register AJAX endpoint for downloading fonts
+		add_action( 'wp_ajax_dkpdf_download_fonts', function() use($container) {
+			$fontDownloader = $container->get( 'admin.font_downloader' );
+			assert($fontDownloader instanceof FontDownloader);
+
+			$this->handle_download_fonts_ajax( $fontDownloader );
+		});
+
+		// Register AJAX endpoint for checking download progress
+		add_action( 'wp_ajax_dkpdf_download_progress', function() use($container) {
+			$fontDownloader = $container->get( 'admin.font_downloader' );
+			assert($fontDownloader instanceof FontDownloader);
+
+			$this->handle_download_progress_ajax( $fontDownloader );
+		});
+
+		// Register AJAX endpoint for checking fonts status
+		add_action( 'wp_ajax_dkpdf_check_fonts_status', function() use($container) {
+			$fontDownloader = $container->get( 'admin.font_downloader' );
+			assert($fontDownloader instanceof FontDownloader);
+
+			$this->handle_check_fonts_status_ajax( $fontDownloader );
+		});
+
 		return true;
 	}
 
@@ -110,5 +135,79 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		}
 
 		wp_send_json_success( $filtered_fields );
+	}
+
+	/**
+	 * Handle AJAX request for downloading fonts
+	 *
+	 * @param FontDownloader $fontDownloader
+	 * @return void
+	 */
+	private function handle_download_fonts_ajax( FontDownloader $fontDownloader ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		// Get GitHub URL from request or use filter default
+		$github_url = isset( $_POST['github_url'] ) ? esc_url_raw( $_POST['github_url'] ) : '';
+
+		// Download fonts
+		$result = $fontDownloader->downloadFonts( $github_url );
+
+		if ( $result['success'] ) {
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( $result );
+		}
+	}
+
+	/**
+	 * Handle AJAX request for checking download progress
+	 *
+	 * @param FontDownloader $fontDownloader
+	 * @return void
+	 */
+	private function handle_download_progress_ajax( FontDownloader $fontDownloader ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		$progress = $fontDownloader->getDownloadProgress();
+
+		wp_send_json_success( array( 'progress' => $progress ) );
+	}
+
+	/**
+	 * Handle AJAX request for checking fonts status
+	 *
+	 * @param FontDownloader $fontDownloader
+	 * @return void
+	 */
+	private function handle_check_fonts_status_ajax( FontDownloader $fontDownloader ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		$installed = $fontDownloader->areFontsInstalled();
+
+		wp_send_json_success( array( 'installed' => $installed ) );
 	}
 }

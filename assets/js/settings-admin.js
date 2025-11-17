@@ -149,4 +149,91 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
+    /***** Font Downloader *****/
+
+    // Font download handler
+    $('#dkpdf-download-fonts').on('click', function(e) {
+        e.preventDefault();
+
+        var $button = $(this);
+        var $progress = $('#dkpdf-download-progress');
+        var $progressFill = $('.dkpdf-progress-fill');
+        var $progressText = $('.dkpdf-progress-text');
+        var $status = $('#dkpdf-download-status');
+
+        // Disable button and show progress
+        $button.prop('disabled', true).text('Downloading...');
+        $progress.show();
+        $status.empty();
+
+        // Poll for progress updates
+        var progressInterval = setInterval(function() {
+            $.ajax({
+                url: dkpdf_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'dkpdf_download_progress',
+                    nonce: dkpdf_ajax.nonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var progress = response.data.progress;
+                        $progressFill.css('width', progress + '%');
+                        $progressText.text(progress + '%');
+
+                        if (progress >= 100) {
+                            clearInterval(progressInterval);
+                        }
+                    }
+                }
+            });
+        }, 500); // Poll every 500ms
+
+        // Start download
+        $.ajax({
+            url: dkpdf_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'dkpdf_download_fonts',
+                nonce: dkpdf_ajax.nonce
+            },
+            success: function(response) {
+                clearInterval(progressInterval);
+
+                if (response.success) {
+                    $progressFill.css('width', '100%');
+                    $progressText.text('100%');
+
+                    setTimeout(function() {
+                        $status.html('<p class="notice notice-success inline"><strong>' +
+                            'Fonts downloaded successfully!' +
+                            '</strong> Page will reload...</p>');
+
+                        // Reload page to hide the download section
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    }, 500);
+                } else {
+                    $button.prop('disabled', false).text('Download Fonts');
+                    $progress.hide();
+                    $progressFill.css('width', '0%');
+                    $progressText.text('0%');
+                    var errorMessage = response.data && response.data.message ? response.data.message : 'Unknown error';
+                    $status.html('<p class="notice notice-error inline"><strong>Error:</strong> ' +
+                        errorMessage + '</p>');
+                }
+            },
+            error: function() {
+                clearInterval(progressInterval);
+                $button.prop('disabled', false).text('Download Fonts');
+                $progress.hide();
+                $progressFill.css('width', '0%');
+                $progressText.text('0%');
+                $status.html('<p class="notice notice-error inline"><strong>Error:</strong> ' +
+                    'Failed to download fonts. Please try again.</p>');
+            }
+        });
+    });
 });
