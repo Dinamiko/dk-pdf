@@ -169,10 +169,10 @@ class Settings {
 			'fields'      => array(
 				array(
 					'id'          => 'font_downloader',
-					'label'       => __( 'mPDF Default Fonts', 'dkpdf' ),
+					'label'       => __( 'Default Font', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'font_downloader',
-					'default'     => ''
+					'default'     => 'DejaVuSans'
 				),
 				array(
 					'id'          => 'page_orientation',

@@ -56,6 +56,7 @@ class FieldValidator {
 
 			case 'radio':
 			case 'select':
+			case 'font_downloader':
 				$data = sanitize_text_field( $data );
 				break;
 

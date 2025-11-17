@@ -592,6 +592,54 @@ class FieldRenderer {
 	}
 
 	/**
+	 * Get list of installed fonts from fonts directory
+	 *
+	 * @param string $fonts_dir Path to fonts directory
+	 * @return array Array of font files with display names
+	 */
+	private function get_installed_fonts( string $fonts_dir ): array {
+		$fonts = array();
+
+		// Get all .ttf files from fonts directory
+		$font_files = glob( $fonts_dir . '/*.ttf' );
+
+		if ( empty( $font_files ) ) {
+			return $fonts;
+		}
+
+		foreach ( $font_files as $font_file ) {
+			$filename = basename( $font_file, '.ttf' );
+
+			// Convert filename to display name (e.g., DejaVuSans-Bold -> DejaVu Sans Bold)
+			$display_name = $this->format_font_name( $filename );
+
+			// Use filename without extension as the key
+			$fonts[ $filename ] = $display_name;
+		}
+
+		// Sort fonts alphabetically by display name
+		asort( $fonts );
+
+		return $fonts;
+	}
+
+	/**
+	 * Format font filename to display name
+	 *
+	 * @param string $filename Font filename without extension
+	 * @return string Formatted display name
+	 */
+	private function format_font_name( string $filename ): string {
+		// Replace hyphens with spaces
+		$name = str_replace( '-', ' ', $filename );
+
+		// Add spaces before uppercase letters (for camelCase)
+		$name = preg_replace( '/(?<!^)(?=[A-Z])/', ' ', $name );
+
+		return $name;
+	}
+
+	/**
 	 * Render font downloader field
 	 *
 	 * @param array $field Field configuration
@@ -604,20 +652,32 @@ class FieldRenderer {
 
 		$fontsInstalled = $fontDownloader->areFontsInstalled();
 
-		// Hide entire row when fonts are installed
+		// Show font selector when fonts are installed
 		if ( $fontsInstalled ) {
-			return '<div id="dkpdf-fonts-hidden-marker" style="display:none;"></div>
-			<script>
-				(function() {
-					var marker = document.getElementById("dkpdf-fonts-hidden-marker");
-					if (marker) {
-						var row = marker.closest("tr");
-						if (row) {
-							row.style.display = "none";
-						}
-					}
-				})();
-			</script>';
+			$fonts_dir = $fontDownloader->getFontsDirectory();
+			$installed_fonts = $this->get_installed_fonts( $fonts_dir );
+
+			// Get saved font selection (option name is dkpdf_ + field id)
+			$selected_font = get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
+
+			$html = '<select name="dkpdf_font_downloader" id="dkpdf_font_downloader" class="regular-text">';
+
+			foreach ( $installed_fonts as $font_file => $font_name ) {
+				$selected = ( $selected_font === $font_file ) ? ' selected="selected"' : '';
+				$html .= sprintf(
+					'<option value="%s"%s>%s</option>',
+					esc_attr( $font_file ),
+					$selected,
+					esc_html( $font_name )
+				);
+			}
+
+			$html .= '</select>';
+			$html .= '<p class="description">';
+			$html .= esc_html__( 'Select the default font for PDF generation.', 'dkpdf' );
+			$html .= '</p>';
+
+			return $html;
 		}
 
 		// Show download UI when fonts are not installed
