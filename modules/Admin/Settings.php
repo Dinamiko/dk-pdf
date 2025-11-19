@@ -168,6 +168,13 @@ class Settings {
 			'description' => '',
 			'fields'      => array(
 				array(
+					'id'          => 'load_theme_css',
+					'label'       => __( 'Load theme CSS in PDF', 'dkpdf' ),
+					'description' => __( 'Include the current theme stylesheet in PDF templates', 'dkpdf' ),
+					'type'        => 'checkbox',
+					'default'     => 'on'
+				),
+				array(
 					'id'          => 'font_downloader',
 					'label'       => __( 'Default Font', 'dkpdf' ),
 					'description' => '',

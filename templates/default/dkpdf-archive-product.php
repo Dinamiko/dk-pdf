@@ -1,7 +1,9 @@
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
-          media="all"/>
+    <?php if ( get_option( 'dkpdf_load_theme_css', 'on' ) === 'on' ) { ?>
+        <link type="text/css" rel="stylesheet" href="<?php echo esc_url( get_bloginfo( 'stylesheet_url' ) ); ?>"
+              media="all"/>
+    <?php } ?>
     <style>
         a, code, ins, kbd, tt {background-color: transparent;}
         .screen-reader-text {
