@@ -37,11 +37,44 @@ class DocumentBuilder {
 		return new Mpdf( $config );
 	}
 
+	private function getSelectedFont(): string {
+		$font = get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
+		return strtolower( $font );
+	}
+
+	private function getCustomFontData(): array {
+		$upload_dir = wp_upload_dir();
+		$fonts_dir  = $upload_dir['basedir'] . '/dkpdf-fonts';
+		$fontdata   = array();
+
+		if ( ! is_dir( $fonts_dir ) ) {
+			return $fontdata;
+		}
+
+		$font_files = glob( $fonts_dir . '/*.ttf' );
+		if ( ! $font_files ) {
+			return $fontdata;
+		}
+
+		foreach ( $font_files as $font_file ) {
+			$font_name = basename( $font_file, '.ttf' );
+			$font_key  = strtolower( $font_name );
+
+			// Register font with basic configuration (regular weight only)
+			$fontdata[ $font_key ] = array(
+				'R' => $font_name . '.ttf',
+			);
+		}
+
+		return $fontdata;
+	}
+
 	private function getMpdfConfig(): array {
 		// Configure PDF options from settings
 		$config = array(
 			'tempDir'           => apply_filters( 'dkpdf_mpdf_temp_dir', realpath( __DIR__ . '/../..' ) . '/tmp' ),
 			'default_font_size' => get_option( 'dkpdf_font_size', '12' ),
+			'default_font'      => $this->getSelectedFont(),
 			'format'            => get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
 				apply_filters( 'dkpdf_pdf_format', 'A4' ) . '-L' :
 				apply_filters( 'dkpdf_pdf_format', 'A4' ),
@@ -56,8 +89,23 @@ class DocumentBuilder {
 		$default_config      = ( new ConfigVariables() )->getDefaults();
 		$default_font_config = ( new FontVariables() )->getDefaults();
 
-		$config['fontDir']  = apply_filters( 'dkpdf_mpdf_font_dir', $default_config['fontDir'] );
-		$config['fontdata'] = apply_filters( 'dkpdf_mpdf_font_data', $default_font_config['fontdata'] );
+		// Include custom fonts directory
+		$upload_dir        = wp_upload_dir();
+		$custom_fonts_dir  = $upload_dir['basedir'] . '/dkpdf-fonts';
+		$font_directories  = $default_config['fontDir'];
+
+		if ( is_dir( $custom_fonts_dir ) ) {
+			$font_directories[] = $custom_fonts_dir;
+		}
+
+		$config['fontDir'] = apply_filters( 'dkpdf_mpdf_font_dir', $font_directories );
+
+		// Merge custom fonts with default fontdata
+		$custom_fontdata = $this->getCustomFontData();
+		$config['fontdata'] = apply_filters(
+			'dkpdf_mpdf_font_data',
+			array_merge( $default_font_config['fontdata'], $custom_fontdata )
+		);
 
 		// Apply final config filter
 		return apply_filters( 'dkpdf_mpdf_config', $config );
