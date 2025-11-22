@@ -58,6 +58,11 @@ class WordPressIntegration {
 			return $description;
 		}
 
+		// Don't show button if position is set to shortcode only
+		if ( get_option( 'dkpdf_pdfbutton_position' ) === 'shortcode' ) {
+			return $description;
+		}
+
 		$option_taxonomies = get_option( 'dkpdf_pdfbutton_taxonomies', array() );
 		$queried_object    = get_queried_object();
 

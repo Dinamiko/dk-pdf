@@ -3,6 +3,7 @@
 ## 2.2.1
 - Enhancement - Display custom fields in WooCommerce product PDF.
 - Fix - Fatal error when generating PDFs for posts with non-publish status.
+- Fix - Respect 'shortcode only' position setting on WooCommerce and WordPress archive pages.
 
 ## 2.2.0
 - Enhancement - Add button visibility by role.
