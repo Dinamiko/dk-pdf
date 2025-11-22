@@ -289,19 +289,56 @@ jQuery(document).ready(function($) {
         },
 
         /**
-         * Refresh font selector dropdown
+         * Format font name for display (matches PHP format_font_name logic)
+         */
+        formatFontName: function(fontName) {
+            // Replace hyphens with spaces
+            var name = fontName.replace(/-/g, ' ');
+
+            // Add spaces before uppercase letters (for camelCase)
+            name = name.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+            return name;
+        },
+
+        /**
+         * Refresh font selector dropdown without page reload
          */
         refreshFontSelector: function() {
+            var self = this;
+            var $dropdown = $('#dkpdf_font_downloader');
+
+            if ($dropdown.length === 0) {
+                return;
+            }
+
+            // Get current selected value to preserve it
+            var currentValue = $dropdown.val();
+
             $.ajax({
                 url: dkpdf_ajax.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'dkpdf_check_fonts_status',
+                    action: 'dkpdf_list_fonts',
                     nonce: dkpdf_ajax.nonce
                 },
                 success: function(response) {
-                    if (response.success && response.data.installed) {
-                        location.reload();
+                    if (response.success && response.data.fonts) {
+                        var fonts = response.data.fonts;
+
+                        // Clear and rebuild dropdown options
+                        $dropdown.empty();
+
+                        fonts.forEach(function(font) {
+                            var selected = font.name === currentValue ? ' selected="selected"' : '';
+                            var displayName = self.formatFontName(font.name);
+
+                            $dropdown.append(
+                                '<option value="' + font.name + '"' + selected + '>' +
+                                displayName +
+                                '</option>'
+                            );
+                        });
                     }
                 }
             });
