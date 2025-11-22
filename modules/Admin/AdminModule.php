@@ -16,6 +16,7 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			'admin.field_renderer'  => static fn() => new FieldRenderer(),
 			'admin.field_validator' => static fn() => new FieldValidator(),
 			'admin.font_downloader' => static fn() => new FontDownloader(),
+			'admin.font_manager'    => static fn() => new FontManager(),
 			'admin.settings'        => static fn( $container ) => new Settings(
 				$container->get( 'admin.field_renderer' ),
 				$container->get( 'admin.field_validator' ),
@@ -95,6 +96,30 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($fontDownloader instanceof FontDownloader);
 
 			$this->handle_check_fonts_status_ajax( $fontDownloader );
+		});
+
+		// Register AJAX endpoint for uploading fonts
+		add_action( 'wp_ajax_dkpdf_upload_font', function() use($container) {
+			$fontManager = $container->get( 'admin.font_manager' );
+			assert($fontManager instanceof FontManager);
+
+			$this->handle_upload_font_ajax( $fontManager );
+		});
+
+		// Register AJAX endpoint for deleting fonts
+		add_action( 'wp_ajax_dkpdf_delete_font', function() use($container) {
+			$fontManager = $container->get( 'admin.font_manager' );
+			assert($fontManager instanceof FontManager);
+
+			$this->handle_delete_font_ajax( $fontManager );
+		});
+
+		// Register AJAX endpoint for listing fonts
+		add_action( 'wp_ajax_dkpdf_list_fonts', function() use($container) {
+			$fontManager = $container->get( 'admin.font_manager' );
+			assert($fontManager instanceof FontManager);
+
+			$this->handle_list_fonts_ajax( $fontManager );
 		});
 
 		return true;
@@ -209,5 +234,89 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		$installed = $fontDownloader->areFontsInstalled();
 
 		wp_send_json_success( array( 'installed' => $installed ) );
+	}
+
+	/**
+	 * Handle AJAX request for uploading a font
+	 *
+	 * @param FontManager $fontManager
+	 * @return void
+	 */
+	private function handle_upload_font_ajax( FontManager $fontManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		// Check if file was uploaded
+		if ( empty( $_FILES['font_file'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'No file uploaded', 'dkpdf' ) ) );
+		}
+
+		$result = $fontManager->uploadFont( $_FILES['font_file'] );
+
+		if ( $result['success'] ) {
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( $result );
+		}
+	}
+
+	/**
+	 * Handle AJAX request for deleting a font
+	 *
+	 * @param FontManager $fontManager
+	 * @return void
+	 */
+	private function handle_delete_font_ajax( FontManager $fontManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		$font_name = sanitize_text_field( $_POST['font_name'] ?? '' );
+		if ( empty( $font_name ) ) {
+			wp_send_json_error( array( 'message' => __( 'Font name is required', 'dkpdf' ) ) );
+		}
+
+		$result = $fontManager->deleteFont( $font_name );
+
+		if ( $result['success'] ) {
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( $result );
+		}
+	}
+
+	/**
+	 * Handle AJAX request for listing fonts
+	 *
+	 * @param FontManager $fontManager
+	 * @return void
+	 */
+	private function handle_list_fonts_ajax( FontManager $fontManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		$fonts = $fontManager->listFonts();
+
+		wp_send_json_success( array( 'fonts' => $fonts ) );
 	}
 }

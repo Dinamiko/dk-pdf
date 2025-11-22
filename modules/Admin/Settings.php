@@ -72,10 +72,35 @@ class Settings {
 		), '1.0.0' );
 		wp_enqueue_script( 'dkpdf' . '-settings-js' );
 
+		// Enqueue Font Manager script
+		wp_register_script( 'dkpdf-font-manager-js', plugins_url( 'dk-pdf/assets/js/font-manager.js' ), array(
+			'jquery'
+		), '1.0.0', true );
+		wp_enqueue_script( 'dkpdf-font-manager-js' );
+
 		// Localize script for AJAX
 		wp_localize_script( 'dkpdf' . '-settings-js', 'dkpdf_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'dkpdf_ajax_nonce' )
+			'nonce' => wp_create_nonce( 'dkpdf_ajax_nonce' ),
+			'i18n' => array(
+				'manage_fonts' => __( 'Manage Fonts', 'dkpdf' ),
+				'close' => __( 'Close', 'dkpdf' ),
+				'upload_font' => __( 'Upload Font', 'dkpdf' ),
+				'uploading' => __( 'Uploading...', 'dkpdf' ),
+				'loading' => __( 'Loading', 'dkpdf' ),
+				'delete' => __( 'Delete', 'dkpdf' ),
+				'active' => __( 'Active', 'dkpdf' ),
+				'core' => __( 'Core', 'dkpdf' ),
+				'custom' => __( 'Custom', 'dkpdf' ),
+				'no_fonts' => __( 'No fonts available.', 'dkpdf' ),
+				'only_ttf_files' => __( 'Only TTF font files are supported.', 'dkpdf' ),
+				'upload_failed' => __( 'Failed to upload font.', 'dkpdf' ),
+				'delete_failed' => __( 'Failed to delete font.', 'dkpdf' ),
+				'error_loading_fonts' => __( 'Failed to load fonts.', 'dkpdf' ),
+				'cannot_delete_active' => __( 'Cannot delete the currently selected font', 'dkpdf' ),
+				'confirm_delete_core' => __( 'Are you sure you want to delete the core font "%s"? You can reinstall it later using the "Install Core Fonts" button.', 'dkpdf' ),
+				'confirm_delete_custom' => __( 'Are you sure you want to delete the custom font "%s"? This action cannot be undone.', 'dkpdf' ),
+			)
 		) );
 	}
 
@@ -176,7 +201,7 @@ class Settings {
 				),
 				array(
 					'id'          => 'font_downloader',
-					'label'       => __( 'Default Font', 'dkpdf' ),
+					'label'       => __( 'Default font', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'font_downloader',
 					'default'     => 'DejaVuSans'

@@ -660,7 +660,8 @@ class FieldRenderer {
 			// Get saved font selection (option name is dkpdf_ + field id)
 			$selected_font = get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
 
-			$html = '<select name="dkpdf_font_downloader" id="dkpdf_font_downloader" class="regular-text">';
+			$html = '<div class="dkpdf-font-selector-wrapper">';
+			$html .= '<select name="dkpdf_font_downloader" id="dkpdf_font_downloader" class="regular-text">';
 
 			foreach ( $installed_fonts as $font_file => $font_name ) {
 				$selected = ( $selected_font === $font_file ) ? ' selected="selected"' : '';
@@ -673,6 +674,10 @@ class FieldRenderer {
 			}
 
 			$html .= '</select>';
+			$html .= '<button type="button" id="dkpdf-manage-fonts" class="button button-secondary" style="margin-left: 10px;">';
+			$html .= esc_html__( 'Manage Fonts', 'dkpdf' );
+			$html .= '</button>';
+			$html .= '</div>';
 			$html .= '<p class="description">';
 			$html .= esc_html__( 'Select the default font for PDF generation.', 'dkpdf' );
 			$html .= '</p>';
