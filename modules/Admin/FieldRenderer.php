@@ -600,15 +600,19 @@ class FieldRenderer {
 	private function get_installed_fonts( string $fonts_dir ): array {
 		$fonts = array();
 
-		// Get all .ttf files from fonts directory
-		$font_files = glob( $fonts_dir . '/*.ttf' );
+		// Get all .ttf files from fonts directory (case-insensitive)
+		$font_files = array_merge(
+			glob( $fonts_dir . '/*.ttf' ) ?: array(),
+			glob( $fonts_dir . '/*.TTF' ) ?: array()
+		);
 
 		if ( empty( $font_files ) ) {
 			return $fonts;
 		}
 
 		foreach ( $font_files as $font_file ) {
-			$filename = basename( $font_file, '.ttf' );
+			// Remove extension (case-insensitive) to get filename
+			$filename = preg_replace( '/\.ttf$/i', '', basename( $font_file ) );
 
 			// Convert filename to display name (e.g., DejaVuSans-Bold -> DejaVu Sans Bold)
 			$display_name = $this->format_font_name( $filename );

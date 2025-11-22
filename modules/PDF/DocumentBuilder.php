@@ -51,18 +51,26 @@ class DocumentBuilder {
 			return $fontdata;
 		}
 
-		$font_files = glob( $fonts_dir . '/*.ttf' );
-		if ( ! $font_files ) {
+		// Use case-insensitive glob to find both .ttf and .TTF files
+		$font_files = array_merge(
+			glob( $fonts_dir . '/*.ttf' ) ?: array(),
+			glob( $fonts_dir . '/*.TTF' ) ?: array()
+		);
+
+		if ( empty( $font_files ) ) {
 			return $fontdata;
 		}
 
 		foreach ( $font_files as $font_file ) {
-			$font_name = basename( $font_file, '.ttf' );
+			$basename  = basename( $font_file );
+			// Remove extension (case-insensitive) to get font name
+			$font_name = preg_replace( '/\.ttf$/i', '', $basename );
 			$font_key  = strtolower( $font_name );
 
 			// Register font with basic configuration (regular weight only)
+			// Use actual basename to preserve original extension
 			$fontdata[ $font_key ] = array(
-				'R' => $font_name . '.ttf',
+				'R' => $basename,
 			);
 		}
 

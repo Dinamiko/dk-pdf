@@ -175,8 +175,9 @@ class FontManager {
             );
         }
 
-        // Sanitize filename
+        // Sanitize filename and normalize extension to lowercase
         $filename = sanitize_file_name( $file['name'] );
+        $filename = preg_replace( '/\.ttf$/i', '.ttf', $filename );
         $font_name = basename( $filename, '.ttf' );
 
         // Create fonts directory if it doesn't exist
