@@ -170,7 +170,7 @@ class Settings {
 				array(
 					'id'          => 'load_theme_css',
 					'label'       => __( 'Load theme CSS in PDF', 'dkpdf' ),
-					'description' => __( 'Include the current theme stylesheet in PDF templates', 'dkpdf' ),
+					'description' => __( 'Include the current theme stylesheet in PDF templates, when enabled it overrides default font.', 'dkpdf' ),
 					'type'        => 'checkbox',
 					'default'     => 'on'
 				),

@@ -683,10 +683,10 @@ class FieldRenderer {
 		// Show download UI when fonts are not installed
 		$html = '<div class="dkpdf-fonts-not-installed">';
 		$html .= '<button type="button" id="dkpdf-download-fonts" class="button button-secondary">';
-		$html .= esc_html__( 'Download Fonts', 'dkpdf' );
+		$html .= esc_html__( 'Install Core Fonts', 'dkpdf' );
 		$html .= '</button>';
 		$html .= '<p class="description">';
-		$html .= esc_html__( 'Download additional fonts for better multi-language support in PDFs.', 'dkpdf' );
+		$html .= esc_html__( 'Install core PDF fonts for RTL and Unicode language support.', 'dkpdf' );
 		$html .= '</p>';
 		$html .= '<div id="dkpdf-download-progress" style="display:none;">';
 		$html .= '<div class="dkpdf-progress-bar">';
