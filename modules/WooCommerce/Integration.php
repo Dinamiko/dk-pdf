@@ -41,6 +41,11 @@ class Integration {
 			return;
 		}
 
+		// Don't show button if position is set to shortcode only
+		if ( get_option( 'dkpdf_pdfbutton_position' ) === 'shortcode' ) {
+			return;
+		}
+
 		$option_taxonomies = get_option( 'dkpdf_pdfbutton_taxonomies', array() );
 
 		// Check if we're on a taxonomy page that should show the button
@@ -70,6 +75,11 @@ class Integration {
 	 * Adds a PDF button to the single product page
 	 */
 	public function add_product_button(): void {
+		// Don't show button if position is set to shortcode only
+		if ( get_option( 'dkpdf_pdfbutton_position' ) === 'shortcode' ) {
+			return;
+		}
+
 		$option_post_types = get_option( 'dkpdf_pdfbutton_post_types', array() );
 		global $post;
 
