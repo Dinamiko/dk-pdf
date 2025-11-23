@@ -41,7 +41,7 @@ class AssetLoader {
 			wp_register_script( 'dkpdf-settings-admin', plugins_url( 'dk-pdf/build/admin-settings.js' ), $settings_dependencies, $settings_version, true );
 			wp_enqueue_script( 'dkpdf-settings-admin' );
 
-			wp_register_script( 'dkpdf-ace', plugins_url( 'dk-pdf/assets/js/src-min/ace.js' ), array(), DKPDF_VERSION );
+			wp_register_script( 'dkpdf-ace', plugins_url( 'dk-pdf/vendor-assets/js/src-min/ace.js' ), array(), DKPDF_VERSION );
 			wp_enqueue_script( 'dkpdf-ace' );
 
 			$ace_asset_file = include plugin_dir_path( dirname( __DIR__ ) ) . 'build/admin-ace.asset.php';

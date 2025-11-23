@@ -682,9 +682,6 @@ class FieldRenderer {
 			$html .= esc_html__( 'Manage Fonts', 'dkpdf' );
 			$html .= '</button>';
 			$html .= '</div>';
-			$html .= '<p class="description">';
-			$html .= esc_html__( 'Select the default font for PDF generation.', 'dkpdf' );
-			$html .= '</p>';
 
 			return $html;
 		}
