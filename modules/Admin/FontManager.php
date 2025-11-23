@@ -32,22 +32,43 @@ class FontManager {
     }
 
     /**
-     * List of core fonts that come with the plugin
-     * These are downloaded from GitHub via the font downloader
+     * Get list of custom uploaded fonts
      *
      * @return array
      */
-    private function getCoreFonts(): array {
-        return array(
-            'DejaVuSans',
-            'DejaVuSansCondensed',
-            'DejaVuSansMono',
-            'DejaVuSerif',
-            'DejaVuSerifCondensed',
-            'FreeSerif',
-            'FreeSans',
-            'FreeMono',
-        );
+    private function getCustomFontsList(): array {
+        return get_option( 'dkpdf_custom_fonts', array() );
+    }
+
+    /**
+     * Add a font to the custom fonts list
+     *
+     * @param string $font_name Font name (without extension)
+     * @return void
+     */
+    private function addToCustomFontsList( string $font_name ): void {
+        $custom_fonts = $this->getCustomFontsList();
+
+        if ( ! in_array( $font_name, $custom_fonts, true ) ) {
+            $custom_fonts[] = $font_name;
+            update_option( 'dkpdf_custom_fonts', $custom_fonts );
+        }
+    }
+
+    /**
+     * Remove a font from the custom fonts list
+     *
+     * @param string $font_name Font name (without extension)
+     * @return void
+     */
+    private function removeFromCustomFontsList( string $font_name ): void {
+        $custom_fonts = $this->getCustomFontsList();
+        $key = array_search( $font_name, $custom_fonts, true );
+
+        if ( $key !== false ) {
+            unset( $custom_fonts[ $key ] );
+            update_option( 'dkpdf_custom_fonts', array_values( $custom_fonts ) );
+        }
     }
 
     /**
@@ -70,13 +91,15 @@ class FontManager {
     }
 
     /**
-     * Check if a font is a core font
+     * Check if a font is a core font (downloaded from GitHub)
+     * Core fonts are those NOT in the custom uploaded fonts list
      *
      * @param string $font_name Font name (without extension)
      * @return bool
      */
     private function isCoreFont( string $font_name ): bool {
-        return in_array( $font_name, $this->getCoreFonts(), true );
+        $custom_fonts = $this->getCustomFontsList();
+        return ! in_array( $font_name, $custom_fonts, true );
     }
 
     /**
@@ -110,13 +133,13 @@ class FontManager {
             );
         }
 
-        // Sort fonts: selected first, then core fonts, then custom fonts, then alphabetically
+        // Sort fonts: selected first, then custom fonts, then core fonts, then alphabetically
         usort( $fonts, function( $a, $b ) {
             if ( $a['selected'] !== $b['selected'] ) {
                 return $b['selected'] ? 1 : -1;
             }
             if ( $a['type'] !== $b['type'] ) {
-                return $a['type'] === 'core' ? -1 : 1;
+                return $a['type'] === 'custom' ? -1 : 1;
             }
             return strcmp( $a['name'], $b['name'] );
         });
@@ -207,6 +230,9 @@ class FontManager {
             );
         }
 
+        // Add to custom fonts list to track it as a custom uploaded font
+        $this->addToCustomFontsList( $font_name );
+
         return array(
             'success' => true,
             'message' => sprintf(
@@ -256,6 +282,9 @@ class FontManager {
                 'message' => __( 'Failed to delete font file.', 'dkpdf' ),
             );
         }
+
+        // Remove from custom fonts list if it was a custom uploaded font
+        $this->removeFromCustomFontsList( $font_name );
 
         return array(
             'success' => true,
