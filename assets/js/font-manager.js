@@ -177,6 +177,11 @@ jQuery(document).ready(function($) {
                     badges += `<span class="dkpdf-badge dkpdf-badge-active">${dkpdf_ajax.i18n.active}</span>`;
                 }
 
+                // Add category badge for core fonts
+                if (font.category) {
+                    badges += `<span class="dkpdf-badge dkpdf-badge-category">${font.category}</span>`;
+                }
+
                 badges += `<span class="dkpdf-badge dkpdf-badge-${font.type}">${font.type === 'core' ? dkpdf_ajax.i18n.core : dkpdf_ajax.i18n.custom}</span>`;
 
                 var deleteButton = font.selected

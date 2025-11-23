@@ -330,6 +330,11 @@
 	color: #fff;
 }
 
+.dkpdf-badge-category {
+	background: #8b5cf6;
+	color: #fff;
+}
+
 .dkpdf-font-actions {
 	margin-left: 15px;
 	flex-shrink: 0;

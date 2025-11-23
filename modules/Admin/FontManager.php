@@ -103,6 +103,86 @@ class FontManager {
     }
 
     /**
+     * Get the category for a font (only for core fonts)
+     *
+     * @param string $font_name Font name (without extension)
+     * @return string|null Category name or null for custom fonts
+     */
+    private function getFontCategory( string $font_name ): ?string {
+        // Normalize font name for comparison (remove hyphens, spaces, and lowercase)
+        $font_lower = strtolower( str_replace( array( '-', ' ' ), '', $font_name ) );
+
+        // Unicode fonts
+        $unicode_fonts = array(
+            'dejavusans',
+            'dejavusanscondensed',
+            'dejavusansmono',
+            'dejavuserif',
+            'dejavuserifcondensed',
+            'freesans',
+            'freeserif',
+            'freemono',
+            'mph2bdamase',
+        );
+
+        // Indic fonts
+        $indic_fonts = array(
+            'lohitkannada',
+            'pothana2000',
+        );
+
+        // Arabic fonts
+        $arabic_fonts = array(
+            'xbriyaz',
+            'lateef',
+            'kfgqpcuthmantahanaskh',
+        );
+
+        // Chinese, Japanese, Korean fonts
+        $cjk_fonts = array(
+            'sunexta',
+            'unbatang',
+        );
+
+        // Check category using exact match
+        if ( in_array( $font_lower, $unicode_fonts, true ) ) {
+            return 'Unicode';
+        }
+
+        if ( in_array( $font_lower, $indic_fonts, true ) ) {
+            return 'Indic';
+        }
+
+        if ( in_array( $font_lower, $arabic_fonts, true ) ) {
+            return 'Arabic';
+        }
+
+        if ( in_array( $font_lower, $cjk_fonts, true ) ) {
+            return 'CJK';
+        }
+
+        // Fallback: Check using partial matches for common font families
+        if ( strpos( $font_lower, 'dejavu' ) !== false || strpos( $font_lower, 'free' ) !== false ) {
+            return 'Unicode';
+        }
+
+        if ( strpos( $font_lower, 'lohit' ) !== false || strpos( $font_lower, 'pothana' ) !== false ) {
+            return 'Indic';
+        }
+
+        if ( strpos( $font_lower, 'riyaz' ) !== false || strpos( $font_lower, 'lateef' ) !== false || strpos( $font_lower, 'kfgqpc' ) !== false ) {
+            return 'Arabic';
+        }
+
+        if ( strpos( $font_lower, 'sun' ) !== false || strpos( $font_lower, 'unbatang' ) !== false ) {
+            return 'CJK';
+        }
+
+        // No specific category - will just show "Core" badge
+        return null;
+    }
+
+    /**
      * List all available fonts with metadata
      *
      * @return array Array of font objects with name, type, and selected status
@@ -124,10 +204,12 @@ class FontManager {
 
         foreach ( $font_files as $font_file ) {
             $font_name = basename( $font_file, '.ttf' );
+            $is_core   = $this->isCoreFont( $font_name );
 
             $fonts[] = array(
                 'name'     => $font_name,
-                'type'     => $this->isCoreFont( $font_name ) ? 'core' : 'custom',
+                'type'     => $is_core ? 'core' : 'custom',
+                'category' => $is_core ? $this->getFontCategory( $font_name ) : null,
                 'selected' => $font_name === $selected_font,
                 'file'     => basename( $font_file ),
             );
