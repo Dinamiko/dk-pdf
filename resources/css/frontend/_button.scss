@@ -1,0 +1,17 @@
+@use 'variables' as *;
+
+.dkpdf-button-container {
+	width: 100%;
+	float: left;
+	padding-top: $spacing-xl;
+	padding-bottom: $spacing-2xl;
+}
+
+a.dkpdf-button {
+	display: inline-block;
+
+	span.dkpdf-button-icon {
+		font-size: 140%;
+		margin-right: $spacing-sm;
+	}
+}

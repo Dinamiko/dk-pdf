@@ -11,6 +11,7 @@ plugins/*
 fonts/*
 wordpress
 docs
+build
 
 # Playwright
 /test-results/

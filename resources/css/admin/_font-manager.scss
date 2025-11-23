@@ -1,0 +1,233 @@
+@use 'variables' as *;
+
+.dkpdf-font-selector-wrapper {
+	display: flex;
+	align-items: center;
+	gap: $spacing-md;
+	flex-wrap: wrap;
+}
+
+.dkpdf-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: $z-modal;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: $spacing-xl;
+}
+
+.dkpdf-modal {
+	background: $color-bg-white;
+	border-radius: $radius-md;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	max-width: 600px;
+	width: 100%;
+	max-height: 80vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.dkpdf-modal-header {
+	padding: $spacing-xl;
+	border-bottom: 1px solid $color-border-light;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	h2 {
+		margin: 0;
+		font-size: 1.3em;
+		font-weight: 600;
+		color: $color-text-primary;
+	}
+}
+
+.dkpdf-modal-close {
+	background: none;
+	border: none;
+	font-size: 28px;
+	line-height: 1;
+	color: $color-text-muted;
+	cursor: pointer;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: $radius-sm;
+	transition: background-color $transition-fast, color $transition-fast;
+
+	&:hover {
+		background: $color-bg-light;
+		color: $color-text-secondary;
+	}
+}
+
+.dkpdf-modal-body {
+	padding: $spacing-xl;
+	overflow-y: auto;
+	flex: 1;
+}
+
+.dkpdf-modal-actions {
+	margin-bottom: $spacing-xl;
+}
+
+.dkpdf-modal-message {
+	margin-bottom: $spacing-lg;
+	display: none;
+
+	.notice {
+		margin: 0 0 $spacing-md 0;
+		padding: $spacing-sm 12px;
+	}
+}
+
+.dkpdf-fonts-list-wrapper {
+	position: relative;
+	min-height: 100px;
+}
+
+.dkpdf-loading {
+	text-align: center;
+	padding: $spacing-xl;
+	color: $color-text-muted;
+	font-style: italic;
+}
+
+.dkpdf-fonts-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dkpdf-font-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px $spacing-lg;
+	border: 1px solid $color-border-light;
+	border-radius: $radius-sm;
+	margin-bottom: $spacing-sm;
+	background: $color-bg-white;
+	transition: background-color $transition-fast;
+
+	&:hover {
+		background: $color-bg-hover;
+	}
+}
+
+.dkpdf-font-selected {
+	border-color: $color-primary;
+	background: $color-bg-selected;
+
+	&:hover {
+		background: $color-bg-selected-hover;
+	}
+}
+
+.dkpdf-font-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.dkpdf-font-name {
+	font-weight: 600;
+	color: $color-text-primary;
+	display: block;
+	margin-bottom: $spacing-xs;
+	word-break: break-word;
+}
+
+.dkpdf-font-badges {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.dkpdf-badge {
+	display: inline-block;
+	padding: 2px $spacing-sm;
+	border-radius: $radius-sm;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.dkpdf-badge-active {
+	background: $color-success;
+	color: $color-bg-white;
+}
+
+.dkpdf-badge-core {
+	background: $color-primary;
+	color: $color-bg-white;
+}
+
+.dkpdf-badge-custom {
+	background: $color-warning;
+	color: $color-bg-white;
+}
+
+.dkpdf-badge-category {
+	background: $color-purple;
+	color: $color-bg-white;
+}
+
+.dkpdf-font-actions {
+	margin-left: $spacing-lg;
+	flex-shrink: 0;
+}
+
+.dkpdf-delete-font {
+	color: $color-error;
+	border-color: $color-error;
+
+	&:hover:not(:disabled) {
+		background: $color-error;
+		border-color: $color-error;
+		color: $color-bg-white;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+.dkpdf-no-fonts {
+	text-align: center;
+	padding: $spacing-2xl $spacing-xl;
+	color: $color-text-muted;
+	font-style: italic;
+}
+
+@media (max-width: $breakpoint-mobile) {
+	.dkpdf-modal {
+		max-width: 100%;
+		max-height: 100vh;
+		border-radius: 0;
+	}
+
+	.dkpdf-font-item {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: $spacing-md;
+	}
+
+	.dkpdf-font-actions {
+		margin-left: 0;
+		width: 100%;
+	}
+
+	.dkpdf-delete-font {
+		width: 100%;
+	}
+}

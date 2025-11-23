@@ -1,0 +1,92 @@
+@use 'variables' as *;
+
+.dkpdf-item {
+	text-align: center;
+	width: 89%;
+	padding: $spacing-xs;
+	float: left;
+	border: solid 1px $color-border;
+	margin-right: 0;
+	margin-top: 2.5%;
+	background: $color-bg-white;
+
+	h3 {
+		font-size: 180%;
+	}
+
+	p {
+		font-size: 130%;
+	}
+}
+
+#editor {
+	height: $editor-height-mobile;
+}
+
+#dkpdf_settings .checkbox_multi {
+	margin-right: $spacing-md;
+	margin-bottom: $spacing-lg;
+	display: inline-block;
+}
+
+.nav-tab-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dkpdf-nav-links {
+	margin-left: auto;
+	padding: 0 $spacing-md;
+	font-size: 0.85rem;
+
+	a {
+		text-decoration: none;
+		padding-left: $spacing-sm;
+		padding-right: $spacing-sm;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.select2 {
+	width: 600px !important;
+}
+
+.select2-selection__choice {
+	padding-left: 25px !important;
+	padding-right: $spacing-md !important;
+}
+
+@media (max-width: $breakpoint-desktop) {
+	.nav-tab-wrapper {
+		justify-content: flex-start;
+	}
+
+	.dkpdf-nav-links {
+		order: -1;
+		margin-left: 0;
+		margin-bottom: $spacing-md;
+		flex-basis: 100%;
+	}
+
+	.select2 {
+		width: 100% !important;
+	}
+}
+
+@media only screen and (min-width: $breakpoint-tablet) {
+	.dkpdf-item {
+		width: 29%;
+		padding: $spacing-xs;
+		margin-right: 5%;
+		margin-top: 2.5%;
+	}
+
+	#editor {
+		height: $editor-height-desktop;
+	}
+}

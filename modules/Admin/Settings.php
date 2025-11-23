@@ -63,19 +63,21 @@ class Settings {
 		wp_enqueue_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '4.1.0' );
 
 		// Enqueue admin CSS
-		wp_enqueue_style( 'dkpdf-admin-css', plugins_url( 'dk-pdf/assets/css/admin.css' ), array(), '1.0.0' );
+		wp_enqueue_style( 'dkpdf-admin-css', plugins_url( 'dk-pdf/build/admin-style.css' ), array(), '1.0.0' );
 
-		wp_register_script( 'dkpdf' . '-settings-js', plugins_url( 'dk-pdf/assets/js/settings-admin.js' ), array(
-			'farbtastic',
-			'jquery',
-			'select2'
-		), '1.0.0' );
+		$settings_asset_file = include plugin_dir_path( dirname( __DIR__ ) ) . 'build/admin-settings.asset.php';
+		$settings_dependencies = isset( $settings_asset_file['dependencies'] ) ? array_merge( array( 'farbtastic', 'select2' ), $settings_asset_file['dependencies'] ) : array( 'farbtastic', 'select2' );
+		$settings_version = isset( $settings_asset_file['version'] ) ? $settings_asset_file['version'] : '1.0.0';
+
+		wp_register_script( 'dkpdf' . '-settings-js', plugins_url( 'dk-pdf/build/admin-settings.js' ), $settings_dependencies, $settings_version, true );
 		wp_enqueue_script( 'dkpdf' . '-settings-js' );
 
 		// Enqueue Font Manager script
-		wp_register_script( 'dkpdf-font-manager-js', plugins_url( 'dk-pdf/assets/js/font-manager.js' ), array(
-			'jquery'
-		), '1.0.0', true );
+		$font_manager_asset_file = include plugin_dir_path( dirname( __DIR__ ) ) . 'build/admin-font-manager.asset.php';
+		$font_manager_dependencies = isset( $font_manager_asset_file['dependencies'] ) ? $font_manager_asset_file['dependencies'] : array();
+		$font_manager_version = isset( $font_manager_asset_file['version'] ) ? $font_manager_asset_file['version'] : '1.0.0';
+
+		wp_register_script( 'dkpdf-font-manager-js', plugins_url( 'dk-pdf/build/admin-font-manager.js' ), $font_manager_dependencies, $font_manager_version, true );
 		wp_enqueue_script( 'dkpdf-font-manager-js' );
 
 		// Localize script for AJAX

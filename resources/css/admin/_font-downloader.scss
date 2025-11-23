@@ -1,0 +1,69 @@
+@use 'variables' as *;
+
+.dkpdf-fonts-not-installed {
+	padding: 0;
+}
+
+#dkpdf-download-fonts {
+	margin: 0;
+}
+
+#dkpdf-download-progress {
+	margin-top: $spacing-lg;
+}
+
+.dkpdf-progress-bar {
+	height: 24px;
+	background: $color-bg-light;
+	border-radius: $radius-sm;
+	overflow: hidden;
+	position: relative;
+}
+
+.dkpdf-progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, $color-primary 0%, $color-primary-dark 100%);
+	width: 0%;
+	transition: width $transition-normal ease;
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(
+			90deg,
+			transparent 0%,
+			rgba(255, 255, 255, 0.3) 50%,
+			transparent 100%
+		);
+		animation: shimmer 2s infinite;
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+.dkpdf-progress-text {
+	margin: $spacing-sm 0 0;
+	font-weight: 600;
+	color: $color-text-secondary;
+}
+
+#dkpdf-download-status {
+	margin-top: $spacing-md;
+
+	.notice {
+		margin: 0;
+		padding: $spacing-sm 12px;
+	}
+}

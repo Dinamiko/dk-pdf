@@ -1,0 +1,45 @@
+// Colors
+$color-border: #ccc;
+$color-border-light: #dcdcde;
+$color-bg-white: #fff;
+$color-bg-light: #f0f0f1;
+$color-bg-hover: #f6f7f7;
+$color-bg-selected: #f0f6fc;
+$color-bg-selected-hover: #e5f0fa;
+$color-text-primary: #1d2327;
+$color-text-secondary: #2c3338;
+$color-text-muted: #50575e;
+$color-primary: #2271b1;
+$color-primary-dark: #135e96;
+$color-success: #00a32a;
+$color-warning: #dba617;
+$color-error: #b32d2e;
+$color-purple: #8b5cf6;
+
+// Spacing
+$spacing-xs: 5px;
+$spacing-sm: 8px;
+$spacing-md: 10px;
+$spacing-lg: 15px;
+$spacing-xl: 20px;
+$spacing-2xl: 40px;
+
+// Border Radius
+$radius-sm: 3px;
+$radius-md: 4px;
+
+// Transitions
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+
+// Breakpoints
+$breakpoint-mobile: 640px;
+$breakpoint-tablet: 996px;
+$breakpoint-desktop: 1400px;
+
+// Editor
+$editor-height-mobile: 300px;
+$editor-height-desktop: 400px;
+
+// Z-index
+$z-modal: 100000;
