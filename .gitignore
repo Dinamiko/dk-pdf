@@ -3,7 +3,6 @@ vendor
 .idea
 node_modules
 *.zip
-package-lock.json
 composer.lock
 tmp
 themes/*
