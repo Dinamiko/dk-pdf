@@ -20,8 +20,32 @@ class ShortcodeManager {
 	 */
 	public function button_shortcode( array $atts, ?string $content = null ): string {
 		ob_start();
-		$this->template_loader->get_template_part( 'dkpdf-button' );
+
+		// Determine which template to use based on current context
+		$template_name = $this->determine_button_template();
+
+		$this->template_loader->get_template_part( $template_name );
 		return ob_get_clean();
+	}
+
+	/**
+	 * Determine which button template to use based on current page context
+	 *
+	 * @return string Template name (without .php extension)
+	 */
+	private function determine_button_template(): string {
+		// For singular posts/pages, use the standard button template
+		if ( is_singular() ) {
+			return 'dkpdf-button';
+		}
+
+		// For archive pages (including shop, categories, tags, etc.), use archive template
+		if ( is_archive() || is_home() || is_front_page() ) {
+			return 'dkpdf-button-archive';
+		}
+
+		// Default fallback for edge cases
+		return 'dkpdf-button';
 	}
 
 	/**
