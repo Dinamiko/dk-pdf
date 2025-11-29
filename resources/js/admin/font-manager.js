@@ -58,20 +58,13 @@ class FontManager {
 			}
 		});
 
-		// File input change - auto-fill and show upload button
+		// File input change - show upload button
 		document.addEventListener('change', (e) => {
 			if (e.target.matches('#dkpdf-font-file-input')) {
 				const file = e.target.files[0];
 				if (file) {
 					// Store selected file
 					this.selectedFile = file;
-
-					// Auto-fill family name if empty
-					const familyNameInput = document.getElementById('dkpdf-family-name');
-					if (familyNameInput && !familyNameInput.value.trim()) {
-						const extractedName = this.extractFamilyName(file.name);
-						familyNameInput.value = extractedName;
-					}
 
 					// Show selected filename
 					const filenameDisplay = document.getElementById('dkpdf-selected-filename');
@@ -127,13 +120,13 @@ class FontManager {
 					<div class="dkpdf-modal-body">
 						<div class="dkpdf-upload-form">
 							<div class="dkpdf-form-row">
-								<label for="dkpdf-family-name">${i18n.family_name || 'Family Name'}</label>
-								<input type="text" id="dkpdf-family-name" class="regular-text" placeholder="${i18n.auto_detected || 'Auto-detected from filename'}">
+								<label for="dkpdf-family-name">${i18n.family_name || 'Family Name'} <span style="color: #d63638;">*</span></label>
+								<input type="text" id="dkpdf-family-name" class="regular-text" placeholder="${i18n.enter_family_name || 'e.g., Montserrat'}" required>
 							</div>
 							<div class="dkpdf-form-row">
-								<label for="dkpdf-variant-type">${i18n.variant_type || 'Variant Type'}</label>
-								<select id="dkpdf-variant-type" class="regular-text">
-									<option value="">${i18n.auto_detect || 'Auto-detect'}</option>
+								<label for="dkpdf-variant-type">${i18n.variant_type || 'Variant Type'} <span style="color: #d63638;">*</span></label>
+								<select id="dkpdf-variant-type" class="regular-text" required>
+									<option value="">${i18n.select_variant || '-- Select Variant --'}</option>
 									<option value="R">${i18n.regular || 'Regular'}</option>
 									<option value="B">${i18n.bold || 'Bold'}</option>
 									<option value="I">${i18n.italic || 'Italic'}</option>
@@ -269,15 +262,26 @@ class FontManager {
 			return;
 		}
 
+		// Get family name and variant from form
+		const familyName = val('#dkpdf-family-name') || '';
+		const variant = val('#dkpdf-variant-type') || '';
+
+		// Validate required fields
+		if (!familyName.trim()) {
+			this.showMessage(i18n.family_name_required || 'Family name is required.', 'error');
+			return;
+		}
+
+		if (!variant) {
+			this.showMessage(i18n.variant_required || 'Variant type is required.', 'error');
+			return;
+		}
+
 		const uploadBtn = document.getElementById('dkpdf-upload-font-btn');
 		const originalText = uploadBtn.textContent;
 		uploadBtn.disabled = true;
 		uploadBtn.textContent = i18n.uploading || 'Uploading...';
 		this.clearMessage();
-
-		// Get family name and variant from form
-		const familyName = val('#dkpdf-family-name') || '';
-		const variant = val('#dkpdf-variant-type') || '';
 
 		try {
 			const response = await ajaxRequest('dkpdf_upload_font', {
