@@ -650,30 +650,45 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_font_downloader_field( array $field ): string {
-		// Get FontDownloader service from container
+		// Get services from container
 		$container = \Dinamiko\DKPDF\Container::get_container();
 		$fontDownloader = $container->get( 'admin.font_downloader' );
+		$fontManager = $container->get( 'admin.font_manager' );
 
 		$fontsInstalled = $fontDownloader->areFontsInstalled();
 
 		// Show font selector when fonts are installed
 		if ( $fontsInstalled ) {
-			$fonts_dir = $fontDownloader->getFontsDirectory();
-			$installed_fonts = $this->get_installed_fonts( $fonts_dir );
+			// Get font families from FontManager
+			$font_families = $fontManager->listFonts();
 
-			// Get saved font selection (option name is dkpdf_ + field id)
+			// Get saved font selection
 			$selected_font = get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
 
 			$html = '<div class="dkpdf-font-selector-wrapper">';
 			$html .= '<select name="dkpdf_font_downloader" id="dkpdf_font_downloader" class="regular-text">';
 
-			foreach ( $installed_fonts as $font_file => $font_name ) {
-				$selected = ( $selected_font === $font_file ) ? ' selected="selected"' : '';
+			// Only show complete families (those with Regular variant)
+			foreach ( $font_families as $family ) {
+				if ( ! isset( $family['complete'] ) || ! $family['complete'] ) {
+					continue; // Skip incomplete families
+				}
+
+				$font_key = $family['key'] ?? $family['name'] ?? '';
+				$family_name = $family['family_name'] ?? $family['name'] ?? '';
+
+				// Check if this family is selected
+				$is_selected = ( $selected_font === $font_key ) ||
+				               ( $selected_font === $family_name ) ||
+				               ( isset( $family['selected'] ) && $family['selected'] );
+
+				$selected = $is_selected ? ' selected="selected"' : '';
+
 				$html .= sprintf(
 					'<option value="%s"%s>%s</option>',
-					esc_attr( $font_file ),
+					esc_attr( $font_key ),
 					$selected,
-					esc_html( $font_name )
+					esc_html( $this->format_font_name( $family_name ) )
 				);
 			}
 

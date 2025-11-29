@@ -50,6 +50,12 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($settings instanceof Settings);
 
 			$settings->register_settings();
+
+			// Run font family migration if needed
+			$fontManager = $container->get( 'admin.font_manager' );
+			assert($fontManager instanceof FontManager);
+
+			$fontManager->migrateToFontFamilies();
 		} );
 
 		add_action( 'admin_menu', function() use($container) {
@@ -258,7 +264,11 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			wp_send_json_error( array( 'message' => __( 'No file uploaded', 'dkpdf' ) ) );
 		}
 
-		$result = $fontManager->uploadFont( $_FILES['font_file'] );
+		// Get optional family name and variant parameters
+		$family_name = sanitize_text_field( $_POST['family_name'] ?? '' );
+		$variant = sanitize_text_field( $_POST['variant'] ?? '' );
+
+		$result = $fontManager->uploadFont( $_FILES['font_file'], $family_name, $variant );
 
 		if ( $result['success'] ) {
 			wp_send_json_success( $result );
@@ -268,7 +278,7 @@ class AdminModule implements ServiceModule, ExecutableModule {
 	}
 
 	/**
-	 * Handle AJAX request for deleting a font
+	 * Handle AJAX request for deleting a font family or variant
 	 *
 	 * @param FontManager $fontManager
 	 * @return void
@@ -284,12 +294,15 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
 		}
 
-		$font_name = sanitize_text_field( $_POST['font_name'] ?? '' );
-		if ( empty( $font_name ) ) {
-			wp_send_json_error( array( 'message' => __( 'Font name is required', 'dkpdf' ) ) );
+		// Get font_key (required) and variant (optional)
+		$font_key = sanitize_text_field( $_POST['font_key'] ?? $_POST['font_name'] ?? '' );
+		if ( empty( $font_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Font key is required', 'dkpdf' ) ) );
 		}
 
-		$result = $fontManager->deleteFont( $font_name );
+		$variant = sanitize_text_field( $_POST['variant'] ?? '' );
+
+		$result = $fontManager->deleteFont( $font_key, $variant );
 
 		if ( $result['success'] ) {
 			wp_send_json_success( $result );

@@ -75,6 +75,47 @@
 	flex: 1;
 }
 
+.dkpdf-upload-form {
+	background: $color-bg-light;
+	border: 1px solid $color-border-light;
+	border-radius: $radius-sm;
+	padding: $spacing-lg;
+	margin-bottom: $spacing-xl;
+}
+
+.dkpdf-form-row {
+	margin-bottom: $spacing-md;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	label {
+		display: block;
+		margin-bottom: $spacing-xs;
+		font-weight: 600;
+		color: $color-text-primary;
+		font-size: 0.875rem;
+	}
+
+	input[type="text"],
+	select {
+		width: 100%;
+	}
+}
+
+.dkpdf-file-selection {
+	display: flex;
+	align-items: center;
+	gap: $spacing-sm;
+	flex-wrap: wrap;
+
+	#dkpdf-selected-filename {
+		font-size: 0.875rem;
+		font-style: italic;
+	}
+}
+
 .dkpdf-modal-actions {
 	margin-bottom: $spacing-xl;
 }
@@ -143,6 +184,36 @@
 	display: block;
 	margin-bottom: $spacing-xs;
 	word-break: break-word;
+}
+
+.dkpdf-font-variants {
+	display: flex;
+	gap: $spacing-xs;
+	margin-bottom: $spacing-xs;
+	flex-wrap: wrap;
+}
+
+.dkpdf-variant {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px $spacing-sm;
+	border-radius: $radius-sm;
+	font-size: 11px;
+	font-weight: 600;
+	font-family: monospace;
+	border: 1px solid;
+}
+
+.dkpdf-variant-exists {
+	background: lighten($color-success, 45%);
+	border-color: lighten($color-success, 20%);
+	color: darken($color-success, 10%);
+}
+
+.dkpdf-variant-missing {
+	background: lighten($color-text-muted, 50%);
+	border-color: lighten($color-text-muted, 30%);
+	color: $color-text-muted;
 }
 
 .dkpdf-font-badges {

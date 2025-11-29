@@ -51,7 +51,39 @@ class DocumentBuilder {
 			return $fontdata;
 		}
 
-		// Use case-insensitive glob to find both .ttf and .TTF files
+		// Get font families from WordPress options
+		$custom_fonts = get_option( 'dkpdf_custom_fonts', array() );
+
+		// Check if using new font family structure
+		if ( ! empty( $custom_fonts ) && ! isset( $custom_fonts[0] ) ) {
+			$first_family = reset( $custom_fonts );
+
+			// New format with font families
+			if ( isset( $first_family['family_name'] ) && isset( $first_family['variants'] ) ) {
+				foreach ( $custom_fonts as $font_key => $family ) {
+					// Only register families with Regular variant (R is mandatory for mPDF)
+					if ( ! isset( $family['variants']['R'] ) ) {
+						continue;
+					}
+
+					// Build font data with all available variants
+					$font_config = array();
+
+					foreach ( array( 'R', 'B', 'I', 'BI' ) as $variant ) {
+						if ( isset( $family['variants'][ $variant ] ) ) {
+							$font_config[ $variant ] = $family['variants'][ $variant ];
+						}
+					}
+
+					// Register font family with mPDF
+					$fontdata[ $font_key ] = $font_config;
+				}
+
+				return $fontdata;
+			}
+		}
+
+		// Fallback: Old format or core fonts - scan filesystem
 		$font_files = array_merge(
 			glob( $fonts_dir . '/*.ttf' ) ?: array(),
 			glob( $fonts_dir . '/*.TTF' ) ?: array()
@@ -63,12 +95,10 @@ class DocumentBuilder {
 
 		foreach ( $font_files as $font_file ) {
 			$basename  = basename( $font_file );
-			// Remove extension (case-insensitive) to get font name
 			$font_name = preg_replace( '/\.ttf$/i', '', $basename );
 			$font_key  = strtolower( $font_name );
 
 			// Register font with basic configuration (regular weight only)
-			// Use actual basename to preserve original extension
 			$fontdata[ $font_key ] = array(
 				'R' => $basename,
 			);
