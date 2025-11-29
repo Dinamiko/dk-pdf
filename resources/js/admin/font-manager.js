@@ -22,7 +22,7 @@ class FontManager {
 	bindEvents() {
 		// Open modal when "Manage Fonts" button is clicked
 		document.addEventListener('click', (e) => {
-			if (e.target.matches('#dkpdf-manage-fonts')) {
+			if (e.target.closest('#dkpdf-manage-fonts')) {
 				e.preventDefault();
 				this.openModal();
 			}
@@ -30,7 +30,7 @@ class FontManager {
 
 		// Close modal on close button click
 		document.addEventListener('click', (e) => {
-			if (e.target.matches('.dkpdf-modal-close')) {
+			if (e.target.closest('.dkpdf-modal-close')) {
 				e.preventDefault();
 				this.closeModal();
 			}
@@ -52,7 +52,7 @@ class FontManager {
 
 		// Select file button - opens file picker
 		document.addEventListener('click', (e) => {
-			if (e.target.matches('#dkpdf-select-file-btn')) {
+			if (e.target.closest('#dkpdf-select-file-btn')) {
 				e.preventDefault();
 				document.getElementById('dkpdf-font-file-input').click();
 			}
@@ -87,9 +87,21 @@ class FontManager {
 			}
 		});
 
+		// Family selector change - show/hide new family input
+		document.addEventListener('change', (e) => {
+			if (e.target.matches('#dkpdf-family-selector')) {
+				const newFamilyRow = document.getElementById('dkpdf-new-family-row');
+				if (e.target.value === '__new__') {
+					newFamilyRow.style.display = 'block';
+				} else {
+					newFamilyRow.style.display = 'none';
+				}
+			}
+		});
+
 		// Upload font button - actually performs the upload
 		document.addEventListener('click', (e) => {
-			if (e.target.matches('#dkpdf-upload-font-btn')) {
+			if (e.target.closest('#dkpdf-upload-font-btn')) {
 				e.preventDefault();
 				if (this.selectedFile) {
 					this.uploadFont(this.selectedFile);
@@ -99,10 +111,11 @@ class FontManager {
 
 		// Delete font button
 		document.addEventListener('click', (e) => {
-			if (e.target.matches('.dkpdf-delete-font')) {
+			const deleteBtn = e.target.closest('.dkpdf-delete-font');
+			if (deleteBtn) {
 				e.preventDefault();
-				const fontKey = e.target.dataset.fontKey;
-				const fontType = e.target.dataset.fontType;
+				const fontKey = deleteBtn.dataset.fontKey;
+				const fontType = deleteBtn.dataset.fontType;
 				this.confirmDelete(fontKey, fontType);
 			}
 		});
@@ -120,8 +133,15 @@ class FontManager {
 					<div class="dkpdf-modal-body">
 						<div class="dkpdf-upload-form">
 							<div class="dkpdf-form-row">
-								<label for="dkpdf-family-name">${i18n.family_name || 'Family Name'} <span style="color: #d63638;">*</span></label>
-								<input type="text" id="dkpdf-family-name" class="regular-text" placeholder="${i18n.enter_family_name || 'e.g., Montserrat'}" required>
+								<label for="dkpdf-family-selector">${i18n.font_family || 'Font Family'} <span style="color: #d63638;">*</span></label>
+								<select id="dkpdf-family-selector" class="regular-text" required>
+									<option value="">${i18n.select_family || '-- Select Font Family --'}</option>
+									<option value="__new__">${i18n.create_new_family || '+ Create New Family'}</option>
+								</select>
+							</div>
+							<div class="dkpdf-form-row" id="dkpdf-new-family-row" style="display:none;">
+								<label for="dkpdf-new-family-name">${i18n.new_family_name || 'New Family Name'} <span style="color: #d63638;">*</span></label>
+								<input type="text" id="dkpdf-new-family-name" class="regular-text" placeholder="${i18n.enter_family_name || 'e.g., Montserrat'}">
 							</div>
 							<div class="dkpdf-form-row">
 								<label for="dkpdf-variant-type">${i18n.variant_type || 'Variant Type'} <span style="color: #d63638;">*</span></label>
@@ -166,6 +186,7 @@ class FontManager {
 	openModal() {
 		fadeIn(this.modal, 200);
 		this.loadFonts();
+		this.populateFamilySelector();
 	}
 
 	closeModal() {
@@ -262,16 +283,32 @@ class FontManager {
 			return;
 		}
 
-		// Get family name and variant from form
-		const familyName = val('#dkpdf-family-name') || '';
-		const variant = val('#dkpdf-variant-type') || '';
+		// Determine family name
+		const familySelectorEl = document.getElementById('dkpdf-family-selector');
+		const familySelector = familySelectorEl?.value || '';
+		let familyName = '';
 
-		// Validate required fields
-		if (!familyName.trim()) {
-			this.showMessage(i18n.family_name_required || 'Family name is required.', 'error');
+		if (!familySelector) {
+			this.showMessage(i18n.select_family_required || 'Please select a font family or create a new one.', 'error');
 			return;
 		}
 
+		if (familySelector === '__new__') {
+			// Creating new family
+			const newFamilyNameEl = document.getElementById('dkpdf-new-family-name');
+			familyName = newFamilyNameEl?.value || '';
+			if (!familyName.trim()) {
+				this.showMessage(i18n.family_name_required || 'Family name is required.', 'error');
+				return;
+			}
+		} else {
+			// Using existing family
+			familyName = familySelector;
+		}
+
+		// Get variant
+		const variantEl = document.getElementById('dkpdf-variant-type');
+		const variant = variantEl?.value || '';
 		if (!variant) {
 			this.showMessage(i18n.variant_required || 'Variant type is required.', 'error');
 			return;
@@ -292,9 +329,10 @@ class FontManager {
 
 			if (response.success) {
 				this.showMessage(response.data.message, 'success');
-				// Clear form fields and reset
+				// Reload fonts first, then reset form (so populateFamilySelector has updated data)
+				await this.loadFonts();
+				this.populateFamilySelector();
 				this.resetUploadForm();
-				this.loadFonts();
 				this.refreshFontSelector();
 			} else {
 				uploadBtn.disabled = false;
@@ -315,9 +353,19 @@ class FontManager {
 		this.selectedFile = null;
 
 		// Clear form inputs
-		const familyNameInput = document.getElementById('dkpdf-family-name');
-		if (familyNameInput) {
-			familyNameInput.value = '';
+		const familySelector = document.getElementById('dkpdf-family-selector');
+		if (familySelector) {
+			familySelector.value = '';
+		}
+
+		const newFamilyNameInput = document.getElementById('dkpdf-new-family-name');
+		if (newFamilyNameInput) {
+			newFamilyNameInput.value = '';
+		}
+
+		const newFamilyRow = document.getElementById('dkpdf-new-family-row');
+		if (newFamilyRow) {
+			newFamilyRow.style.display = 'none';
 		}
 
 		const variantSelect = document.getElementById('dkpdf-variant-type');
@@ -379,6 +427,35 @@ class FontManager {
 			}
 		} catch (error) {
 			this.showMessage(i18n.delete_failed || 'Failed to delete font.', 'error');
+		}
+	}
+
+	populateFamilySelector() {
+		const familySelector = document.getElementById('dkpdf-family-selector');
+		if (!familySelector) return;
+
+		// Keep existing options (default + "Create New")
+		const defaultOptions = familySelector.querySelectorAll('option[value=""], option[value="__new__"]');
+
+		// Clear all options
+		familySelector.innerHTML = '';
+
+		// Re-add default options
+		defaultOptions.forEach(option => familySelector.appendChild(option));
+
+		// Add existing font families
+		if (this.fonts && this.fonts.length > 0) {
+			const customFamilies = this.fonts.filter(f => f.type === 'custom');
+
+			if (customFamilies.length > 0) {
+				customFamilies.forEach(family => {
+					const option = document.createElement('option');
+					option.value = family.family_name;
+					option.textContent = family.family_name;
+					// Insert before "Create New" option
+					familySelector.insertBefore(option, familySelector.querySelector('option[value="__new__"]'));
+				});
+			}
 		}
 	}
 
