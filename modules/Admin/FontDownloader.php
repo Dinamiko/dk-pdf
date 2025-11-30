@@ -13,15 +13,40 @@ class FontDownloader {
 	 * Check if fonts directory exists and contains fonts
 	 */
 	public function areFontsInstalled(): bool {
-		$fonts_dir = $this->getFontsDirectory();
+		// Check the flag that's set when core fonts are downloaded
+		$flag = get_option( 'dkpdf_core_fonts_installed', null );
 
-		if ( ! file_exists( $fonts_dir ) || ! is_dir( $fonts_dir ) ) {
-			return false;
+		// If flag is not set (null), check if core fonts exist (backward compatibility)
+		if ( $flag === null ) {
+			$fonts_dir = $this->getFontsDirectory();
+
+			// Check for specific core font files (DejaVuSans is always in core fonts)
+			$core_font_markers = array(
+				$fonts_dir . '/DejaVuSans.ttf',
+				$fonts_dir . '/DejaVuSansCondensed.ttf',
+				$fonts_dir . '/DejaVuSerif.ttf'
+			);
+
+			// If at least 2 core font files exist, consider core fonts installed
+			$found_count = 0;
+			foreach ( $core_font_markers as $marker_file ) {
+				if ( file_exists( $marker_file ) ) {
+					$found_count++;
+				}
+			}
+
+			if ( $found_count >= 2 ) {
+				// Set the flag for future checks
+				update_option( 'dkpdf_core_fonts_installed', true );
+				return true;
+			} else {
+				// Set flag to false so we don't check files every time
+				update_option( 'dkpdf_core_fonts_installed', false );
+				return false;
+			}
 		}
 
-		// Check if directory contains .ttf files
-		$font_files = glob( $fonts_dir . '/*.ttf' );
-		return ! empty( $font_files );
+		return (bool) $flag;
 	}
 
 	/**
@@ -158,6 +183,9 @@ class FontDownloader {
 
 		// Clear progress transient
 		delete_transient( self::TRANSIENT_KEY );
+
+		// Set flag to indicate core fonts are installed
+		update_option( 'dkpdf_core_fonts_installed', true );
 
 		do_action( 'dkpdf_after_fonts_download', $fonts_dir );
 

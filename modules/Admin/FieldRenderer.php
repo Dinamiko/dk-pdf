@@ -757,7 +757,7 @@ class FieldRenderer {
 		// Get saved font selection
 		$value = $data ?? $field['default'] ?? 'DejaVuSans';
 
-		$html = '<select id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $option_name . '[' . $field['id'] . ']' ) . '" class="regular-text"';
+		$html = '<select id="dkpdf_' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $option_name ) . '" class="regular-text"';
 
 		if ( $total_count === 0 ) {
 			$html .= ' disabled';

@@ -183,9 +183,9 @@ class FontManager {
 		this.modal = document.querySelector('.dkpdf-modal-overlay');
 	}
 
-	openModal() {
+	async openModal() {
 		fadeIn(this.modal, 200);
-		this.loadFonts();
+		await this.loadFonts();
 		this.populateFamilySelector();
 	}
 
@@ -504,6 +504,10 @@ class FontManager {
 
 			if (response.success && response.data.fonts) {
 				const fonts = response.data.fonts;
+
+				// Remove disabled attribute if present
+				dropdown.disabled = false;
+
 				empty(dropdown);
 
 				// Only show complete families (those with Regular variant)
@@ -512,12 +516,26 @@ class FontManager {
 						const option = document.createElement('option');
 						option.value = font.key || font.name;
 						option.textContent = this.formatFontName(font.family_name || font.name);
+
+						// Add (Core) suffix for core fonts
+						if (font.type === 'core') {
+							option.textContent += ' (Core)';
+						}
+
 						if ((font.key && font.key === currentValue) || (font.name === currentValue) || font.selected) {
 							option.selected = true;
 						}
 						dropdown.appendChild(option);
 					}
 				});
+
+				// Update helper text
+				const description = dropdown.nextElementSibling;
+				if (description && description.classList.contains('description')) {
+					const coreCount = fonts.filter(f => f.type === 'core').length;
+					const customCount = fonts.filter(f => f.type === 'custom').length;
+					description.textContent = `${coreCount} core fonts, ${customCount} custom fonts available. Need more? See options below.`;
+				}
 			}
 		} catch (error) {
 			console.error('Failed to refresh font selector:', error);
