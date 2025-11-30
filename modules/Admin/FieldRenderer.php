@@ -768,34 +768,33 @@ class FieldRenderer {
 		if ( $total_count === 0 ) {
 			$html .= '<option value="">' . esc_html__( 'No fonts available', 'dkpdf' ) . '</option>';
 		} else {
-			// Only show complete families (those with Regular variant)
-			foreach ( $font_families as $family ) {
-				if ( ! isset( $family['complete'] ) || ! $family['complete'] ) {
-					continue; // Skip incomplete families
+			// Show custom fonts first, then core fonts
+			$font_lists = array( $custom_fonts, $core_fonts );
+
+			foreach ( $font_lists as $font_list ) {
+				foreach ( $font_list as $family ) {
+					// Only show complete families (those with Regular variant)
+					if ( ! isset( $family['complete'] ) || ! $family['complete'] ) {
+						continue; // Skip incomplete families
+					}
+
+					$font_key = $family['key'] ?? $family['name'] ?? '';
+					$family_name = $family['family_name'] ?? $family['name'] ?? '';
+
+					// Check if this family is selected
+					$is_selected = ( $value === $font_key ) ||
+					               ( $value === $family_name ) ||
+					               ( isset( $family['selected'] ) && $family['selected'] );
+
+					$selected = $is_selected ? ' selected="selected"' : '';
+
+					$html .= sprintf(
+						'<option value="%s"%s>%s</option>',
+						esc_attr( $font_key ),
+						$selected,
+						esc_html( $this->format_font_name( $family_name ) )
+					);
 				}
-
-				$font_key = $family['key'] ?? $family['name'] ?? '';
-				$family_name = $family['family_name'] ?? $family['name'] ?? '';
-
-				// Check if this family is selected
-				$is_selected = ( $value === $font_key ) ||
-				               ( $value === $family_name ) ||
-				               ( isset( $family['selected'] ) && $family['selected'] );
-
-				$selected = $is_selected ? ' selected="selected"' : '';
-
-				$html .= sprintf(
-					'<option value="%s"%s>%s',
-					esc_attr( $font_key ),
-					$selected,
-					esc_html( $this->format_font_name( $family_name ) )
-				);
-
-				if ( ( $family['type'] ?? '' ) === 'core' ) {
-					$html .= ' (' . esc_html__( 'Core', 'dkpdf' ) . ')';
-				}
-
-				$html .= '</option>';
 			}
 		}
 
