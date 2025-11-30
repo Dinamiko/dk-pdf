@@ -252,13 +252,20 @@ class SettingsAdmin {
 					progressText.textContent = '100%';
 
 					setTimeout(() => {
+						// Replace button with installed status
+						const buttonContainer = downloadBtn.parentElement;
+						buttonContainer.innerHTML = '<p class="dkpdf-core-fonts-status">' +
+							'<span class="dashicons dashicons-yes-alt" style="color: #46b450; vertical-align: middle;"></span> ' +
+							'Core fonts installed' +
+							'</p>';
+
+						// Refresh the font selector dropdown
+						this.refreshFontSelector();
+
+						// Show success message
 						statusEl.innerHTML = '<p class="notice notice-success inline"><strong>' +
 							'Fonts downloaded successfully!' +
-							'</strong> Page will reload...</p>';
-
-						setTimeout(() => {
-							location.reload();
-						}, 1500);
+							'</strong></p>';
 					}, 500);
 				} else {
 					downloadBtn.disabled = false;
@@ -281,6 +288,54 @@ class SettingsAdmin {
 					'Failed to download fonts. Please try again.</p>';
 			}
 		});
+	}
+
+	async refreshFontSelector() {
+		const selector = document.getElementById('dkpdf_default_font');
+		if (!selector) {
+			return;
+		}
+
+		try {
+			const response = await ajaxRequest('dkpdf_list_fonts');
+
+			if (response.success && response.data.fonts) {
+				const currentValue = selector.value;
+				selector.innerHTML = '';
+
+				const fonts = response.data.fonts;
+
+				fonts.forEach(font => {
+					if (!font.complete) {
+						return; // Skip incomplete families
+					}
+
+					const option = document.createElement('option');
+					option.value = font.key;
+					option.textContent = font.family_name;
+
+					if (font.type === 'core') {
+						option.textContent += ' (Core)';
+					}
+
+					if (font.key === currentValue || font.selected) {
+						option.selected = true;
+					}
+
+					selector.appendChild(option);
+				});
+
+				// Update helper text
+				const description = selector.nextElementSibling;
+				if (description && description.classList.contains('description')) {
+					const coreCount = fonts.filter(f => f.type === 'core').length;
+					const customCount = fonts.filter(f => f.type === 'custom').length;
+					description.textContent = `${coreCount} core fonts, ${customCount} custom fonts available. Need more? See options below.`;
+				}
+			}
+		} catch (error) {
+			console.error('Failed to refresh font selector:', error);
+		}
 	}
 }
 

@@ -491,7 +491,7 @@ class FontManager {
 	}
 
 	async refreshFontSelector() {
-		const dropdown = document.getElementById('dkpdf_font_downloader');
+		const dropdown = document.getElementById('dkpdf_default_font');
 
 		if (!dropdown) {
 			return;

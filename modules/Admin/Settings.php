@@ -202,11 +202,25 @@ class Settings {
 					'default'     => 'on'
 				),
 				array(
-					'id'          => 'font_downloader',
+					'id'          => 'default_font',
 					'label'       => __( 'Default font', 'dkpdf' ),
-					'description' => '',
-					'type'        => 'font_downloader',
+					'description' => __( 'Select the default font for PDF generation.', 'dkpdf' ),
+					'type'        => 'font_selector',
 					'default'     => 'DejaVuSans'
+				),
+				array(
+					'id'          => 'core_fonts_installer',
+					'label'       => __( 'Core fonts', 'dkpdf' ),
+					'description' => __( 'Download and install mPDF core fonts (DejaVu Sans, Free Sans, etc.).', 'dkpdf' ),
+					'type'        => 'core_fonts_installer',
+					'default'     => ''
+				),
+				array(
+					'id'          => 'custom_fonts_manager',
+					'label'       => __( 'Custom fonts', 'dkpdf' ),
+					'description' => __( 'Upload and manage your own TTF font families.', 'dkpdf' ),
+					'type'        => 'custom_fonts_manager',
+					'default'     => ''
 				),
 				array(
 					'id'          => 'page_orientation',

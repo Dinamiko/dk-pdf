@@ -38,8 +38,38 @@ class DocumentBuilder {
 	}
 
 	private function getSelectedFont(): string {
-		$font = get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
-		return strtolower( $font );
+		$selected_font = get_option( 'dkpdf_default_font', 'DejaVuSans' );
+		$custom_fonts = get_option( 'dkpdf_custom_fonts', array() );
+
+		// Validate selected font exists
+		$font_exists = false;
+
+		// Check if it's a custom font
+		if ( isset( $custom_fonts[ strtolower( $selected_font ) ] ) ) {
+			$font_exists = true;
+		}
+
+		// Check if it's a core font (in fonts directory)
+		$core_font_path = DKPDF_PLUGIN_DIR . 'fonts/' . $selected_font;
+		if ( ! str_ends_with( $core_font_path, '.ttf' ) ) {
+			$core_font_path .= '.ttf';
+		}
+		if ( file_exists( $core_font_path ) ) {
+			$font_exists = true;
+		}
+
+		// Fallback logic
+		if ( ! $font_exists ) {
+			// Get first available font
+			if ( ! empty( $custom_fonts ) ) {
+				$selected_font = key( $custom_fonts );
+			} else {
+				// Default to DejaVuSans (mPDF default)
+				$selected_font = 'DejaVuSans';
+			}
+		}
+
+		return strtolower( $selected_font );
 	}
 
 	private function getCustomFontData(): array {
