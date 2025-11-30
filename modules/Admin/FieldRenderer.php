@@ -478,6 +478,14 @@ class FieldRenderer {
 				}
 				break;
 
+			case 'core_fonts_installer':
+				// Description is rendered within the field itself
+				break;
+
+			case 'custom_fonts_manager':
+				// Description is rendered within the field itself
+				break;
+
 			default:
 				if ( ! $post ) {
 					$html .= '<label for="' . esc_attr( $field['id'] ) . '">' . "\n";
@@ -800,21 +808,6 @@ class FieldRenderer {
 
 		$html .= '</select>';
 
-		// Helper text
-		if ( $total_count > 0 ) {
-			$html .= '<p class="description">';
-			$html .= sprintf(
-				esc_html__( '%1$d core fonts, %2$d custom fonts available. Need more? See options below.', 'dkpdf' ),
-				$core_count,
-				$custom_count
-			);
-			$html .= '</p>';
-		} else {
-			$html .= '<p class="description">';
-			$html .= esc_html__( 'No fonts available. Install core fonts or upload custom fonts below to get started.', 'dkpdf' );
-			$html .= '</p>';
-		}
-
 		return $html;
 	}
 
@@ -833,9 +826,15 @@ class FieldRenderer {
 			$html .= '</p>';
 		} else {
 			// Show install button
-			$html = '<button type="button" id="dkpdf-download-fonts" class="button button-secondary">';
+			$html = '<button type="button" id="dkpdf-download-fonts" class="button button-secondary" style="display: block; margin-bottom: 8px;">';
 			$html .= esc_html__( 'Install Core Fonts', 'dkpdf' );
 			$html .= '</button>';
+
+			// Add description below button
+			if ( isset( $field['description'] ) && $field['description'] !== '' ) {
+				$html .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+			}
+
 			$html .= '<div id="dkpdf-download-progress" style="display:none;">';
 			$html .= '<div class="dkpdf-progress-bar">';
 			$html .= '<div class="dkpdf-progress-fill"></div>';
@@ -849,9 +848,14 @@ class FieldRenderer {
 	}
 
 	private function render_custom_fonts_manager_field( array $field ): string {
-		$html = '<button type="button" id="dkpdf-manage-fonts" class="button button-secondary">';
+		$html = '<button type="button" id="dkpdf-manage-fonts" class="button button-secondary" style="display: block; margin-bottom: 8px;">';
 		$html .= esc_html__( 'Manage Custom Fonts', 'dkpdf' );
 		$html .= '</button>';
+
+		// Add description below button
+		if ( isset( $field['description'] ) && $field['description'] !== '' ) {
+			$html .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+		}
 
 		return $html;
 	}

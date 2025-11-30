@@ -204,14 +204,14 @@ class Settings {
 				array(
 					'id'          => 'default_font',
 					'label'       => __( 'Default font', 'dkpdf' ),
-					'description' => __( 'Select the default font for PDF generation.', 'dkpdf' ),
+					'description' => '',
 					'type'        => 'font_selector',
 					'default'     => 'DejaVuSans'
 				),
 				array(
 					'id'          => 'core_fonts_installer',
 					'label'       => __( 'Core fonts', 'dkpdf' ),
-					'description' => __( 'Download and install mPDF core fonts (DejaVu Sans, Free Sans, etc.).', 'dkpdf' ),
+					'description' => __( 'Recommended for RTL and Unicode language support.', 'dkpdf' ),
 					'type'        => 'core_fonts_installer',
 					'default'     => ''
 				),

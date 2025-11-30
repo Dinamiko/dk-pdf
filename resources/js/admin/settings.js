@@ -259,13 +259,17 @@ class SettingsAdmin {
 							'Core fonts installed' +
 							'</p>';
 
-						// Refresh the font selector dropdown
-						this.refreshFontSelector();
+						// Page will reload to enable and populate the font selector
 
 						// Show success message
 						statusEl.innerHTML = '<p class="notice notice-success inline"><strong>' +
-							'Fonts downloaded successfully!' +
+							'Fonts downloaded successfully! Reloading page...' +
 							'</strong></p>';
+
+						// Reload page to enable and populate the font selector
+						setTimeout(() => {
+							window.location.reload();
+						}, 1000);
 					}, 500);
 				} else {
 					downloadBtn.disabled = false;
