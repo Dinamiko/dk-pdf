@@ -49,8 +49,10 @@ class DocumentBuilder {
 			$font_exists = true;
 		}
 
-		// Check if it's a core font (in fonts directory)
-		$core_font_path = DKPDF_PLUGIN_DIR . 'fonts/' . $selected_font;
+		// Check if it's a core font (in uploads directory)
+		$upload_dir = wp_upload_dir();
+		$fonts_dir = $upload_dir['basedir'] . '/dkpdf-fonts';
+		$core_font_path = $fonts_dir . '/' . $selected_font;
 		if ( ! str_ends_with( $core_font_path, '.ttf' ) ) {
 			$core_font_path .= '.ttf';
 		}

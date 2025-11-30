@@ -260,7 +260,7 @@ class FontManager {
      * @return string
      */
     private function getSelectedFont(): string {
-        return get_option( 'dkpdf_font_downloader', 'DejaVuSans' );
+        return get_option( 'dkpdf_default_font', 'DejaVuSans' );
     }
 
     /**
@@ -455,11 +455,8 @@ class FontManager {
             }
         }
 
-        // Sort fonts: selected first, then custom fonts, then core fonts, then alphabetically
+        // Sort fonts: custom fonts first, then core fonts, then alphabetically within each type
         usort( $fonts, function( $a, $b ) {
-            if ( $a['selected'] !== $b['selected'] ) {
-                return $b['selected'] ? 1 : -1;
-            }
             if ( $a['type'] !== $b['type'] ) {
                 return $a['type'] === 'custom' ? -1 : 1;
             }
