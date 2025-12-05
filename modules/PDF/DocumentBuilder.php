@@ -155,6 +155,12 @@ class DocumentBuilder {
 			'margin_header'     => get_option( 'dkpdf_margin_header', '15' ),
 		);
 
+		// Auto language detection for non-Latin scripts (Arabic, Hebrew, CJK, Thai, etc.)
+		if ( get_option( 'dkpdf_auto_language_detection' ) === 'on' ) {
+			$config['autoScriptToLang'] = true;
+			$config['autoLangToFont']   = true;
+		}
+
 		// Add font configuration
 		$default_config      = ( new ConfigVariables() )->getDefaults();
 		$default_font_config = ( new FontVariables() )->getDefaults();
@@ -182,6 +188,11 @@ class DocumentBuilder {
 	}
 
 	private function configureMpdfSettings( Mpdf $mpdf ): void {
+		// Set RTL direction if enabled
+		if ( get_option( 'dkpdf_enable_rtl' ) === 'on' ) {
+			$mpdf->SetDirectionality( 'rtl' );
+		}
+
 		// Set protection if enabled
 		if ( get_option( 'dkpdf_enable_protection' ) == 'on' ) {
 			$mpdf->SetProtection( get_option( 'dkpdf_grant_permissions', array() ) );

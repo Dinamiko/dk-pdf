@@ -219,6 +219,20 @@ class Settings {
 					'default'     => ''
 				),
 				array(
+					'id'          => 'auto_language_detection',
+					'label'       => __( 'Auto language detection', 'dkpdf' ),
+					'description' => __( 'Automatically detect text language and use appropriate fonts. Works best with core fonts installed.', 'dkpdf' ),
+					'type'        => 'checkbox',
+					'default'     => ''
+				),
+				array(
+					'id'          => 'enable_rtl',
+					'label'       => __( 'Enable RTL', 'dkpdf' ),
+					'description' => __( 'Enable right-to-left document direction, this affects text alignment, page layout, and table ordering.', 'dkpdf' ),
+					'type'        => 'checkbox',
+					'default'     => ''
+				),
+				array(
 					'id'          => 'custom_fonts_manager',
 					'label'       => __( 'Custom fonts', 'dkpdf' ),
 					'description' => __( 'Upload and manage your own TTF font families.', 'dkpdf' ),
