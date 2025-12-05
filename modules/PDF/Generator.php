@@ -27,6 +27,12 @@ class Generator {
 			return;
 		}
 
+		// Sanitize: only allow alphanumeric, underscores, and hyphens
+		$pdf = preg_replace( '/[^a-zA-Z0-9_-]/', '', $pdf );
+		if ( empty( $pdf ) ) {
+			return;
+		}
+
 		// Start output buffering early to prevent WordPress warnings
 		if ( ! ob_get_level() ) {
 			ob_start();
