@@ -211,7 +211,7 @@ class Settings {
 				array(
 					'id'          => 'core_fonts_installer',
 					'label'       => __( 'Core fonts', 'dkpdf' ),
-					'description' => __( 'Recommended for RTL and Unicode language support.', 'dkpdf' ),
+					'description' => __( 'Recommended for extended Unicode support, including Arabic, Indic and CJK languages.', 'dkpdf' ),
 					'type'        => 'core_fonts_installer',
 					'default'     => ''
 				),

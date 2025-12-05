@@ -143,7 +143,12 @@ class FontDownloader {
 			do_action( 'dkpdf_fonts_download_error', $temp_file->get_error_message() );
 			return array(
 				'success' => false,
-				'message' => sprintf( __( 'Failed to download fonts: %s', 'dkpdf' ), $temp_file->get_error_message() )
+				'message' => sprintf(
+					__( 'Failed to download fonts: %s. You can manually upload fonts to: %s', 'dkpdf' ),
+					$temp_file->get_error_message(),
+					$fonts_dir
+				),
+				'fonts_directory' => $fonts_dir
 			);
 		}
 
@@ -156,7 +161,11 @@ class FontDownloader {
 			do_action( 'dkpdf_fonts_download_error', 'Invalid ZIP file' );
 			return array(
 				'success' => false,
-				'message' => __( 'Downloaded file is not a valid ZIP archive', 'dkpdf' )
+				'message' => sprintf(
+					__( 'Downloaded file is not a valid ZIP archive. You can manually upload fonts to: %s', 'dkpdf' ),
+					$fonts_dir
+				),
+				'fonts_directory' => $fonts_dir
 			);
 		}
 
@@ -174,7 +183,11 @@ class FontDownloader {
 			do_action( 'dkpdf_fonts_download_error', 'Extraction failed' );
 			return array(
 				'success' => false,
-				'message' => __( 'Failed to extract fonts from archive', 'dkpdf' )
+				'message' => sprintf(
+					__( 'Failed to extract fonts from archive. You can manually upload fonts to: %s', 'dkpdf' ),
+					$fonts_dir
+				),
+				'fonts_directory' => $fonts_dir
 			);
 		}
 
