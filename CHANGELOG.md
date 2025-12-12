@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+- Enhancement - Add custom font manager for uploading and managing custom .ttf fonts in PDF generation.
+- Enhancement - Add core fonts management, recommended for Arabic, Hebrew, Indic and CJK languages support.
+
 ## 2.2.1
 - Enhancement - Display custom fields in WooCommerce product PDF.
 - Fix - Fatal error when generating PDFs for posts with non-publish status.

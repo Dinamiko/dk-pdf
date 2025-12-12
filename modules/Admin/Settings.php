@@ -212,7 +212,7 @@ class Settings {
 					'id'          => 'core_fonts_installer',
 					'label'       => __( 'Core fonts', 'dkpdf' ),
 					'description' => sprintf(
-						__( 'Recommended for Arabic, Indic and CJK languages support. Fonts will be downloaded from %s repository.', 'dkpdf' ),
+						__( 'Recommended for Arabic, Hebrew, Indic and CJK languages support. Fonts will be downloaded from %s repository.', 'dkpdf' ),
 						'<a href="https://github.com/Dinamiko/mpdf-ttfonts" target="_blank" rel="noopener noreferrer">mpdf-ttfonts GitHub</a>'
 					),
 					'type'        => 'core_fonts_installer',
