@@ -121,6 +121,36 @@ class Settings {
 	}
 
 	/**
+	 * Get default value for a field by field ID
+	 *
+	 * @param string $field_id The field ID (with or without prefix)
+	 * @return mixed The default value or empty string if not found
+	 */
+	private function get_field_default_value( string $field_id ) {
+		// Remove prefix if present
+		$field_id_without_prefix = str_replace( $this->base, '', $field_id );
+
+		foreach ( $this->settings as $section ) {
+			if ( ! isset( $section['fields'] ) ) {
+				continue;
+			}
+
+			foreach ( $section['fields'] as $field ) {
+				if ( ! isset( $field['id'] ) ) {
+					continue;
+				}
+
+				// Check both with and without prefix
+				if ( $field['id'] === $field_id || $field['id'] === $field_id_without_prefix ) {
+					return $field['default'] ?? '';
+				}
+			}
+		}
+
+		return '';
+	}
+
+	/**
 	 * Build settings fields
 	 * @return array Fields to be displayed on settings page
 	 */
@@ -409,7 +439,7 @@ class Settings {
 		$settings['pdf_templates'] = array(
 			'title'       => __( 'PDF Templates', 'dkpdf' ),
 			'description' => sprintf(
-				__( 'Select a set of PDF templates, by default the Legacy set (the templates in the root of templates folder) is selected. All templates can be %1$soverridden%2$s in your theme or child theme.', 'dkpdf' ),
+				__( 'All templates can be %1$soverridden%2$s in your theme or child theme.', 'dkpdf' ),
 				'<a href="https://dinamiko.dev/docs/how-to-use-dk-pdf-templates-in-your-theme/" target="_blank">',
 				'</a>'
 			),
@@ -420,7 +450,7 @@ class Settings {
 					'description' => '',
 					'type'        => 'select',
 					'options'     => array( '' => 'Legacy', 'default/' => 'Default' ),
-					'default'     => array(),
+					'default'     => 'default/',
 				),
 				array(
 					'id'          => 'post_display',
@@ -530,7 +560,7 @@ class Settings {
 		}
 
 		// Custom Fields settings - only show when not using legacy templates
-		$selected_template = get_option( 'dkpdf_selected_template' );
+		$selected_template = get_option( 'dkpdf_selected_template', 'default/' );
 		$selected_post_types = get_option( 'dkpdf_pdfbutton_post_types', array() );
 
 		if ( ! empty( $selected_template ) ) {
@@ -606,7 +636,8 @@ class Settings {
 					// Check dependency before registering the field
 					$should_register = true;
 					if ( isset( $field['depends_on'] ) ) {
-						$dependency_value = get_option( $field['depends_on'] );
+						$default_value = $this->get_field_default_value( $field['depends_on'] );
+						$dependency_value = get_option( $field['depends_on'], $default_value );
 						if ( empty( $dependency_value ) ) {
 							$should_register = false;
 						}

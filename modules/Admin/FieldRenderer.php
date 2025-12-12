@@ -26,7 +26,9 @@ class FieldRenderer {
 
 		// Check dependency - if this field depends on another field and that field is empty, return empty
 		if ( isset( $field['depends_on'] ) ) {
-			$dependency_value = get_option( $field['depends_on'] );
+			// For selected_template field, use 'default/' as the default value
+			$default_value = ( $field['depends_on'] === 'dkpdf_selected_template' ) ? 'default/' : '';
+			$dependency_value = get_option( $field['depends_on'], $default_value );
 			if ( empty( $dependency_value ) ) {
 				// Return empty if dependency value is not set
 				if ( ! $echo ) {
