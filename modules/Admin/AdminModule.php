@@ -27,6 +27,14 @@ class AdminModule implements ServiceModule, ExecutableModule {
 	}
 
 	public function run( ContainerInterface $container ): bool {
+		// Run version upgrade check on init (priority 10, before settings init at priority 20)
+		add_action( 'init', function() {
+			// Only run in admin context
+			if ( is_admin() ) {
+				$this->check_version_upgrade();
+			}
+		}, 10 );
+
 		add_action( 'init', function() use ($container) {
 			$settings = $container->get( 'admin.settings' );
 			assert($settings instanceof Settings);
@@ -46,9 +54,6 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		}, 20 );
 
 		add_action( 'admin_init', function() use ($container) {
-			// Check for version upgrade and run migrations
-			$this->check_version_upgrade();
-
 			$settings = $container->get( 'admin.settings' );
 			assert($settings instanceof Settings);
 
