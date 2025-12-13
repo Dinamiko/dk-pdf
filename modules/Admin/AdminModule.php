@@ -46,6 +46,9 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		}, 20 );
 
 		add_action( 'admin_init', function() use ($container) {
+			// Check for version upgrade and run migrations
+			$this->check_version_upgrade();
+
 			$settings = $container->get( 'admin.settings' );
 			assert($settings instanceof Settings);
 
@@ -331,5 +334,36 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		$fonts = $fontManager->listFonts();
 
 		wp_send_json_success( array( 'fonts' => $fonts ) );
+	}
+
+	/**
+	 * Check for version upgrade and run necessary migrations
+	 *
+	 * @return void
+	 */
+	private function check_version_upgrade(): void {
+		$current_version = DKPDF_VERSION;
+		$installed_version = get_option( 'dkpdf_installed_version', '' );
+
+		// If no installed version, this could be either:
+		// - A new installation (no options exist)
+		// - An upgrade from a version before version tracking
+		if ( empty( $installed_version ) ) {
+			// Check if this is an existing installation by looking for other options
+			$existing_option = get_option( 'dkpdf_pdfbutton_text', null );
+
+			if ( $existing_option !== null ) {
+				// This is an upgrade from old version
+				// Preserve legacy template if no template is set
+				if ( get_option( 'dkpdf_selected_template', null ) === null ) {
+					update_option( 'dkpdf_selected_template', '' );
+				}
+			}
+		}
+
+		// Update installed version
+		if ( $installed_version !== $current_version ) {
+			update_option( 'dkpdf_installed_version', $current_version );
+		}
 	}
 }
