@@ -13,16 +13,20 @@ class AdminModule implements ServiceModule, ExecutableModule {
 
 	public function services(): array {
 		return [
-			'admin.field_renderer'  => static fn() => new FieldRenderer(),
-			'admin.field_validator' => static fn() => new FieldValidator(),
-			'admin.font_downloader' => static fn() => new FontDownloader(),
-			'admin.font_manager'    => static fn() => new FontManager(),
-			'admin.settings'        => static fn( $container ) => new Settings(
+			'admin.field_renderer'         => static fn() => new FieldRenderer(),
+			'admin.field_validator'        => static fn() => new FieldValidator(),
+			'admin.font_downloader'        => static fn() => new FontDownloader(),
+			'admin.font_manager'           => static fn() => new FontManager(),
+			'admin.template_set_extractor' => static fn() => new TemplateSetExtractor(),
+			'admin.template_set_manager'   => static fn( $container ) => new TemplateSetManager(
+				$container->get( 'admin.template_set_extractor' )
+			),
+			'admin.settings'               => static fn( $container ) => new Settings(
 				$container->get( 'admin.field_renderer' ),
 				$container->get( 'admin.field_validator' ),
 				$container->get( 'core.helper' )
 			),
-			'admin.metaboxes'       => static fn() => new MetaBoxes(),
+			'admin.metaboxes'              => static fn() => new MetaBoxes(),
 		];
 	}
 
@@ -64,6 +68,12 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($fontManager instanceof FontManager);
 
 			$fontManager->migrateToFontFamilies();
+
+			// Run template sets migration if needed
+			$templateSetManager = $container->get( 'admin.template_set_manager' );
+			assert($templateSetManager instanceof TemplateSetManager);
+
+			$templateSetManager->migrateDefaultTemplate();
 		} );
 
 		add_action( 'admin_menu', function() use($container) {
@@ -134,6 +144,30 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($fontManager instanceof FontManager);
 
 			$this->handle_list_fonts_ajax( $fontManager );
+		});
+
+		// Register AJAX endpoint for uploading template sets
+		add_action( 'wp_ajax_dkpdf_upload_template_set', function() use($container) {
+			$templateSetManager = $container->get( 'admin.template_set_manager' );
+			assert($templateSetManager instanceof TemplateSetManager);
+
+			$this->handle_upload_template_set_ajax( $templateSetManager );
+		});
+
+		// Register AJAX endpoint for deleting template sets
+		add_action( 'wp_ajax_dkpdf_delete_template_set', function() use($container) {
+			$templateSetManager = $container->get( 'admin.template_set_manager' );
+			assert($templateSetManager instanceof TemplateSetManager);
+
+			$this->handle_delete_template_set_ajax( $templateSetManager );
+		});
+
+		// Register AJAX endpoint for listing template sets
+		add_action( 'wp_ajax_dkpdf_list_template_sets', function() use($container) {
+			$templateSetManager = $container->get( 'admin.template_set_manager' );
+			assert($templateSetManager instanceof TemplateSetManager);
+
+			$this->handle_list_template_sets_ajax( $templateSetManager );
 		});
 
 		return true;
@@ -339,6 +373,91 @@ class AdminModule implements ServiceModule, ExecutableModule {
 		$fonts = $fontManager->listFonts();
 
 		wp_send_json_success( array( 'fonts' => $fonts ) );
+	}
+
+	/**
+	 * Handle AJAX request for uploading a template set
+	 *
+	 * @param TemplateSetManager $templateSetManager
+	 * @return void
+	 */
+	private function handle_upload_template_set_ajax( TemplateSetManager $templateSetManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		// Check if file was uploaded
+		if ( empty( $_FILES['template_file'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'No file uploaded', 'dkpdf' ) ) );
+		}
+
+		$result = $templateSetManager->uploadTemplateSet( $_FILES['template_file'] );
+
+		if ( $result['success'] ) {
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( $result );
+		}
+	}
+
+	/**
+	 * Handle AJAX request for deleting a template set
+	 *
+	 * @param TemplateSetManager $templateSetManager
+	 * @return void
+	 */
+	private function handle_delete_template_set_ajax( TemplateSetManager $templateSetManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		// Get template set key
+		$template_set_key = sanitize_text_field( $_POST['template_set_key'] ?? '' );
+		if ( empty( $template_set_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Template set key is required', 'dkpdf' ) ) );
+		}
+
+		$result = $templateSetManager->deleteTemplateSet( $template_set_key );
+
+		if ( $result['success'] ) {
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( $result );
+		}
+	}
+
+	/**
+	 * Handle AJAX request for listing template sets
+	 *
+	 * @param TemplateSetManager $templateSetManager
+	 * @return void
+	 */
+	private function handle_list_template_sets_ajax( TemplateSetManager $templateSetManager ): void {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'dkpdf_ajax_nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed', 'dkpdf' ) ) );
+		}
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'dkpdf' ) ) );
+		}
+
+		$template_sets = $templateSetManager->listTemplateSets();
+
+		wp_send_json_success( array( 'template_sets' => $template_sets ) );
 	}
 
 	/**

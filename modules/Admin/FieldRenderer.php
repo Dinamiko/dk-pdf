@@ -178,6 +178,10 @@ class FieldRenderer {
 			case 'custom_fonts_manager':
 				$html = $this->render_custom_fonts_manager_field( $field );
 				break;
+
+			case 'template_set_manager':
+				$html = $this->render_template_set_manager_field( $field );
+				break;
 		}
 
 		// Add field description
@@ -852,6 +856,19 @@ class FieldRenderer {
 	private function render_custom_fonts_manager_field( array $field ): string {
 		$html = '<button type="button" id="dkpdf-manage-fonts" class="button button-secondary" style="display: block; margin-bottom: 8px;">';
 		$html .= esc_html__( 'Manage Custom Fonts', 'dkpdf' );
+		$html .= '</button>';
+
+		// Add description below button
+		if ( isset( $field['description'] ) && $field['description'] !== '' ) {
+			$html .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+		}
+
+		return $html;
+	}
+
+	private function render_template_set_manager_field( array $field ): string {
+		$html = '<button type="button" id="dkpdf-manage-template-sets" class="button button-secondary" style="display: block; margin-bottom: 8px;">';
+		$html .= esc_html__( 'Manage Template Sets', 'dkpdf' );
 		$html .= '</button>';
 
 		// Add description below button

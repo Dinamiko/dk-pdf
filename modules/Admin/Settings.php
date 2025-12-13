@@ -80,6 +80,14 @@ class Settings {
 		wp_register_script( 'dkpdf-font-manager-js', plugins_url( 'dk-pdf/build/admin-font-manager.js' ), $font_manager_dependencies, $font_manager_version, true );
 		wp_enqueue_script( 'dkpdf-font-manager-js' );
 
+		// Enqueue Template Set Manager script
+		$template_set_manager_asset_file = include plugin_dir_path( dirname( __DIR__ ) ) . 'build/admin-template-set-manager.asset.php';
+		$template_set_manager_dependencies = isset( $template_set_manager_asset_file['dependencies'] ) ? $template_set_manager_asset_file['dependencies'] : array();
+		$template_set_manager_version = isset( $template_set_manager_asset_file['version'] ) ? $template_set_manager_asset_file['version'] : '1.0.0';
+
+		wp_register_script( 'dkpdf-template-set-manager-js', plugins_url( 'dk-pdf/build/admin-template-set-manager.js' ), $template_set_manager_dependencies, $template_set_manager_version, true );
+		wp_enqueue_script( 'dkpdf-template-set-manager-js' );
+
 		// Localize script for AJAX
 		wp_localize_script( 'dkpdf' . '-settings-js', 'dkpdf_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -102,6 +110,25 @@ class Settings {
 				'cannot_delete_active' => __( 'Cannot delete the currently selected font', 'dkpdf' ),
 				'confirm_delete_core' => __( 'Are you sure you want to delete the core font "%s"? You can reinstall it later using the "Install Core Fonts" button.', 'dkpdf' ),
 				'confirm_delete_custom' => __( 'Are you sure you want to delete the custom font "%s"? This action cannot be undone.', 'dkpdf' ),
+				'template_sets' => array(
+					'manage_template_sets' => __( 'Manage Template Sets', 'dkpdf' ),
+					'upload_template_set' => __( 'Upload Template Set', 'dkpdf' ),
+					'select_zip_file' => __( 'Select Template Set (.zip)', 'dkpdf' ),
+					'delete' => __( 'Delete', 'dkpdf' ),
+					'active' => __( 'Active', 'dkpdf' ),
+					'core' => __( 'Core', 'dkpdf' ),
+					'custom' => __( 'Custom', 'dkpdf' ),
+					'cannot_delete_active' => __( 'Cannot delete the currently active template set', 'dkpdf' ),
+					'cannot_delete_core' => __( 'Cannot delete core template sets', 'dkpdf' ),
+					'invalid_structure' => __( 'Invalid template set structure. Missing required files.', 'dkpdf' ),
+					'only_zip_files' => __( 'Only ZIP files are supported.', 'dkpdf' ),
+					'upload_failed' => __( 'Failed to upload template set.', 'dkpdf' ),
+					'delete_failed' => __( 'Failed to delete template set.', 'dkpdf' ),
+					'confirm_delete' => __( 'Are you sure you want to delete "%s"? This action cannot be undone.', 'dkpdf' ),
+					'no_template_sets' => __( 'No template sets available.', 'dkpdf' ),
+					'error_loading' => __( 'Failed to load template sets.', 'dkpdf' ),
+					'close' => __( 'Close', 'dkpdf' ),
+				),
 			)
 		) );
 	}
@@ -449,8 +476,14 @@ class Settings {
 					'label'       => __( 'PDF template sets', 'dkpdf' ),
 					'description' => '',
 					'type'        => 'select',
-					'options'     => array( '' => 'Legacy', 'default/' => 'Default' ),
+					'options'     => $this->get_template_set_options(),
 					'default'     => 'default/',
+				),
+				array(
+					'id'          => 'template_set_manager',
+					'label'       => __( 'Template Sets', 'dkpdf' ),
+					'description' => __( 'Upload custom template sets or manage existing ones.', 'dkpdf' ),
+					'type'        => 'template_set_manager',
 				),
 				array(
 					'id'          => 'post_display',
@@ -779,6 +812,29 @@ class Settings {
 		return function ( $value ) use ( $type ) {
 			return $this->field_validator->validate_field( $value, $type );
 		};
+	}
+
+	/**
+	 * Get template set options for select field
+	 *
+	 * @return array Template set options
+	 */
+	private function get_template_set_options(): array {
+		$template_sets = get_option( 'dkpdf_template_sets', array() );
+		$options = array();
+
+		// Add legacy option first
+		$options[''] = __( 'Legacy', 'dkpdf' );
+
+		foreach ( $template_sets as $key => $set ) {
+			$label = $set['name'];
+			if ( $set['type'] === 'core' ) {
+				$label .= ' (' . __( 'Core', 'dkpdf' ) . ')';
+			}
+			$options[ $key . '/' ] = $label;
+		}
+
+		return $options;
 	}
 
 }

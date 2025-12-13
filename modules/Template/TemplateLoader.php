@@ -99,6 +99,17 @@ class TemplateLoader {
 	}
 
 	protected function get_templates_dir(): string {
+		$selected_template = get_option( 'dkpdf_selected_template', 'default/' );
+		$template_sets = get_option( 'dkpdf_template_sets', array() );
+		$template_key = rtrim( $selected_template, '/' );
+
+		// Check if custom template set
+		if ( isset( $template_sets[ $template_key ] ) && $template_sets[ $template_key ]['type'] === 'custom' ) {
+			$upload_dir = wp_upload_dir();
+			return $upload_dir['basedir'] . '/dkpdf-templates/' . $template_key;
+		}
+
+		// Return plugin templates for core templates
 		return trailingslashit( $this->plugin_directory ) . $this->plugin_template_directory;
 	}
 }

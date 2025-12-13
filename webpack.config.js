@@ -5,6 +5,7 @@ module.exports = {
 	...defaultConfig,
 	entry: {
 		'admin-font-manager': path.resolve(process.cwd(), 'resources/js/admin', 'font-manager.js'),
+		'admin-template-set-manager': path.resolve(process.cwd(), 'resources/js/admin', 'template-set-manager.js'),
 		'admin-settings': path.resolve(process.cwd(), 'resources/js/admin', 'settings.js'),
 		'admin-ace': path.resolve(process.cwd(), 'resources/js/admin', 'ace-editor.js'),
 		'frontend': path.resolve(process.cwd(), 'resources/js/frontend', 'index.js'),

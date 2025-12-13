@@ -1,0 +1,195 @@
+/**
+ * Template Set Manager Styles
+ */
+
+.dkpdf-template-set-modal {
+	.dkpdf-template-sets-list-wrapper {
+		margin-top: 20px;
+		max-height: 400px;
+		overflow-y: auto;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		background: #fff;
+	}
+
+	.dkpdf-template-sets-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.dkpdf-no-template-sets {
+			padding: 20px;
+			text-align: center;
+			color: #666;
+		}
+	}
+
+	.dkpdf-template-set-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding: 15px;
+		border-bottom: 1px solid #f0f0f0;
+		transition: background-color 0.2s;
+
+		&:hover {
+			background-color: #f9f9f9;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		&.dkpdf-template-set-selected {
+			background-color: #f0f6fc;
+			border-left: 3px solid #2271b1;
+		}
+	}
+
+	.dkpdf-template-set-info {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.dkpdf-template-set-header {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 8px;
+	}
+
+	.dkpdf-template-set-name {
+		font-weight: 600;
+		font-size: 14px;
+		color: #1d2327;
+	}
+
+	.dkpdf-template-set-badges {
+		display: flex;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+
+	.dkpdf-template-set-meta {
+		display: flex;
+		gap: 12px;
+		margin-bottom: 8px;
+		font-size: 12px;
+		color: #646970;
+
+		.dkpdf-template-version,
+		.dkpdf-template-author {
+			display: inline-block;
+		}
+	}
+
+	.dkpdf-template-description {
+		margin: 8px 0;
+		font-size: 13px;
+		color: #50575e;
+		line-height: 1.5;
+	}
+
+	.dkpdf-template-tags {
+		display: flex;
+		gap: 6px;
+		flex-wrap: wrap;
+		margin: 8px 0;
+
+		.dkpdf-tag {
+			display: inline-block;
+			padding: 2px 8px;
+			background: #f0f0f0;
+			border-radius: 3px;
+			font-size: 11px;
+			color: #646970;
+		}
+	}
+
+	.dkpdf-template-files {
+		margin-top: 8px;
+		font-size: 12px;
+		color: #646970;
+
+		strong {
+			font-weight: 600;
+		}
+	}
+
+	.dkpdf-template-set-actions {
+		margin-left: 15px;
+		flex-shrink: 0;
+
+		.button {
+			white-space: nowrap;
+		}
+	}
+
+	.dkpdf-badge {
+		display: inline-block;
+		padding: 3px 8px;
+		border-radius: 3px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+
+		&.dkpdf-badge-active {
+			background: #00a32a;
+			color: #fff;
+		}
+
+		&.dkpdf-badge-core {
+			background: #2271b1;
+			color: #fff;
+		}
+
+		&.dkpdf-badge-custom {
+			background: #dba617;
+			color: #fff;
+		}
+	}
+
+	.dkpdf-upload-form {
+		padding: 15px;
+		background: #f9f9f9;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		margin-bottom: 15px;
+
+		.dkpdf-form-row {
+			margin-bottom: 15px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			label {
+				display: block;
+				margin-bottom: 6px;
+				font-weight: 600;
+				font-size: 13px;
+			}
+		}
+
+		.dkpdf-file-selection {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+	}
+
+	.dkpdf-modal-message {
+		margin: 15px 0;
+
+		.notice {
+			margin: 0;
+		}
+	}
+
+	.dkpdf-loading {
+		padding: 20px;
+		text-align: center;
+		color: #646970;
+	}
+}
