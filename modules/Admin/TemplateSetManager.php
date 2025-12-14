@@ -212,11 +212,16 @@ class TemplateSetManager {
 		wp_mkdir_p( $temp_dir );
 
 		// Extract to temporary directory
-		if ( ! $this->extractor->extractTemplateSet( $file['tmp_name'], $temp_dir ) ) {
+		$extraction_result = $this->extractor->extractTemplateSet( $file['tmp_name'], $temp_dir );
+		if ( $extraction_result !== true ) {
 			$this->extractor->cleanupTemporaryFiles( $temp_dir );
 			return array(
 				'success' => false,
-				'message' => __( 'Failed to extract template set.', 'dkpdf' ),
+				'message' => sprintf(
+					/* translators: %s: error message */
+					__( 'Failed to extract template set: %s', 'dkpdf' ),
+					$extraction_result
+				),
 			);
 		}
 
@@ -271,14 +276,33 @@ class TemplateSetManager {
 			);
 		}
 
-		// Move directory
-		if ( ! rename( $temp_dir, $final_dir ) ) {
+		// Create final directory
+		wp_mkdir_p( $final_dir );
+
+		// Copy files from temp to final location
+		global $wp_filesystem;
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		WP_Filesystem();
+
+		$copy_result = copy_dir( $temp_dir, $final_dir );
+
+		if ( is_wp_error( $copy_result ) ) {
 			$this->extractor->cleanupTemporaryFiles( $temp_dir );
+			$this->extractor->cleanupTemporaryFiles( $final_dir );
 			return array(
 				'success' => false,
-				'message' => __( 'Failed to move template set to final location.', 'dkpdf' ),
+				'message' => sprintf(
+					/* translators: %s: error message */
+					__( 'Failed to move template set to final location: %s', 'dkpdf' ),
+					$copy_result->get_error_message()
+				),
 			);
 		}
+
+		// Clean up temp directory
+		$this->extractor->cleanupTemporaryFiles( $temp_dir );
 
 		// Set file permissions
 		chmod( $final_dir, 0755 );

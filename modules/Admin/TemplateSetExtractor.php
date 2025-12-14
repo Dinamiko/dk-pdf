@@ -33,14 +33,29 @@ class TemplateSetExtractor {
 	 *
 	 * @param string $zip_path Path to ZIP file
 	 * @param string $destination Destination directory
-	 * @return bool True on success
+	 * @return bool|string True on success, error message on failure
 	 */
-	public function extractTemplateSet( string $zip_path, string $destination ): bool {
+	public function extractTemplateSet( string $zip_path, string $destination ) {
+		global $wp_filesystem;
+
+		// Load WordPress filesystem functions if not available
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		// Initialize WordPress filesystem
+		WP_Filesystem();
+
 		// Use WordPress unzip_file function
 		$result = unzip_file( $zip_path, $destination );
 
 		if ( is_wp_error( $result ) ) {
-			return false;
+			// Log error for debugging
+			$error_message = $result->get_error_message();
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'DK PDF Template Set Extraction Error: ' . $error_message );
+			}
+			return $error_message;
 		}
 
 		return true;
