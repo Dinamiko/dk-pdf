@@ -18,11 +18,10 @@ class TemplateRenderer {
 	 * @return string Rendered template content
 	 */
 	public function get_template( string $template_name ): string {
-		$selected_template = get_option( 'dkpdf_selected_template', '' );
-		$full_template_name = $selected_template . $template_name;
-
+		// With template sets, we don't need to prepend the template directory
+		// because get_templates_dir() already returns the correct path
 		ob_start();
-		$this->template_loader->get_template_part( $full_template_name );
+		$this->template_loader->get_template_part( $template_name );
 		$content = ob_get_clean();
 
 		return $content;
