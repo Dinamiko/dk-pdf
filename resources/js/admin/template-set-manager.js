@@ -1,8 +1,3 @@
-/**
- * Template Set Manager Modal Handler
- * Vanilla JavaScript implementation
- */
-
 import { ajaxRequest } from '../utils/ajax';
 import { fadeIn, fadeOut, show, hide, empty, isVisible } from '../utils/dom';
 

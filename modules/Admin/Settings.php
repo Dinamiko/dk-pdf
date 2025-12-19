@@ -465,11 +465,7 @@ class Settings {
 		// PDF Templates
 		$settings['pdf_templates'] = array(
 			'title'       => __( 'PDF Templates', 'dkpdf' ),
-			'description' => sprintf(
-				__( 'All templates can be %1$soverridden%2$s in your theme or child theme.', 'dkpdf' ),
-				'<a href="https://dinamiko.dev/docs/how-to-use-dk-pdf-templates-in-your-theme/" target="_blank">',
-				'</a>'
-			),
+			'description' => '',
 			'fields'      => array(
 				array(
 					'id'          => 'selected_template',

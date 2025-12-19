@@ -123,6 +123,7 @@ class ContextManager {
 		$wp_query->posts = array( $post );
 		$wp_query->post_count = 1;
 		$wp_query->found_posts = 1;
+		$wp_query->current_post = -1;
 		$wp_query->queried_object = $post;
 		$wp_query->queried_object_id = $post_id;
 

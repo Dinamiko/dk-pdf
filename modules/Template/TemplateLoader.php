@@ -146,8 +146,8 @@ class TemplateLoader {
 			return $custom_dir;
 		}
 
-		// Return plugin templates for core templates
-		$plugin_dir = $this->get_plugin_templates_dir();
+		// Return plugin templates for core templates (append subdirectory for core templates)
+		$plugin_dir = trailingslashit( $this->get_plugin_templates_dir() ) . $template_key;
 
 		// Debug logging
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
