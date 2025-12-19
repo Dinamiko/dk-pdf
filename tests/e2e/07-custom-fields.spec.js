@@ -13,36 +13,18 @@ test.describe('Custom Fields Integration', () => {
     });
 
     test.describe('Custom Fields Tab Visibility', () => {
-        test('Custom Fields tab is hidden when legacy template is selected', async ({ page }) => {
+        test('Custom Fields tab is visible when default template is selected', async ({ page }) => {
             // Navigate to PDF Templates tab
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
 
             // Check that Custom Fields tab is not visible
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
-            await expect(page.locator('a.nav-tab', { hasText: 'Custom Fields' })).not.toBeVisible();
-        });
-
-        test('Custom Fields tab is visible when default template is selected', async ({ page }) => {
-            // Navigate to PDF Templates tab
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
-
-            // Set default template
-            await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
-            await page.getByRole('button', { name: 'Save Settings' }).click();
-            await expect(page.getByText('Settings saved.')).toBeVisible();
-
-            // Navigate back to main settings page
-            await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
-
-            // Check that Custom Fields tab is visible (regardless of post type selection)
             await expect(page.locator('a.nav-tab', { hasText: 'Custom Fields' })).toBeVisible();
         });
 
         test('Custom Fields tab is visible even when no post types are selected', async ({ page }) => {
-            // Navigate to PDF Templates tab and set default template
+            // Navigate to PDF Templates tab
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
-            await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
-            await page.getByRole('button', { name: 'Save Settings' }).click();
 
             // Navigate to main settings and ensure no post types are selected
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
@@ -84,6 +66,11 @@ test.describe('Custom Fields Integration', () => {
             // Setup configuration
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
             await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
+
+            // Enable post display options
+            await page.locator('#post_display_title').check();
+            await page.locator('#post_display_content').check();
+
             await page.getByRole('button', { name: 'Save Settings' }).click();
 
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
@@ -128,6 +115,11 @@ test.describe('Custom Fields Integration', () => {
             // Setup configuration
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
             await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
+
+            // Enable post display options
+            await page.locator('#post_display_title').check();
+            await page.locator('#post_display_content').check();
+
             await page.getByRole('button', { name: 'Save Settings' }).click();
 
             await page.goto('/wp-admin/admin.php?page=dkpdf_settings');

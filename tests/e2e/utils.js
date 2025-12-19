@@ -81,6 +81,10 @@ export async function enableWooCommerceProductDisplay(page, options = 'all') {
     await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
     await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
 
+    // Enable basic post display for title and content
+    await page.locator('#post_display_title').check();
+    await page.locator('#post_display_content').check();
+
     await page.getByRole('button', {name: 'Save Settings'}).click();
 
     const singleProductOptions = [
@@ -117,5 +121,37 @@ export async function enableWooCommerceProductDisplay(page, options = 'all') {
     }
 
     await page.getByRole('button', {name: 'Save Settings'}).click();
+    await expect(page.locator('.updated')).toContainText('Settings saved');
+}
+
+/**
+ * Helper function to enable post display options for default templates
+ * @param {Page} page - Playwright page object
+ * @param {Array<string>} options - Array of options: 'title', 'content', 'post_author', 'post_date', 'featured_img'
+ */
+export async function enablePostDisplay(page, options = ['title', 'content']) {
+    await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
+
+    for (const option of options) {
+        const checkbox = page.locator(`#post_display_${option}`);
+        if (await checkbox.count() > 0) {
+            await checkbox.check();
+        }
+    }
+
+    await page.getByRole('button', { name: 'Save Settings' }).click();
+    await expect(page.locator('.updated')).toContainText('Settings saved');
+}
+
+/**
+ * Helper to set up default template with basic post display (title + content)
+ * @param {Page} page - Playwright page object
+ */
+export async function enableDefaultTemplate(page) {
+    await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
+    await page.selectOption('select[name="dkpdf_selected_template"]', 'default/');
+    await page.locator('#post_display_title').check();
+    await page.locator('#post_display_content').check();
+    await page.getByRole('button', { name: 'Save Settings' }).click();
     await expect(page.locator('.updated')).toContainText('Settings saved');
 }

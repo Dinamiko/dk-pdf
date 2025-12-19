@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { loginAsAdmin } from "./utils";
+import {enableDefaultTemplate, loginAsAdmin} from "./utils";
 import { execSync } from "node:child_process";
 
 test.describe('Template Overrides in Child Theme', () => {
@@ -18,6 +18,8 @@ test.describe('Template Overrides in Child Theme', () => {
 
     test.describe('Legacy Template Overrides', () => {
         test('uses child theme template override for legacy templates', async ({ page }) => {
+            await enableDefaultTemplate(page);
+
             // Activate child theme
             execSync('wp-env run tests-cli -- wp theme activate storefront-child', { stdio: 'inherit' });
 

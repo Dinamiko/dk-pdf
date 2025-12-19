@@ -5,6 +5,11 @@ import { loginAsAdmin } from "./utils";
 test.describe('Legacy Template Functionality', () => {
     test.beforeEach(async ({ page }) => {
         await loginAsAdmin(page);
+
+        // Explicitly use legacy templates (empty string = root /templates/ directory)
+        await page.goto('/wp-admin/admin.php?page=dkpdf_settings&tab=pdf_templates');
+        await page.selectOption('select[name="dkpdf_selected_template"]', '');
+        await page.getByRole('button', { name: 'Save Settings' }).click();
     });
 
     test.describe('PDF Generation', () => {

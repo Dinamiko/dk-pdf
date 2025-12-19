@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import {loginAsAdmin} from "./utils";
+import {loginAsAdmin, enableDefaultTemplate} from "./utils";
 import {execSync} from "node:child_process";
 
 test.describe('Shortcode Functionality', () => {
@@ -13,6 +13,8 @@ test.describe('Shortcode Functionality', () => {
     });
 
     test('dkpdf-button shortcode works in PDF context', async ({page}) => {
+        await enableDefaultTemplate(page);
+
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('radio', {name: 'Use shortcode'}).check();
@@ -43,6 +45,8 @@ test.describe('Shortcode Functionality', () => {
     });
 
     test('dkpdf-remove shortcode removes content in PDF context', async ({page}) => {
+        await enableDefaultTemplate(page);
+
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
@@ -73,6 +77,8 @@ test.describe('Shortcode Functionality', () => {
     });
 
     test('dkpdf-pagebreak shortcode adds pagebreak in PDF context', async ({page}) => {
+        await enableDefaultTemplate(page);
+
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
@@ -107,6 +113,8 @@ test.describe('Shortcode Functionality', () => {
     });
 
     test('dkpdf-columns shortcode adds column markup in PDF context', async ({page}) => {
+        await enableDefaultTemplate(page);
+
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
@@ -142,6 +150,8 @@ test.describe('Shortcode Functionality', () => {
     });
 
     test('dkpdf-columnbreak shortcode adds columnbreak in PDF context', async ({page}) => {
+        await enableDefaultTemplate(page);
+
         await page.goto('/wp-admin/admin.php?page=dkpdf_settings');
         await page.locator('#pdfbutton_post_types_post').check();
         await page.getByRole('button', {name: 'Save Settings'}).click();
