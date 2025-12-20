@@ -1,16 +1,17 @@
 {
   "plugins": [
     ".",
-    "https://downloads.wordpress.org/plugin/plugin-check.1.6.0.zip",
+    "https://downloads.wordpress.org/plugin/plugin-check.1.7.0.zip",
     "https://downloads.wordpress.org/plugin/classic-editor.1.6.7.zip",
-    "https://downloads.wordpress.org/plugin/woocommerce.10.1.2.zip"
+    "https://downloads.wordpress.org/plugin/woocommerce.10.4.2.zip"
   ],
   "themes": [
-    "https://downloads.wordpress.org/theme/storefront.4.6.1.zip"
+    "https://downloads.wordpress.org/theme/storefront.4.6.2.zip"
   ],
   "mappings": {
     "wp-content/plugins/disable-rest-permissions": "./plugins/disable-rest-permissions",
-    "wp-content/themes/storefront-child": "./themes/storefront-child"
+    "wp-content/themes/storefront-child": "./themes/storefront-child",
+    "wp-content/uploads": "./uploads"
   },
   "phpVersion": "8.2",
   "config": {
