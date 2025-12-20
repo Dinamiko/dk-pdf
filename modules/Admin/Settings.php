@@ -482,6 +482,27 @@ class Settings {
 					'type'        => 'template_set_manager',
 				),
 				array(
+					'id'          => 'pdf_primary_color',
+					'label'       => __( 'Primary color', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'color',
+					'default'     => '#333333',
+				),
+				array(
+					'id'          => 'pdf_secondary_color',
+					'label'       => __( 'Secondary color', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'color',
+					'default'     => '#666666',
+				),
+				array(
+					'id'          => 'pdf_text_color',
+					'label'       => __( 'Text color', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'color',
+					'default'     => '#000000',
+				),
+				array(
 					'id'          => 'post_display',
 					'label'       => __( 'Post display', 'dkpdf' ),
 					'description' => '',

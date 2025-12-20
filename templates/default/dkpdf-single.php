@@ -7,6 +7,24 @@
     <style>
         a, code, ins, kbd, tt {background-color: transparent;}
 
+        <?php
+        $primary_color = get_option( 'dkpdf_pdf_primary_color', '#333333' );
+        $secondary_color = get_option( 'dkpdf_pdf_secondary_color', '#666666' );
+        $text_color = get_option( 'dkpdf_pdf_text_color', '#000000' );
+        ?>
+
+        body {
+            color: <?php echo esc_attr( $text_color ); ?>;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: <?php echo esc_attr( $primary_color ); ?>;
+        }
+
+        .entry-meta {
+            color: <?php echo esc_attr( $secondary_color ); ?>;
+        }
+
         .custom-fields-section {
             margin-top: 20px;
             padding-top: 15px;

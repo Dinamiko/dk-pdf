@@ -15,6 +15,24 @@
             font-weight: bold;
         }
 
+        <?php
+        $primary_color = get_option( 'dkpdf_pdf_primary_color', '#333333' );
+        $secondary_color = get_option( 'dkpdf_pdf_secondary_color', '#666666' );
+        $text_color = get_option( 'dkpdf_pdf_text_color', '#000000' );
+        ?>
+
+        body {
+            color: <?php echo esc_attr( $text_color ); ?>;
+        }
+
+        h1, h2, h3, h4, h5, h6, .product-title, .archive-title {
+            color: <?php echo esc_attr( $primary_color ); ?>;
+        }
+
+        .product-price, .sale-price, .regular-price, .archive-description, .product-sku {
+            color: <?php echo esc_attr( $secondary_color ); ?>;
+        }
+
         .posts-container {
             width: 100%;
             border-collapse: collapse;
@@ -35,19 +53,16 @@
             font-size: 16px;
             margin: 10px 0 5px;
             font-weight: bold;
-            color: #333;
         }
         .product-price {
             font-size: 14px;
-            color: #555;
             margin: 5px 0;
         }
         .sale-price {
-            color: #cc0000;
+            font-weight: bold;
         }
         .regular-price {
             text-decoration: line-through;
-            color: #888;
             font-size: 12px;
         }
         .archive-header {
@@ -55,13 +70,11 @@
         }
         .archive-title {
             font-size: 24px;
-            color: #333;
             margin-bottom: 10px;
         }
         .archive-description {
             margin-bottom: 20px;
             font-style: italic;
-            color: #555;
         }
 
         <?php
