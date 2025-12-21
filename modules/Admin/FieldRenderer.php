@@ -422,14 +422,19 @@ class FieldRenderer {
 	 * @return string Field HTML
 	 */
 	private function render_image_field( array $field, $data, string $option_name ): string {
-		$image_thumb = '';
+		$html = '';
+
 		if ( $data ) {
 			$image_thumb = wp_get_attachment_thumb_url( $data );
+			$html .= '<img id="' . $option_name . '_preview" class="image_preview" src="' . $image_thumb . '" /><br/>' . "\n";
 		}
 
-		$html = '<img id="' . $option_name . '_preview" class="image_preview" src="' . $image_thumb . '" /><br/>' . "\n";
 		$html .= '<input id="' . $option_name . '_button" type="button" data-uploader_title="' . __( 'Upload an image', 'dkpdf' ) . '" data-uploader_button_text="' . __( 'Use image', 'dkpdf' ) . '" class="image_upload_button button" value="' . __( 'Upload new image', 'dkpdf' ) . '" />' . "\n";
-		$html .= '<input id="' . $option_name . '_delete" type="button" class="image_delete_button button" value="' . __( 'Remove image', 'dkpdf' ) . '" />' . "\n";
+
+		if ( $data ) {
+			$html .= '<input id="' . $option_name . '_delete" type="button" class="image_delete_button button" value="' . __( 'Remove image', 'dkpdf' ) . '" />' . "\n";
+		}
+
 		$html .= '<input id="' . $option_name . '" class="image_data_field" type="hidden" name="' . $option_name . '" value="' . $data . '"/><br/>' . "\n";
 		return $html;
 	}
