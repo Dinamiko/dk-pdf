@@ -17,6 +17,10 @@
             color: <?php echo esc_attr( $text_color ); ?>;
         }
 
+        a {
+            color: <?php echo esc_attr( $primary_color ); ?>;
+        }
+
         h1, h2, h3, h4, h5, h6 {
             color: <?php echo esc_attr( $primary_color ); ?>;
         }
