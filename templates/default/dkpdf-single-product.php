@@ -105,6 +105,10 @@
                 $wc_product_display_options = empty( $wc_product_display_options ) ? array() : array( $wc_product_display_options );
             }
 
+            // Check if we should display labels
+            $show_labels = get_option( 'dkpdf_show_custom_field_labels', 'on' );
+            $should_show_labels = ( 'on' === $show_labels );
+
             if ( ! $product ) {
                 // If not a product, just show regular content
                 ?>
@@ -169,7 +173,10 @@
                     <div class="product-meta">
                         <?php if ( in_array( 'sku', $wc_product_display_options ) && $product->get_sku() ) : ?>
                             <div class="custom-field-item product-sku">
-                                <strong><?php esc_html_e( 'SKU:', 'dk-pdf' ); ?></strong> <?php echo esc_html( $product->get_sku() ); ?>
+                                <?php if ( $should_show_labels ) : ?>
+                                    <strong><?php esc_html_e( 'SKU:', 'dk-pdf' ); ?></strong>
+                                <?php endif; ?>
+                                <?php echo esc_html( $product->get_sku() ); ?>
                             </div>
                         <?php endif; ?>
 
@@ -183,7 +190,10 @@
                                     $cat_names[] = $category->name;
                                 }
                                 echo '<div class="custom-field-item product-categories">';
-                                echo '<strong>' . esc_html__( 'Categories:', 'dk-pdf' ) . '</strong> ' . esc_html( implode( ', ', $cat_names ) );
+                                if ( $should_show_labels ) {
+                                    echo '<strong>' . esc_html__( 'Categories:', 'dk-pdf' ) . '</strong> ';
+                                }
+                                echo esc_html( implode( ', ', $cat_names ) );
                                 echo '</div>';
                             }
                             ?>
@@ -199,7 +209,10 @@
                                     $tag_names[] = $tag->name;
                                 }
                                 echo '<div class="custom-field-item product-tags">';
-                                echo '<strong>' . esc_html__( 'Tags:', 'dk-pdf' ) . '</strong> ' . esc_html( implode( ', ', $tag_names ) );
+                                if ( $should_show_labels ) {
+                                    echo '<strong>' . esc_html__( 'Tags:', 'dk-pdf' ) . '</strong> ';
+                                }
+                                echo esc_html( implode( ', ', $tag_names ) );
                                 echo '</div>';
                             }
                             ?>
