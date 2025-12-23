@@ -100,6 +100,10 @@ class Helper {
 			return '';
 		}
 
+		// Check if we should display custom field labels
+		$show_labels = get_option( 'dkpdf_show_custom_field_labels', 'on' );
+		$should_show_labels = ( 'on' === $show_labels );
+
 		$output = '';
 		$field_count = 0;
 
@@ -120,7 +124,9 @@ class Helper {
 			$field_label = $this->format_field_label( $field_key );
 
 			$output .= '<div class="custom-field-item">';
-			$output .= '<strong>' . esc_html( $field_label ) . ':</strong> ';
+			if ( $should_show_labels ) {
+				$output .= '<strong>' . esc_html( $field_label ) . ':</strong> ';
+			}
 			$output .= esc_html( $field_value );
 			$output .= '</div>' . "\n";
 

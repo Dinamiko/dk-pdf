@@ -620,6 +620,16 @@ class Settings {
 				'fields'      => array()
 			);
 
+			// Add show/hide labels checkbox
+			$custom_fields_settings['fields'][] = array(
+				'id'          => 'show_custom_field_labels',
+				'label'       => __( 'Show labels', 'dkpdf' ),
+				'description' => __( 'Display field names/labels before field values in PDF output.', 'dkpdf' ),
+				'type'        => 'checkbox',
+				'default'     => 'on',
+				'depends_on'  => 'dkpdf_selected_template',
+			);
+
 			// Add a field for each selected post type
 			if ( ! empty( $selected_post_types ) ) {
 				foreach ( $selected_post_types as $post_type ) {
