@@ -5,7 +5,13 @@
               media="all"/>
     <?php } ?>
     <style>
-        a, code, ins, kbd, tt {background-color: transparent;}
+        a, code, ins, kbd, tt {
+            background-color: transparent;
+        }
+
+        .screen-reader-text {
+            display: none;
+        }
 
         <?php
         $primary_color = get_option( 'dkpdf_pdf_primary_color', '#333333' );
@@ -32,27 +38,33 @@
         .product-header {
             margin-bottom: 20px;
         }
+
         .product-title {
             font-size: 24px;
             margin-bottom: 10px;
         }
+
         .product-price {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 15px;
         }
+
         .product-image {
             margin-bottom: 20px;
             text-align: center;
         }
+
         .product-image img {
             max-width: 100%;
             height: auto;
         }
+
         .product-description {
             margin-bottom: 20px;
             line-height: 1.6;
         }
+
         .product-meta {
             margin-top: 20px;
         }
@@ -70,140 +82,140 @@
 </head>
 <body>
 <main id="primary" class="site-main">
-	<?php
-	if ( have_posts() ) :
-		while ( have_posts() ) : the_post();
-		    global $product;
+    <?php
+    if ( have_posts() ) :
+        while ( have_posts() ) : the_post();
+            global $product;
 
-		    // Make sure we have the product object
-		    if (!is_a($product, 'WC_Product') && function_exists('wc_get_product')) {
-		        $product = wc_get_product(get_the_ID());
-		    }
+            // Make sure we have the product object
+            if ( ! is_a( $product, 'WC_Product' ) && function_exists( 'wc_get_product' ) ) {
+                $product = wc_get_product( get_the_ID() );
+            }
 
-		    // Get WooCommerce product display options
-		    $wc_product_display_options = get_option('dkpdf_wc_product_display', array());
+            // Get WooCommerce product display options
+            $wc_product_display_options = get_option( 'dkpdf_wc_product_display', array() );
 
-		    // Ensure wc_product_display_options is an array
-		    if (!is_array($wc_product_display_options)) {
-		        $wc_product_display_options = empty($wc_product_display_options) ? array() : array($wc_product_display_options);
-		    }
+            // Ensure wc_product_display_options is an array
+            if ( ! is_array( $wc_product_display_options ) ) {
+                $wc_product_display_options = empty( $wc_product_display_options ) ? array() : array( $wc_product_display_options );
+            }
 
-		    if (!$product) {
-		        // If not a product, just show regular content
-		        ?>
-		        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-		            <header class="entry-header">
-		                <h1 class="entry-title"><?php the_title(); ?></h1>
-		            </header>
-		            <div class="entry-content">
-		                <?php the_content(); ?>
-		            </div>
-		        </article>
-		        <?php
-		    } else {
-		        // This is a WooCommerce product
-		        ?>
-		        <article id="product-<?php the_ID(); ?>" <?php post_class('product-container'); ?>>
-		            <header class="product-header">
-		                <?php if (in_array('title', $wc_product_display_options)) : ?>
-		                    <h1 class="product-title"><?php the_title(); ?></h1>
-		                <?php endif; ?>
+            if ( ! $product ) {
+                // If not a product, just show regular content
+                ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="entry-header">
+                        <h1 class="entry-title"><?php the_title(); ?></h1>
+                    </header>
+                    <div class="entry-content">
+                        <?php the_content(); ?>
+                    </div>
+                </article>
+                <?php
+            } else {
+                // This is a WooCommerce product
+                ?>
+                <article id="product-<?php the_ID(); ?>" <?php post_class( 'product-container' ); ?>>
+                    <header class="product-header">
+                        <?php if ( in_array( 'title', $wc_product_display_options ) ) : ?>
+                            <h1 class="product-title"><?php the_title(); ?></h1>
+                        <?php endif; ?>
 
-		                <?php if (in_array('price', $wc_product_display_options) && $product->get_price_html()) : ?>
-		                    <div class="product-price">
-		                        <?php echo $product->get_price_html(); ?>
-		                    </div>
-		                <?php endif; ?>
-		            </header>
+                        <?php if ( in_array( 'price', $wc_product_display_options ) && $product->get_price_html() ) : ?>
+                            <div class="product-price">
+                                <?php echo $product->get_price_html(); ?>
+                            </div>
+                        <?php endif; ?>
+                    </header>
 
-		            <?php if (in_array('product_img', $wc_product_display_options) && has_post_thumbnail()) : ?>
-		                <div class="product-image">
-		                    <?php
-		                    $image_id = get_post_thumbnail_id();
-		                    $image_url = wp_get_attachment_image_src($image_id, 'large');
-		                    if ($image_url) {
-		                        echo '<img src="' . esc_url($image_url[0]) . '" alt="' . esc_attr(get_the_title()) . '" />';
-		                    }
-		                    ?>
-		                </div>
-		            <?php endif; ?>
+                    <?php if ( in_array( 'product_img', $wc_product_display_options ) && has_post_thumbnail() ) : ?>
+                        <div class="product-image">
+                            <?php
+                            $image_id  = get_post_thumbnail_id();
+                            $image_url = wp_get_attachment_image_src( $image_id, 'large' );
+                            if ( $image_url ) {
+                                echo '<img src="' . esc_url( $image_url[0] ) . '" alt="' . esc_attr( get_the_title() ) . '" />';
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
 
-		            <?php if (in_array('description', $wc_product_display_options)) : ?>
-		                <div class="product-description">
-		                    <?php
-		                    // First try to get short description
-		                    $short_description = $product->get_short_description();
-		                    if (!empty($short_description)) {
-		                        echo '<div class="product-short-description">' . wpautop($short_description) . '</div>';
-		                    }
+                    <?php if ( in_array( 'description', $wc_product_display_options ) ) : ?>
+                        <div class="product-description">
+                            <?php
+                            // First try to get short description
+                            $short_description = $product->get_short_description();
+                            if ( ! empty( $short_description ) ) {
+                                echo '<div class="product-short-description">' . wpautop( $short_description ) . '</div>';
+                            }
 
-		                    // Also include full description
-		                    $description = $product->get_description();
-		                    if (!empty($description)) {
-		                        echo '<div class="product-full-description">' . wpautop($description) . '</div>';
-		                    } elseif (empty($short_description)) {
-		                        // Fallback to post content if both descriptions are empty
-		                        the_content();
-		                    }
-		                    ?>
-		                </div>
-		            <?php endif; ?>
+                            // Also include full description
+                            $description = $product->get_description();
+                            if ( ! empty( $description ) ) {
+                                echo '<div class="product-full-description">' . wpautop( $description ) . '</div>';
+                            } elseif ( empty( $short_description ) ) {
+                                // Fallback to post content if both descriptions are empty
+                                the_content();
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
 
-		            <div class="product-meta">
-		                <?php if (in_array('sku', $wc_product_display_options) && $product->get_sku()) : ?>
-		                    <div class="custom-field-item product-sku">
-		                        <strong>SKU:</strong> <?php echo esc_html($product->get_sku()); ?>
-		                    </div>
-		                <?php endif; ?>
+                    <div class="product-meta">
+                        <?php if ( in_array( 'sku', $wc_product_display_options ) && $product->get_sku() ) : ?>
+                            <div class="custom-field-item product-sku">
+                                <strong>SKU:</strong> <?php echo esc_html( $product->get_sku() ); ?>
+                            </div>
+                        <?php endif; ?>
 
-		                <?php if (in_array('categories', $wc_product_display_options)) : ?>
-		                    <?php
-		                    // Display categories
-		                    $categories = get_the_terms($product->get_id(), 'product_cat');
-		                    if ($categories && !is_wp_error($categories)) {
-		                        $cat_names = array();
-		                        foreach ($categories as $category) {
-		                            $cat_names[] = $category->name;
-		                        }
-		                        echo '<div class="custom-field-item product-categories">';
-		                        echo '<strong>Categories:</strong> ' . esc_html(implode(', ', $cat_names));
-		                        echo '</div>';
-		                    }
-		                    ?>
-		                <?php endif; ?>
+                        <?php if ( in_array( 'categories', $wc_product_display_options ) ) : ?>
+                            <?php
+                            // Display categories
+                            $categories = get_the_terms( $product->get_id(), 'product_cat' );
+                            if ( $categories && ! is_wp_error( $categories ) ) {
+                                $cat_names = array();
+                                foreach ( $categories as $category ) {
+                                    $cat_names[] = $category->name;
+                                }
+                                echo '<div class="custom-field-item product-categories">';
+                                echo '<strong>Categories:</strong> ' . esc_html( implode( ', ', $cat_names ) );
+                                echo '</div>';
+                            }
+                            ?>
+                        <?php endif; ?>
 
-		                <?php if (in_array('tags', $wc_product_display_options)) : ?>
-		                    <?php
-		                    // Display tags
-		                    $tags = get_the_terms($product->get_id(), 'product_tag');
-		                    if ($tags && !is_wp_error($tags)) {
-		                        $tag_names = array();
-		                        foreach ($tags as $tag) {
-		                            $tag_names[] = $tag->name;
-		                        }
-		                        echo '<div class="custom-field-item product-tags">';
-		                        echo '<strong>Tags:</strong> ' . esc_html(implode(', ', $tag_names));
-		                        echo '</div>';
-		                    }
-		                    ?>
-		                <?php endif; ?>
-		            </div>
+                        <?php if ( in_array( 'tags', $wc_product_display_options ) ) : ?>
+                            <?php
+                            // Display tags
+                            $tags = get_the_terms( $product->get_id(), 'product_tag' );
+                            if ( $tags && ! is_wp_error( $tags ) ) {
+                                $tag_names = array();
+                                foreach ( $tags as $tag ) {
+                                    $tag_names[] = $tag->name;
+                                }
+                                echo '<div class="custom-field-item product-tags">';
+                                echo '<strong>Tags:</strong> ' . esc_html( implode( ', ', $tag_names ) );
+                                echo '</div>';
+                            }
+                            ?>
+                        <?php endif; ?>
+                    </div>
 
-		            <?php
-		            $selected_template = get_option( 'dkpdf_selected_template', '' );
-		            if ( ! empty( $selected_template ) ) {
-		                $custom_fields_html = apply_filters( 'dkpdf_get_custom_fields_display', '', get_the_ID() );
-		                if ( ! empty( $custom_fields_html ) ) {
-		                    echo $custom_fields_html;
-		                }
-		            }
-		            ?>
-		        </article>
-		        <?php
-		    }
-		endwhile;
-	endif;
-	?>
+                    <?php
+                    $selected_template = get_option( 'dkpdf_selected_template', '' );
+                    if ( ! empty( $selected_template ) ) {
+                        $custom_fields_html = apply_filters( 'dkpdf_get_custom_fields_display', '', get_the_ID() );
+                        if ( ! empty( $custom_fields_html ) ) {
+                            echo $custom_fields_html;
+                        }
+                    }
+                    ?>
+                </article>
+                <?php
+            }
+        endwhile;
+    endif;
+    ?>
 </main>
 </body>
 </html>

@@ -5,7 +5,13 @@
               media="all"/>
     <?php } ?>
     <style>
-        a, code, ins, kbd, tt {background-color: transparent;}
+        a, code, ins, kbd, tt {
+            background-color: transparent;
+        }
+
+        .screen-reader-text {
+            display: none;
+        }
 
         <?php
         $primary_color = get_option( 'dkpdf_pdf_primary_color', '#333333' );
@@ -55,46 +61,46 @@
 <body>
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-		<?php if ( have_posts() ) : ?>
-			<?php while ( have_posts() ) : the_post(); ?>
+        <?php if ( have_posts() ) : ?>
+            <?php while ( have_posts() ) : the_post(); ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <?php
                     // Get post display options
-                    $post_display_options = get_option('dkpdf_post_display', array());
+                    $post_display_options = get_option( 'dkpdf_post_display', array() );
 
                     // Only render elements that are specifically selected in post_display options
 
                     // Display title if selected
-                    if (in_array('title', $post_display_options)) {
+                    if ( in_array( 'title', $post_display_options ) ) {
                         ?>
                         <header class="entry-header">
-                            <?php the_title('<h2 class="entry-title">', '</h2>'); ?>
+                            <?php the_title( '<h2 class="entry-title">', '</h2>' ); ?>
                         </header>
                         <?php
                     }
 
                     // Display post date if selected
-                    if (in_array('post_date', $post_display_options)) {
+                    if ( in_array( 'post_date', $post_display_options ) ) {
                         ?>
                         <div class="entry-meta">
                             <span class="posted-on">
-                                <?php echo esc_html__('Posted on', 'dkpdf') . ' ' . get_the_date(); ?>
+                                <?php echo esc_html__( 'Posted on', 'dkpdf' ) . ' ' . get_the_date(); ?>
                             </span>
                         </div>
                         <?php
                     }
 
                     // Display featured image if selected
-                    if (in_array('featured_img', $post_display_options) && has_post_thumbnail()) {
+                    if ( in_array( 'featured_img', $post_display_options ) && has_post_thumbnail() ) {
                         ?>
                         <div class="post-thumbnail">
-                            <?php the_post_thumbnail('large'); ?>
+                            <?php the_post_thumbnail( 'large' ); ?>
                         </div>
                         <?php
                     }
 
                     // Only display the content if content option is selected
-                    if (in_array('content', $post_display_options)) {
+                    if ( in_array( 'content', $post_display_options ) ) {
                         ?>
                         <div class="entry-content">
                             <?php the_content(); ?>
@@ -112,10 +118,10 @@
                     }
                     ?>
                 </article>
-			<?php endwhile; ?>
-		<?php else : ?>
+            <?php endwhile; ?>
+        <?php else : ?>
             <p>No posts found.</p>
-		<?php endif; ?>
+        <?php endif; ?>
     </main>
 </div>
 </body>

@@ -5,7 +5,13 @@
               media="all"/>
     <?php } ?>
     <style>
-        a, code, ins, kbd, tt {background-color: transparent;}
+        a, code, ins, kbd, tt {
+            background-color: transparent;
+        }
+
+        .screen-reader-text {
+            display: none;
+        }
 
         <?php
         $primary_color = get_option( 'dkpdf_pdf_primary_color', '#333333' );
@@ -33,10 +39,12 @@
             width: 100%;
             border-collapse: collapse;
         }
+
         .post-item {
             padding: 10px;
             vertical-align: top;
         }
+
         .post-thumbnail img {
             max-width: 100%;
             height: auto;
@@ -57,48 +65,48 @@ $taxonomy_display_options = get_option( 'dkpdf_taxonomy_display', array() );
 
 // Ensure taxonomy_display_options is an array
 if ( ! is_array( $taxonomy_display_options ) ) {
-	$taxonomy_display_options = empty( $taxonomy_display_options ) ? array() : array( $taxonomy_display_options );
+    $taxonomy_display_options = empty( $taxonomy_display_options ) ? array() : array( $taxonomy_display_options );
 }
 
 // Get layout columns option
 $columns = intval( get_option( 'dkpdf_taxonomy_layout', '1' ) );
 // Validate columns (must be between 1 and 4)
 if ( $columns < 1 || $columns > 4 ) {
-	$columns = 1; // default to 1 column
+    $columns = 1; // default to 1 column
 }
 
 // Only display archive header if title is selected
 if ( in_array( 'title', $taxonomy_display_options ) ) {
-	?>
+    ?>
     <div class="archive-header">
         <h2 class="archive-title">
-			<?php
-			if ( is_category() ) {
-				echo single_cat_title( '', false );
-			} elseif ( is_tag() ) {
-				echo single_tag_title( '', false );
-			} elseif ( is_author() ) {
-				the_post();
-				echo 'Author: ' . get_the_author();
-				rewind_posts();
-			} elseif ( is_day() ) {
-				echo 'Daily Archives: ' . get_the_date();
-			} elseif ( is_month() ) {
-				echo 'Monthly Archives: ' . get_the_date( 'F Y' );
-			} elseif ( is_year() ) {
-				echo 'Yearly Archives: ' . get_the_date( 'Y' );
-			} else {
-				echo 'Archives';
-			}
-			?>
+            <?php
+            if ( is_category() ) {
+                echo single_cat_title( '', false );
+            } elseif ( is_tag() ) {
+                echo single_tag_title( '', false );
+            } elseif ( is_author() ) {
+                the_post();
+                echo 'Author: ' . get_the_author();
+                rewind_posts();
+            } elseif ( is_day() ) {
+                echo 'Daily Archives: ' . get_the_date();
+            } elseif ( is_month() ) {
+                echo 'Monthly Archives: ' . get_the_date( 'F Y' );
+            } elseif ( is_year() ) {
+                echo 'Yearly Archives: ' . get_the_date( 'Y' );
+            } else {
+                echo 'Archives';
+            }
+            ?>
         </h2>
     </div>
-	<?php
+    <?php
 }
 
 // Only display archive description if description is selected
 if ( in_array( 'description', $taxonomy_display_options ) && ( is_category() || is_tag() ) && term_description() ) {
-	echo '<div class="archive-description">' . term_description() . '</div>';
+    echo '<div class="archive-description">' . term_description() . '</div>';
 }
 
 // Initialize counter to track columns
@@ -108,72 +116,72 @@ $counter = 0;
 echo '<table class="posts-container">';
 
 if ( have_posts() ) :
-	// Start with a new row
-	echo '<tr>';
+    // Start with a new row
+    echo '<tr>';
 
-	while ( have_posts() ) : the_post();
-		// Start a new cell
-		echo '<td class="post-item" width="' . ( 100 / $columns ) . '%">';
+    while ( have_posts() ) : the_post();
+        // Start a new cell
+        echo '<td class="post-item" width="' . ( 100 / $columns ) . '%">';
 
-		// Display title if selected
-		if ( in_array( 'title', $taxonomy_display_options ) ) {
-			?>
+        // Display title if selected
+        if ( in_array( 'title', $taxonomy_display_options ) ) {
+            ?>
             <h3 class="post-title">
                 <a href="<?php the_permalink(); ?>" target="_blank">
-					<?php the_title(); ?>
+                    <?php the_title(); ?>
                 </a>
             </h3>
-			<?php
-		}
+            <?php
+        }
 
-		// Display post date if selected
-		if ( in_array( 'post_date', $taxonomy_display_options ) ) {
-			?>
+        // Display post date if selected
+        if ( in_array( 'post_date', $taxonomy_display_options ) ) {
+            ?>
             <div class="post-meta">
-				<?php echo get_the_date( 'F j, Y' ); ?>
+                <?php echo get_the_date( 'F j, Y' ); ?>
             </div>
-			<?php
-		}
+            <?php
+        }
 
-		// Display thumbnail if selected
-		if ( in_array( 'post_thumbnail', $taxonomy_display_options ) && has_post_thumbnail() ) {
-			?>
+        // Display thumbnail if selected
+        if ( in_array( 'post_thumbnail', $taxonomy_display_options ) && has_post_thumbnail() ) {
+            ?>
             <div class="post-thumbnail">
-				<?php the_post_thumbnail( 'thumbnail' ); ?>
+                <?php the_post_thumbnail( 'thumbnail' ); ?>
             </div>
-			<?php
-		}
+            <?php
+        }
 
-		// Display post excerpt if selected
-		if ( in_array( 'post_excerpt', $taxonomy_display_options ) ) {
-			?>
+        // Display post excerpt if selected
+        if ( in_array( 'post_excerpt', $taxonomy_display_options ) ) {
+            ?>
             <div class="post-excerpt">
-				<?php echo wp_trim_words( get_the_excerpt(), 20, '...' ); ?>
+                <?php echo wp_trim_words( get_the_excerpt(), 20, '...' ); ?>
             </div>
-			<?php
-		}
+            <?php
+        }
 
-		// Close the cell
-		echo '</td>';
+        // Close the cell
+        echo '</td>';
 
-		$counter ++;
+        $counter ++;
 
-		// If we've reached the number of columns, end this row and start a new one
-		if ( $counter % $columns === 0 ) {
-			echo '</tr><tr>';
-		}
-	endwhile;
+        // If we've reached the number of columns, end this row and start a new one
+        if ( $counter % $columns === 0 ) {
+            echo '</tr><tr>';
+        }
+    endwhile;
 
-	// Fill any remaining cells in the last row with empty cells
-	$remaining = $columns - ( $counter % $columns );
-	if ( $remaining > 0 && $remaining < $columns ) {
-		for ( $i = 0; $i < $remaining; $i ++ ) {
-			echo '<td width="' . ( 100 / $columns ) . '%"></td>';
-		}
-	}
+    // Fill any remaining cells in the last row with empty cells
+    $remaining = $columns - ( $counter % $columns );
+    if ( $remaining > 0 && $remaining < $columns ) {
+        for ( $i = 0; $i < $remaining; $i ++ ) {
+            echo '<td width="' . ( 100 / $columns ) . '%"></td>';
+        }
+    }
 
-	// Close the last row
-	echo '</tr>';
+    // Close the last row
+    echo '</tr>';
 endif;
 
 // Close the table
