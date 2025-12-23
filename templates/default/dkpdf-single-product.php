@@ -169,7 +169,7 @@
                     <div class="product-meta">
                         <?php if ( in_array( 'sku', $wc_product_display_options ) && $product->get_sku() ) : ?>
                             <div class="custom-field-item product-sku">
-                                <strong>SKU:</strong> <?php echo esc_html( $product->get_sku() ); ?>
+                                <strong><?php esc_html_e( 'SKU:', 'dk-pdf' ); ?></strong> <?php echo esc_html( $product->get_sku() ); ?>
                             </div>
                         <?php endif; ?>
 
@@ -183,7 +183,7 @@
                                     $cat_names[] = $category->name;
                                 }
                                 echo '<div class="custom-field-item product-categories">';
-                                echo '<strong>Categories:</strong> ' . esc_html( implode( ', ', $cat_names ) );
+                                echo '<strong>' . esc_html__( 'Categories:', 'dk-pdf' ) . '</strong> ' . esc_html( implode( ', ', $cat_names ) );
                                 echo '</div>';
                             }
                             ?>
@@ -199,7 +199,7 @@
                                     $tag_names[] = $tag->name;
                                 }
                                 echo '<div class="custom-field-item product-tags">';
-                                echo '<strong>Tags:</strong> ' . esc_html( implode( ', ', $tag_names ) );
+                                echo '<strong>' . esc_html__( 'Tags:', 'dk-pdf' ) . '</strong> ' . esc_html( implode( ', ', $tag_names ) );
                                 echo '</div>';
                             }
                             ?>
