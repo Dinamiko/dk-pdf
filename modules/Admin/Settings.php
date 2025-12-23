@@ -305,6 +305,21 @@ class Settings {
 					'default'     => 'vertical'
 				),
 				array(
+					'id'          => 'page_size',
+					'label'       => __( 'Page size', 'dkpdf' ),
+					'description' => '',
+					'type'        => 'select',
+					'options'     => apply_filters( 'dkpdf_page_size_options', array(
+						'A4'     => 'A4 (210 x 297mm)',
+						'A5'     => 'A5 (148 x 210mm)',
+						'A3'     => 'A3 (297 x 420mm)',
+						'Letter' => 'Letter (8.5 x 11 in)',
+						'Legal'  => 'Legal (8.5 x 14 in)',
+						'Ledger' => 'Ledger (11 x 17 in)',
+					) ),
+					'default'     => 'A4'
+				),
+				array(
 					'id'          => 'font_size',
 					'label'       => __( 'Font size', 'dkpdfg' ),
 					'description' => 'In points (pt)',

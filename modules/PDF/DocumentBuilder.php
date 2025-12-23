@@ -145,9 +145,7 @@ class DocumentBuilder {
 			'tempDir'           => apply_filters( 'dkpdf_mpdf_temp_dir', realpath( __DIR__ . '/../..' ) . '/tmp' ),
 			'default_font_size' => get_option( 'dkpdf_font_size', '12' ),
 			'default_font'      => $this->getSelectedFont(),
-			'format'            => get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
-				apply_filters( 'dkpdf_pdf_format', 'A4' ) . '-L' :
-				apply_filters( 'dkpdf_pdf_format', 'A4' ),
+			'format'            => $this->getPageFormat(),
 			'margin_left'       => get_option( 'dkpdf_margin_left', '15' ),
 			'margin_right'      => get_option( 'dkpdf_margin_right', '15' ),
 			'margin_top'        => get_option( 'dkpdf_margin_top', '50' ),
@@ -185,6 +183,36 @@ class DocumentBuilder {
 
 		// Apply final config filter
 		return apply_filters( 'dkpdf_mpdf_config', $config );
+	}
+
+	/**
+	 * Get page format with orientation handling.
+	 * Supports both string formats ('A4') and array formats ([width, height]).
+	 *
+	 * @return string|array Page format string (e.g., 'A4-L') or array [width, height] in mm
+	 */
+	private function getPageFormat() {
+		$base_format = get_option( 'dkpdf_page_size', 'A4' );
+		$is_horizontal = get_option( 'dkpdf_page_orientation' ) === 'horizontal';
+
+		// Apply filter - can return string or array
+		$format = apply_filters( 'dkpdf_pdf_format', $base_format );
+
+		// Handle array format (custom dimensions)
+		if ( is_array( $format ) ) {
+			// For landscape, swap width and height
+			if ( $is_horizontal && count( $format ) === 2 ) {
+				return [ $format[1], $format[0] ];
+			}
+			return $format;
+		}
+
+		// Handle string format (predefined sizes)
+		if ( $is_horizontal ) {
+			return $format . '-L';
+		}
+
+		return $format;
 	}
 
 	private function configureMpdfSettings( Mpdf $mpdf ): void {
