@@ -480,6 +480,7 @@ class Settings {
 					'label'       => __( 'Template Sets', 'dkpdf' ),
 					'description' => __( 'Upload custom template sets or manage existing ones.', 'dkpdf' ),
 					'type'        => 'template_set_manager',
+					'depends_on'  => 'dkpdf_selected_template',
 				),
 				array(
 					'id'          => 'pdf_primary_color',
@@ -487,6 +488,7 @@ class Settings {
 					'description' => '',
 					'type'        => 'color',
 					'default'     => '#333333',
+					'depends_on'  => 'dkpdf_selected_template',
 				),
 				array(
 					'id'          => 'pdf_secondary_color',
@@ -494,6 +496,7 @@ class Settings {
 					'description' => '',
 					'type'        => 'color',
 					'default'     => '#666666',
+					'depends_on'  => 'dkpdf_selected_template',
 				),
 				array(
 					'id'          => 'pdf_text_color',
@@ -501,6 +504,7 @@ class Settings {
 					'description' => '',
 					'type'        => 'color',
 					'default'     => '#000000',
+					'depends_on'  => 'dkpdf_selected_template',
 				),
 				array(
 					'id'          => 'post_display',
