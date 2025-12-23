@@ -85,18 +85,12 @@ class TemplateSetExtractor {
 		}
 
 		// Validate required metadata fields
-		$required_fields = array( 'name', 'version', 'author', 'required_files' );
+		$required_fields = array( 'name', 'version', 'description' );
 		foreach ( $required_fields as $field ) {
-			if ( ! isset( $metadata[ $field ] ) ) {
+			if ( ! isset( $metadata[ $field ] ) || empty( $metadata[ $field ] ) ) {
 				return null;
 			}
 		}
-
-		// Set defaults for optional fields
-		$metadata['description'] = $metadata['description'] ?? '';
-		$metadata['author_uri'] = $metadata['author_uri'] ?? '';
-		$metadata['minimum_dkpdf_version'] = $metadata['minimum_dkpdf_version'] ?? '2.3.0';
-		$metadata['tags'] = $metadata['tags'] ?? array();
 
 		return $metadata;
 	}

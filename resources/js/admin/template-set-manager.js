@@ -199,22 +199,6 @@ class TemplateSetManager {
 
 			badges += `<span class="dkpdf-badge dkpdf-badge-${templateSet.type}">${templateSet.type === 'core' ? (i18n.core || 'Core') : (i18n.custom || 'Custom')}</span>`;
 
-			// Add tags if available
-			let tagsHtml = '';
-			if (templateSet.tags && templateSet.tags.length > 0) {
-				tagsHtml = '<div class="dkpdf-template-tags">';
-				templateSet.tags.forEach(tag => {
-					tagsHtml += `<span class="dkpdf-tag">${tag}</span>`;
-				});
-				tagsHtml += '</div>';
-			}
-
-			// Add required files list
-			let filesHtml = '';
-			if (templateSet.required_files && templateSet.required_files.length > 0) {
-				filesHtml = `<div class="dkpdf-template-files"><strong>Files:</strong> ${templateSet.required_files.join(', ')}</div>`;
-			}
-
 			const canDelete = !templateSet.selected && templateSet.type !== 'core';
 			const deleteButton = canDelete
 				? `<button class="button dkpdf-delete-template-set" data-template-set-key="${templateSet.key}" data-template-set-type="${templateSet.type}" data-template-set-name="${templateSet.name}">${i18n.delete || 'Delete'}</button>`
@@ -229,11 +213,8 @@ class TemplateSetManager {
 						</div>
 						<div class="dkpdf-template-set-meta">
 							<span class="dkpdf-template-version">v${templateSet.version}</span>
-							${templateSet.author ? `<span class="dkpdf-template-author">by ${templateSet.author}</span>` : ''}
-						</div>
+							</div>
 						${templateSet.description ? `<p class="dkpdf-template-description">${templateSet.description}</p>` : ''}
-						${tagsHtml}
-						${filesHtml}
 					</div>
 					<div class="dkpdf-template-set-actions">
 						${deleteButton}

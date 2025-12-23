@@ -102,11 +102,7 @@ class TemplateSetManager {
 				'name' => $set['name'],
 				'description' => $set['description'] ?? '',
 				'version' => $set['version'] ?? '1.0.0',
-				'author' => $set['author'] ?? '',
-				'author_uri' => $set['author_uri'] ?? '',
 				'type' => $set['type'],
-				'required_files' => $set['required_files'] ?? array(),
-				'tags' => $set['tags'] ?? array(),
 				'installed_date' => $set['installed_date'] ?? '',
 				'selected' => $key === $selected_template,
 			);
@@ -161,11 +157,6 @@ class TemplateSetManager {
 		$metadata = $this->extractor->parseTemplateMetadata( $directory );
 		if ( $metadata === null ) {
 			return __( 'Invalid or missing template.json file.', 'dkpdf' );
-		}
-
-		// Validate required files
-		if ( ! $this->extractor->validateRequiredFiles( $directory, $metadata['required_files'] ) ) {
-			return __( 'Template set is missing required files.', 'dkpdf' );
 		}
 
 		// Check for subdirectories (should be flat structure)
@@ -319,11 +310,7 @@ class TemplateSetManager {
 			'name' => $metadata['name'],
 			'description' => $metadata['description'],
 			'version' => $metadata['version'],
-			'author' => $metadata['author'],
-			'author_uri' => $metadata['author_uri'] ?? '',
 			'type' => 'custom',
-			'required_files' => $metadata['required_files'],
-			'tags' => $metadata['tags'] ?? array(),
 			'installed_date' => current_time( 'mysql' ),
 		);
 
@@ -422,15 +409,8 @@ class TemplateSetManager {
 			'default' => array(
 				'name' => __( 'Default Template', 'dkpdf' ),
 				'description' => __( 'Built-in DK PDF template with basic styling', 'dkpdf' ),
-				'type' => 'core',
 				'version' => '1.0.0',
-				'author' => 'Dinamiko',
-				'author_uri' => 'https://wordpress.org/plugins/dk-pdf/',
-				'required_files' => array(
-					'dkpdf-single.php',
-					'dkpdf-header.php',
-					'dkpdf-footer.php',
-				),
+				'type' => 'core',
 				'installed_date' => current_time( 'mysql' ),
 			),
 		);
