@@ -876,11 +876,6 @@ class FieldRenderer {
 		$html .= esc_html__( 'Manage Template Sets', 'dkpdf' );
 		$html .= '</button>';
 
-		// Add description below button
-		if ( isset( $field['description'] ) && $field['description'] !== '' ) {
-			$html .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
-		}
-
 		return $html;
 	}
 }
