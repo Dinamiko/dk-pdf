@@ -129,7 +129,6 @@
                     <?php
                 }
 
-                // Display custom fields if not using legacy template and fields are selected
                 $selected_template = get_option( 'dkpdf_selected_template', '' );
                 if ( ! empty( $selected_template ) ) {
                     $custom_fields_html = apply_filters( 'dkpdf_get_custom_fields_display', '', get_the_ID() );

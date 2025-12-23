@@ -66,7 +66,12 @@
         }
 
         .product-meta {
+            color: <?php echo esc_attr( $secondary_color ); ?>;
             margin-top: 20px;
+        }
+
+        .custom-fields-section {
+            color: <?php echo esc_attr( $secondary_color ); ?>;
         }
 
         .custom-field-item {
