@@ -417,7 +417,7 @@ class FieldRendererTest extends TestCase {
 
 	// ===== IMAGE FIELD TESTS =====
 
-	public function test_image_field_renders_upload_interface(): void {
+	public function test_image_field_renders_upload_button_when_empty(): void {
 		$field = [
 			'id'   => 'test_image_field',
 			'type' => 'image',
@@ -425,13 +425,47 @@ class FieldRendererTest extends TestCase {
 
 		$html = $this->renderer->display_field( $field, false, false );
 
+		// Should contain upload button
+		$this->assertStringContainsString( 'class="image_upload_button button"', $html );
+		$this->assertStringContainsString( 'id="test_image_field_button"', $html );
+
+		// Should contain hidden input field
+		$this->assertStringContainsString( 'type="hidden"', $html );
+		$this->assertStringContainsString( 'name="test_image_field"', $html );
+		$this->assertStringContainsString( 'value=""', $html );
+
+		// Should NOT contain preview or delete button when empty
+		$this->assertStringNotContainsString( '<img', $html );
+		$this->assertStringNotContainsString( 'class="image_delete_button"', $html );
+	}
+
+	public function test_image_field_renders_full_interface_with_image(): void {
+		// Create a mock attachment ID
+		$attachment_id = 123;
+		update_option( 'test_image_field', (string) $attachment_id );
+
+		$field = [
+			'id'   => 'test_image_field',
+			'type' => 'image',
+		];
+
+		$html = $this->renderer->display_field( $field, false, false );
+
+		// Should contain image preview
 		$this->assertStringContainsString( '<img', $html );
 		$this->assertStringContainsString( 'class="image_preview"', $html );
 		$this->assertStringContainsString( 'id="test_image_field_preview"', $html );
+
+		// Should contain upload button
 		$this->assertStringContainsString( 'class="image_upload_button button"', $html );
+
+		// Should contain delete button
 		$this->assertStringContainsString( 'class="image_delete_button button"', $html );
+
+		// Should contain hidden input with value
 		$this->assertStringContainsString( 'type="hidden"', $html );
 		$this->assertStringContainsString( 'name="test_image_field"', $html );
+		$this->assertStringContainsString( 'value="123"', $html );
 	}
 
 	// ===== INFO TEXT TESTS =====
