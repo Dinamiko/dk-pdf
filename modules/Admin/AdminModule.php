@@ -77,6 +77,19 @@ class AdminModule implements ServiceModule, ExecutableModule {
 			assert($templateSetManager instanceof TemplateSetManager);
 
 			$templateSetManager->migrateDefaultTemplate();
+
+			// Register button text with Polylang if active
+			if ( function_exists( 'pll_register_string' ) ) {
+				$button_text = get_option( 'dkpdf_pdfbutton_text', 'PDF Button' );
+				pll_register_string( 'dkpdf_button_text', $button_text, 'DK PDF', false );
+			}
+
+			// Re-register with Polylang when button text is updated
+			add_action( 'update_option_dkpdf_pdfbutton_text', function( $old_value, $new_value ) {
+				if ( function_exists( 'pll_register_string' ) ) {
+					pll_register_string( 'dkpdf_button_text', $new_value, 'DK PDF', false );
+				}
+			}, 10, 2 );
 		} );
 
 		add_action( 'admin_menu', function() use($container) {

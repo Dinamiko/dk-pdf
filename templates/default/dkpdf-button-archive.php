@@ -7,12 +7,12 @@
 * copy this template and paste in your theme inside a directory named dkpdf
 */
 
-// Check if we're using polylang plugin
-if( function_exists( 'pll_register_string' )  ) {
-	// Get button text setting value from polylang
-	$pdfbutton_text = pll__( 'PDF Button' );
-} else {
-	$pdfbutton_text = sanitize_option( 'dkpdf_pdfbutton_text', get_option( 'dkpdf_pdfbutton_text', 'PDF Button' ) );
+// Get button text from settings
+$pdfbutton_text = sanitize_option( 'dkpdf_pdfbutton_text', get_option( 'dkpdf_pdfbutton_text', 'PDF Button' ) );
+
+// Apply Polylang translation if active
+if ( function_exists( 'pll__' ) ) {
+	$pdfbutton_text = pll__( $pdfbutton_text );
 }
 
 $pdfbutton_align = sanitize_option( 'dkpdf_pdfbutton_align', get_option( 'dkpdf_pdfbutton_align', 'right' ) );
