@@ -75,8 +75,11 @@ if ( $columns < 1 || $columns > 4 ) {
     $columns = 1; // default to 1 column
 }
 
-// Only display archive header if title is selected
-if ( in_array( 'title', $taxonomy_display_options ) ) {
+// Display archive header if 'archive_title' OR 'title' is checked
+// Backward compatibility: 'title' used to control both archive and items,
+// so we show archive if either option is checked
+if ( in_array( 'archive_title', $taxonomy_display_options, true )
+     || in_array( 'title', $taxonomy_display_options, true ) ) {
     ?>
     <div class="archive-header">
         <h2 class="archive-title">

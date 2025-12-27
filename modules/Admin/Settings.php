@@ -542,6 +542,7 @@ class Settings {
 					'description' => '',
 					'type'        => 'checkbox_multi',
 					'options'     => [
+						'archive_title' => 'Archive Title',
 						'title'      => 'Title',
 						'description'      => 'Description',
 						'post_date' => 'Post date',
@@ -598,6 +599,7 @@ class Settings {
 				'description' => '',
 				'type'        => 'checkbox_multi',
 				'options'     => [
+					'archive_title' => 'Archive Title',
 					'title'      => 'Title',
 					'price'      => 'Price',
 					'product_thumbnail' => 'Product thumbnail',

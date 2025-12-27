@@ -119,8 +119,12 @@ if ( $columns < 1 || $columns > 4 ) {
     $columns = 2; // default to 2 columns for product display
 }
 
-// Display the archive header
-if ( is_shop() ) {
+// Display archive header if 'archive_title' is checked, OR if ANY other option is checked
+// Backward compatibility: archive header was ALWAYS shown before (not controlled by settings)
+// So we show it if anything is checked (assume old settings) OR if 'archive_title' is explicitly checked
+if ( in_array( 'archive_title', $wc_archive_display_options, true )
+     || ! empty( $wc_archive_display_options ) ) {
+    if ( is_shop() ) {
     echo '<div class="archive-header">';
     // Check if WooCommerce function exists before calling it
     if ( function_exists( 'wc_get_page_title' ) ) {
@@ -139,6 +143,7 @@ if ( is_shop() ) {
         echo '<div class="archive-description">' . $term_description . '</div>';
     }
     echo '</div>';
+}
 }
 
 // Initialize counter to track columns
