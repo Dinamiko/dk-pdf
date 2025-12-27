@@ -37,7 +37,7 @@
             color: <?php echo esc_attr( $primary_color ); ?>;
         }
 
-        .product-price, .sale-price, .regular-price, .archive-description, .product-sku {
+        .product-price, .sale-price, .regular-price, .archive-description, .product-description, .product-sku {
             color: <?php echo esc_attr( $secondary_color ); ?>;
         }
 
@@ -134,17 +134,30 @@ if ( in_array( 'archive_title', $wc_archive_display_options, true ) ) {
 } elseif ( is_product_category() || is_product_tag() ) {
     echo '<div class="archive-header">';
     echo '<h2 class="archive-title">' . esc_html( single_term_title( '', false ) ) . '</h2>';
-
-    // Display term description if it exists
-    $term_description = term_description();
-    if ( ! empty( $term_description ) ) {
-        echo '<div class="archive-description">' . $term_description . '</div>';
-    }
     echo '</div>';
 }
 }
 
 // Initialize counter to track columns
+
+// Display category/term description if 'description' is checked
+if ( in_array( 'description', $wc_archive_display_options, true ) ) {
+    if ( is_product_category() || is_product_tag() ) {
+        $term_description = term_description();
+        if ( ! empty( $term_description ) ) {
+            echo '<div class="archive-description">' . $term_description . '</div>';
+        }
+    } elseif ( is_shop() && function_exists( 'wc_get_page_id' ) ) {
+        // For shop page, get the shop page content/description
+        $shop_page_id = wc_get_page_id( 'shop' );
+        if ( $shop_page_id ) {
+            $shop_description = get_post_field( 'post_content', $shop_page_id );
+            if ( ! empty( $shop_description ) ) {
+                echo '<div class="archive-description">' . wp_kses_post( $shop_description ) . '</div>';
+            }
+        }
+    }
+}
 $counter = 0;
 
 // Start table-based layout
@@ -185,13 +198,6 @@ if ( have_posts() ) :
         // Display product title ONLY if selected in wc_archive_display
         if ( in_array( 'title', $wc_archive_display_options ) ) {
             echo '<h3 class="product-title">' . get_the_title() . '</h3>';
-        }
-
-        // Display product price ONLY if selected in wc_archive_display
-        if ( in_array( 'price', $wc_archive_display_options ) ) {
-            if ( $price_html = $product->get_price_html() ) {
-                echo '<div class="product-price">' . $price_html . '</div>';
-            }
         }
 
         // Display SKU ONLY if selected in wc_archive_display and SKU exists

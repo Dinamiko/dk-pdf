@@ -601,6 +601,7 @@ class Settings {
 				'options'     => [
 					'archive_title' => 'Archive Title',
 					'title'      => 'Title',
+					'description' => 'Description',
 					'price'      => 'Price',
 					'product_thumbnail' => 'Product thumbnail',
 					'sku' => 'SKU',
