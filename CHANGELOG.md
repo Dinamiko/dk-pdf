@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.0 
+- Fix - Polylang PDF button string translation.
+
 ## 2.3.0
 - Enhancement - Add custom font manager for uploading and managing custom .ttf fonts in PDF generation.
 - Enhancement - Add core fonts management, recommended for Arabic, Hebrew, Indic and CJK languages support.
