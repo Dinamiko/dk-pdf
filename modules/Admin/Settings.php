@@ -683,6 +683,44 @@ class Settings {
 	}
 
 	/**
+	 * Migrate archive title settings - one-time migration
+	 * Adds 'archive_title' to existing settings to preserve backward compatibility
+	 * @return void
+	 */
+	public function migrate_archive_title_settings() {
+		// Check if migration has already been run
+		if ( get_option( 'dkpdf_settings_migrated_archive_title', false ) ) {
+			return;
+		}
+
+		// Migrate taxonomy display settings
+		$taxonomy_display = get_option( 'dkpdf_taxonomy_display', array() );
+		if ( is_array( $taxonomy_display ) && ! empty( $taxonomy_display ) ) {
+			// If 'title' is checked and 'archive_title' is not, add 'archive_title'
+			if ( in_array( 'title', $taxonomy_display, true ) && ! in_array( 'archive_title', $taxonomy_display, true ) ) {
+				// Add 'archive_title' at the beginning to preserve order
+				array_unshift( $taxonomy_display, 'archive_title' );
+				update_option( 'dkpdf_taxonomy_display', $taxonomy_display );
+			}
+		}
+
+		// Migrate WooCommerce archive display settings
+		$wc_archive_display = get_option( 'dkpdf_wc_archive_display', array() );
+		if ( is_array( $wc_archive_display ) && ! empty( $wc_archive_display ) ) {
+			// If any option is checked and 'archive_title' is not, add 'archive_title'
+			// (old behavior was to always show archive header)
+			if ( ! in_array( 'archive_title', $wc_archive_display, true ) ) {
+				// Add 'archive_title' at the beginning to preserve order
+				array_unshift( $wc_archive_display, 'archive_title' );
+				update_option( 'dkpdf_wc_archive_display', $wc_archive_display );
+			}
+		}
+
+		// Mark migration as complete
+		update_option( 'dkpdf_settings_migrated_archive_title', true );
+	}
+
+	/**
 	 * Register plugin settings
 	 * @return void
 	 */

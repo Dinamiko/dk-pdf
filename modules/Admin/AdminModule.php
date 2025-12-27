@@ -63,6 +63,9 @@ class AdminModule implements ServiceModule, ExecutableModule {
 
 			$settings->register_settings();
 
+			// Run archive title settings migration if needed
+			$settings->migrate_archive_title_settings();
+
 			// Run font family migration if needed
 			$fontManager = $container->get( 'admin.font_manager' );
 			assert($fontManager instanceof FontManager);

@@ -119,11 +119,9 @@ if ( $columns < 1 || $columns > 4 ) {
     $columns = 2; // default to 2 columns for product display
 }
 
-// Display archive header if 'archive_title' is checked, OR if ANY other option is checked
-// Backward compatibility: archive header was ALWAYS shown before (not controlled by settings)
-// So we show it if anything is checked (assume old settings) OR if 'archive_title' is explicitly checked
-if ( in_array( 'archive_title', $wc_archive_display_options, true )
-     || ! empty( $wc_archive_display_options ) ) {
+// Display archive header if 'archive_title' is checked
+// Note: Migration auto-adds 'archive_title' to existing settings for backward compatibility
+if ( in_array( 'archive_title', $wc_archive_display_options, true ) ) {
     if ( is_shop() ) {
     echo '<div class="archive-header">';
     // Check if WooCommerce function exists before calling it
