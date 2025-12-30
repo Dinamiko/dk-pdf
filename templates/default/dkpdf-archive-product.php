@@ -204,7 +204,7 @@ if ( have_posts() ) :
 
         // Display SKU ONLY if selected in wc_archive_display and SKU exists
         if ( in_array( 'sku', $wc_archive_display_options ) && $product->get_sku() ) {
-            echo '<div class="product-sku"><small>SKU: ' . esc_html( $product->get_sku() ) . '</small></div>';
+            echo '<div class="product-sku"><small>' . esc_html__( 'SKU:', 'dk-pdf' ) . ' ' . esc_html( $product->get_sku() ) . '</small></div>';
         }
 
         // Close the cell
