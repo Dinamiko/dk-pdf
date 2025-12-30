@@ -35,6 +35,10 @@
             color: <?php echo esc_attr( $secondary_color ); ?>;
         }
 
+        .post-date {
+            font-size:90%;
+        }
+
         .posts-container {
             width: 100%;
             border-collapse: collapse;
@@ -43,6 +47,7 @@
         .post-item {
             padding: 10px;
             vertical-align: top;
+            line-height: 145%;
         }
 
         .post-thumbnail img {
@@ -138,7 +143,7 @@ if ( have_posts() ) :
         // Display post date if selected
         if ( in_array( 'post_date', $taxonomy_display_options ) ) {
             ?>
-            <div class="post-meta">
+            <div class="post-meta post-date">
                 <?php echo get_the_date( 'F j, Y' ); ?>
             </div>
             <?php

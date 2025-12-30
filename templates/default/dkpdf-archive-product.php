@@ -81,10 +81,6 @@
             font-size: 12px;
         }
 
-        .archive-header {
-            margin-bottom: 20px;
-        }
-
         .archive-title {
             font-size: 24px;
             margin-bottom: 10px;
@@ -92,7 +88,6 @@
 
         .archive-description {
             margin-bottom: 20px;
-            font-style: italic;
         }
 
         <?php
@@ -198,6 +193,13 @@ if ( have_posts() ) :
         // Display product title ONLY if selected in wc_archive_display
         if ( in_array( 'title', $wc_archive_display_options ) ) {
             echo '<h3 class="product-title">' . get_the_title() . '</h3>';
+        }
+
+        // Display product price ONLY if selected in wc_archive_display
+        if (in_array('price', $wc_archive_display_options)) {
+            if ($price_html = $product->get_price_html()) {
+                echo '<div class="product-price">' . wp_kses_post( $price_html ) . '</div>';
+            }
         }
 
         // Display SKU ONLY if selected in wc_archive_display and SKU exists
