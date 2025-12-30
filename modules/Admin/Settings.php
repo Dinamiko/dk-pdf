@@ -128,6 +128,7 @@ class Settings {
 					'no_template_sets' => __( 'No template sets available.', 'dkpdf' ),
 					'error_loading' => __( 'Failed to load template sets.', 'dkpdf' ),
 					'close' => __( 'Close', 'dkpdf' ),
+					'download_templates' => __( 'Download Template Sets', 'dkpdf' ),
 				),
 			)
 		) );

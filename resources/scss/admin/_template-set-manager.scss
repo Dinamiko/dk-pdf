@@ -179,6 +179,35 @@
 		}
 	}
 
+	.dkpdf-download-templates-link {
+		text-decoration: none;
+		color: #2271b1;
+		font-size: 13px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		white-space: nowrap;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: #135e96;
+			text-decoration: underline;
+		}
+
+		&:focus {
+			outline: 2px solid #4f94d4;
+			outline-offset: 2px;
+			border-radius: 2px;
+		}
+
+		.dashicons {
+			font-size: 14px;
+			width: 14px;
+			height: 14px;
+			vertical-align: middle;
+		}
+	}
+
 	.dkpdf-modal-message {
 		margin: 15px 0;
 
