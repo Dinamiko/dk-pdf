@@ -126,7 +126,7 @@ class TemplateSetManager {
 									<span id="dkpdf-selected-zip-filename" style="display:none; margin-left: 10px; color: #666;"></span>
 									<input type="file" id="dkpdf-template-zip-input" accept=".zip" style="display:none;">
 									<div style="flex: 1;"></div>
-									<a href="https://dinamiko.dev/" target="_blank" rel="noopener noreferrer" class="dkpdf-download-templates-link" aria-label="Download template sets - opens in new tab">
+									<a href="https://dinamiko.dev/pdf-templates/" target="_blank" rel="noopener noreferrer" class="dkpdf-download-templates-link" aria-label="Download template sets - opens in new tab">
 										${i18n.download_templates || 'Download Template Sets'}
 										<span class="dashicons dashicons-external" style="font-size: 14px; width: 14px; height: 14px;"></span>
 									</a>
