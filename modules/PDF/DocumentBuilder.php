@@ -142,17 +142,18 @@ class DocumentBuilder {
 	private function getMpdfConfig(): array {
 		// Configure PDF options from settings
 		$config = array(
-			'tempDir'           => apply_filters( 'dkpdf_mpdf_temp_dir', realpath( __DIR__ . '/../..' ) . '/tmp' ),
-			'default_font_size' => get_option( 'dkpdf_font_size', '12' ),
-			'default_font'      => $this->getSelectedFont(),
-			'format'            => get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
+			'tempDir'                 => apply_filters( 'dkpdf_mpdf_temp_dir', realpath( __DIR__ . '/../..' ) . '/tmp' ),
+			'default_font_size'       => get_option( 'dkpdf_font_size', '12' ),
+			'default_font'            => $this->getSelectedFont(),
+			'format'                  => get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
 				apply_filters( 'dkpdf_pdf_format', 'A4' ) . '-L' :
 				apply_filters( 'dkpdf_pdf_format', 'A4' ),
-			'margin_left'       => get_option( 'dkpdf_margin_left', '15' ),
-			'margin_right'      => get_option( 'dkpdf_margin_right', '15' ),
-			'margin_top'        => get_option( 'dkpdf_margin_top', '50' ),
-			'margin_bottom'     => get_option( 'dkpdf_margin_bottom', '30' ),
-			'margin_header'     => get_option( 'dkpdf_margin_header', '15' ),
+			'margin_left'             => get_option( 'dkpdf_margin_left', '15' ),
+			'margin_right'            => get_option( 'dkpdf_margin_right', '15' ),
+			'margin_top'              => get_option( 'dkpdf_margin_top', '50' ),
+			'margin_bottom'           => get_option( 'dkpdf_margin_bottom', '30' ),
+			'margin_header'           => get_option( 'dkpdf_margin_header', '15' ),
+			'whitelistStreamWrappers' => array( 'https' ),
 		);
 
 		// Auto language detection for non-Latin scripts (Arabic, Hebrew, CJK, Thai, etc.)
@@ -205,14 +206,65 @@ class DocumentBuilder {
 	}
 
 	private function addContentToMpdf( Mpdf $mpdf ): void {
-		// Set header and footer
-		$mpdf->SetHTMLHeader( $this->renderer->get_template( 'dkpdf-header' ) );
-		$mpdf->SetHTMLFooter( $this->renderer->get_template( 'dkpdf-footer' ) );
+		$mpdf->SetHTMLHeader( $this->sanitizeContent( $this->renderer->get_template( 'dkpdf-header' ) ) );
+		$mpdf->SetHTMLFooter( $this->sanitizeContent( $this->renderer->get_template( 'dkpdf-footer' ) ) );
 
-		// Write content
-		$mpdf->WriteHTML( apply_filters( 'dkpdf_before_content', '' ) );
-		$mpdf->WriteHTML( $this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) ) );
-		$mpdf->WriteHTML( apply_filters( 'dkpdf_after_content', '' ) );
+		$mpdf->WriteHTML( $this->sanitizeContent( apply_filters( 'dkpdf_before_content', '' ) ) );
+		$mpdf->WriteHTML( $this->sanitizeContent(
+			$this->renderer->get_template( apply_filters( 'dkpdf_content_template', 'dkpdf-index' ) )
+		) );
+		$mpdf->WriteHTML( $this->sanitizeContent( apply_filters( 'dkpdf_after_content', '' ) ) );
+	}
+
+	private function sanitizeContent( string $html ): string {
+		$html = preg_replace_callback(
+			'/<img([^>]*)\ssrc=["\']([^"\']+)["\']([^>]*)>/i',
+			function ( $matches ) {
+				$url = $matches[2];
+				if ( $this->isUrlAllowed( $url ) ) {
+					return $matches[0];
+				}
+				return '';
+			},
+			$html
+		);
+
+		$html = preg_replace_callback(
+			'/url\s*\(\s*["\']?([^"\')\s]+)["\']?\s*\)/i',
+			function ( $matches ) {
+				$url = $matches[1];
+				if ( $this->isUrlAllowed( $url ) ) {
+					return $matches[0];
+				}
+				return 'url()';
+			},
+			$html
+		);
+
+		return $html;
+	}
+
+	private function isUrlAllowed( string $url ): bool {
+		$url = trim( $url );
+
+		if ( empty( $url ) ) {
+			return true;
+		}
+
+		if ( str_starts_with( $url, 'data:' ) ) {
+			return true;
+		}
+
+		if ( ! preg_match( '~^[a-zA-Z][a-zA-Z0-9+.-]*://~', $url ) ) {
+			return true;
+		}
+
+		$site_url = get_site_url();
+		if ( str_starts_with( $url, $site_url ) ) {
+			return true;
+		}
+
+		return wp_http_validate_url( $url ) !== false;
 	}
 
 	private function setDocumentProperties( Mpdf $mpdf, string $title ): void {
