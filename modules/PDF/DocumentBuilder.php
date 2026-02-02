@@ -29,6 +29,9 @@ class DocumentBuilder {
 		$this->configureMpdfSettings( $mpdf );
 		$this->addContentToMpdf( $mpdf );
 		$this->setDocumentProperties( $mpdf, $title );
+
+		do_action( 'dkpdf_before_output', $mpdf, $title );
+
 		$this->outputPdf( $mpdf, $title );
 	}
 
