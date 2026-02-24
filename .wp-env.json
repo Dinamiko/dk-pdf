@@ -10,7 +10,8 @@
   "mappings": {
     "wp-content/plugins/disable-rest-permissions": "./plugins/disable-rest-permissions",
     "wp-content/plugins/dk-pdf-storage": "./plugins/dk-pdf-storage",
-    "wp-content/themes/storefront-child": "./themes/storefront-child"
+    "wp-content/themes/storefront-child": "./themes/storefront-child",
+    "wp-content/uploads": "./uploads"
   },
   "phpVersion": "8.2",
   "config": {

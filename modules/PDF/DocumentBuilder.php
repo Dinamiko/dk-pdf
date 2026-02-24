@@ -275,6 +275,29 @@ class DocumentBuilder {
 		$mpdf->SetAuthor( apply_filters( 'dkpdf_pdf_author', get_bloginfo( 'name' ) ) );
 	}
 
+	/**
+	 * Generate a PDF document and save it to a file
+	 *
+	 * @param string $title     The title/filename for the PDF
+	 * @param string $file_path The full file path to save the PDF to
+	 * @return string The file path where the PDF was saved
+	 * @throws \Exception If PDF generation fails
+	 */
+	public function generateToFile( string $title, string $file_path ): string {
+		require_once realpath( __DIR__ . '/../..' ) . '/vendor/autoload.php';
+
+		$mpdf = $this->createMpdfInstance();
+		$this->configureMpdfSettings( $mpdf );
+		$this->addContentToMpdf( $mpdf );
+		$this->setDocumentProperties( $mpdf, $title );
+
+		do_action( 'dkpdf_before_output', $mpdf, $title );
+
+		$mpdf->Output( $file_path, 'F' );
+
+		return $file_path;
+	}
+
 	private function outputPdf( Mpdf $mpdf, string $title ): void {
 		// Clean any previous output before sending PDF
 		if ( ob_get_level() ) {

@@ -72,5 +72,7 @@ add_action(
 		plugin()->boot();
 
 		Container::init( plugin()->container() );
+
+		require_once __DIR__ . '/api.php';
 	}
 );
