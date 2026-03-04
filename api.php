@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array $args    Optional arguments:
  *                       - 'output_path' (string) Full file path for the PDF.
  *                       - 'title' (string) Override PDF document title/filename.
+ *                       - 'format' (string) Page size, e.g. 'A4', 'Letter', 'A4-L'.
  * @return string|WP_Error File path on success, WP_Error on failure.
  */
 function dkpdf_generate( int $post_id, array $args = [] ) {

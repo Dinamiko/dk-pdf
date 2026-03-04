@@ -26,6 +26,7 @@ class ProgrammaticGenerator {
 	 * @param array $args    Optional arguments:
 	 *                       - 'output_path' (string) Full file path for the PDF.
 	 *                       - 'title' (string) Override PDF document title.
+	 *                       - 'format' (string) Page size, e.g. 'A4', 'Letter', 'A4-L'.
 	 * @return string|\WP_Error File path on success, WP_Error on failure.
 	 */
 	public function generate( int $post_id, array $args = [] ) {
@@ -59,7 +60,9 @@ class ProgrammaticGenerator {
 				);
 			}
 
-			return $this->documentBuilder->generateToFile( $title, $output_path );
+			$format = $args['format'] ?? null;
+
+			return $this->documentBuilder->generateToFile( $title, $output_path, $format );
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'pdf_generation_failed',

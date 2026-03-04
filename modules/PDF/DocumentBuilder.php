@@ -35,8 +35,8 @@ class DocumentBuilder {
 		$this->outputPdf( $mpdf, $title );
 	}
 
-	private function createMpdfInstance(): Mpdf {
-		$config = $this->getMpdfConfig();
+	private function createMpdfInstance( ?string $format = null ): Mpdf {
+		$config = $this->getMpdfConfig( $format );
 		return new Mpdf( $config );
 	}
 
@@ -142,15 +142,19 @@ class DocumentBuilder {
 		return $fontdata;
 	}
 
-	private function getMpdfConfig(): array {
+	private function getMpdfConfig( ?string $format = null ): array {
+		if ( $format === null ) {
+			$format = get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
+				apply_filters( 'dkpdf_pdf_format', 'A4' ) . '-L' :
+				apply_filters( 'dkpdf_pdf_format', 'A4' );
+		}
+
 		// Configure PDF options from settings
 		$config = array(
 			'tempDir'                 => apply_filters( 'dkpdf_mpdf_temp_dir', realpath( __DIR__ . '/../..' ) . '/tmp' ),
 			'default_font_size'       => get_option( 'dkpdf_font_size', '12' ),
 			'default_font'            => $this->getSelectedFont(),
-			'format'                  => get_option( 'dkpdf_page_orientation' ) == 'horizontal' ?
-				apply_filters( 'dkpdf_pdf_format', 'A4' ) . '-L' :
-				apply_filters( 'dkpdf_pdf_format', 'A4' ),
+			'format'                  => $format,
 			'margin_left'             => get_option( 'dkpdf_margin_left', '15' ),
 			'margin_right'            => get_option( 'dkpdf_margin_right', '15' ),
 			'margin_top'              => get_option( 'dkpdf_margin_top', '50' ),
@@ -283,10 +287,10 @@ class DocumentBuilder {
 	 * @return string The file path where the PDF was saved
 	 * @throws \Exception If PDF generation fails
 	 */
-	public function generateToFile( string $title, string $file_path ): string {
+	public function generateToFile( string $title, string $file_path, ?string $format = null ): string {
 		require_once realpath( __DIR__ . '/../..' ) . '/vendor/autoload.php';
 
-		$mpdf = $this->createMpdfInstance();
+		$mpdf = $this->createMpdfInstance( $format );
 		$this->configureMpdfSettings( $mpdf );
 		$this->addContentToMpdf( $mpdf );
 		$this->setDocumentProperties( $mpdf, $title );
