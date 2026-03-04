@@ -1,7 +1,8 @@
 # Changelog
 
-## 2.3.2 ##
+## 2.3.2
 - Enhancement - Add dkpdf_before_output action hook.
+- Enhancement - Add dkpdf_generate to generate PDFs programmatically
 
 ## 2.3.1
 - Fix - Server-Side Request Forgery by sanitizing external URLs from content, and configuring mPDF to restrict external resource fetching.
