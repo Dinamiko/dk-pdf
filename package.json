@@ -8,7 +8,7 @@
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.3",
     "@wordpress/env": "^10.31.0",
-    "@wordpress/scripts": "^31.0.0"
+    "@wordpress/scripts": "^31.6.0"
   },
   "scripts": {
     "wp-env": "wp-env",
