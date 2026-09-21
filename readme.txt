@@ -1,5 +1,4 @@
 === DK PDF - WordPress PDF Generator ===
-Contributors: dinamiko
 Tags: pdf, wordpress pdf generator, pdf generator, woocommerce pdf, post to pdf
 Requires at least: 3.9.6
 Tested up to: 6.9
@@ -15,18 +14,14 @@ DK PDF allows your site visitors generate PDF files from WordPress posts, pages,
 
 Generate stunning, brand-consistent PDF files from your WordPress posts, pages, custom post types, and WooCommerce products with just one click. Perfect for content creators, businesses, and developers who need reliable PDF generation.
 
-[Homepage](https://dinamiko.dev/plugins/dk-pdf-wordpress-pdf-generator/) | [View Demo](https://demo-dk-pdf.dinamiko.dev/) | [Documentation](https://dinamiko.dev/docs-categories/dk-pdf-documentation/) | [YouTube](https://www.youtube.com/playlist?list=PLWqrakko3Z0T0As28ucC9YUoi_Ciju6u1)
-
-[youtube https://youtu.be/ZQoXLbu5ldI]
-
 == Powerful features that deliver results ==
 
 * **Multi-Content Generation**: Create PDFs from posts, pages, custom post types, taxonomies, WooCommerce products, shop and categories
 * **Selective Content Display**: Choose exactly what appears in your PDFs - featured images, post dates, authors, categories, and more
-* **Custom Fields Support**: Add custom fields including Advanced Custom Fields, see [documentation](https://dinamiko.dev/docs/custom-fields/)
-* **Custom Font Manager**: Upload and manage custom .ttf fonts to match your brand typography in generated PDFs: see [documentation](https://dinamiko.dev/docs/dk-pdf-fonts-user-guide/)
+* **Custom Fields Support**: Add custom fields including Advanced Custom Fields
+* **Custom Font Manager**: Upload and manage custom .ttf fonts to match your brand typography in generated PDFs
 * **Multi-Language Support**: Core fonts management for Arabic, Hebrew, Indic, and CJK languages ensuring proper character rendering
-* **Button Visibility by User Role**: Control which WordPress user roles can see and generate PDFs, see [documentation](https://dinamiko.dev/docs/pdf-button-visibility-by-role/)
+* **Button Visibility by User Role**: Control which WordPress user roles can see and generate PDFs
 * **WooCommerce Integration**: Include product details like prices, SKUs, categories, and more
 * **Header & Footer Control**: Add logo, custom text, and branding elements to headers and footers
 * **Custom CSS Support**: Apply your own styling to match your brand perfectly
@@ -40,10 +35,6 @@ Generate stunning, brand-consistent PDF files from your WordPress posts, pages, 
 * **E-commerce Sites**: Create product catalogs and detailed product sheets from your WooCommerce products.
 * **Developers**: Build custom PDF solutions for clients using template overrides and WordPress hooks.
 * **Educational Sites**: Convert course materials, lessons, and resources into portable PDF formats.
-
-== DK PDF Custom Services ==
-Need custom functionality for the DK PDF Plugin? I provide [professional customization services](https://dinamiko.dev/dk-pdf-custom-services/) to extend and enhance your PDF generation capabilities.
-
 == Installation ==
 
 Installing "DK PDF" can be done either by searching for "DK PDF" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:

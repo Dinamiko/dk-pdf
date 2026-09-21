@@ -735,7 +735,7 @@ class Settings {
 
 			// Add right-aligned links
 			$html .= '<span class="dkpdf-nav-links">';
-			$html .= '<a href="https://dinamiko.dev/docs-categories/dk-pdf-documentation/" target="_blank"><i class="fa fa-file-o"></i> Documentation</a> | <a href="https://wordpress.org/support/plugin/dk-pdf/" target="_blank"><i class="fa fa-comment-o"></i> Support</a> | <a href="https://dinamiko.dev/dk-pdf-custom-services/" target="_blank"><i class="fa fa-star-o"></i> Need Customization?</a>';
+			$html .= '';
 
 			$html .= '</h2>' . "\n";
 		}
